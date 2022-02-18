@@ -96,22 +96,24 @@ header .container {
 
 
 .btnn {
-  display: inline-block;
-  padding: 1rem 2rem;
-  background: #000000;
-  color: #ffffff;
-  font-family: var(--font-secondary);
-  font-style: italic;
-  font-weight: bold;
-  font-size: 1rem;
-  text-transform: capitalize;
-  transition: all 0.3s ease;
-  border-style:solid ;
-  border-color:  #ffffff;
-  cursor: pointer;
-  position: relative;
-  text-decoration: none;
-  outline: none;
+  COLOR: WHITE;
+    display: inline-block;
+    padding: 1rem 2rem;
+    /* background: var(--btn-bg-color); */
+    font-family: var(--font-secondary);
+    font-style: italic;
+    font-size: 1rem;
+    text-transform: capitalize;
+    transition: all 0.3s ease;
+    box-shadow: 4px 4px 0 0 WHITE;
+    cursor: pointer;
+    position: relative;
+    text-decoration: none;
+    outline: none;
+  BACKGROUND-COLOR: BLACK;
+  
+  PADDING: 13PX;
+    TEXT-ALIGN: end;
 }
 
 
