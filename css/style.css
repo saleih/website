@@ -41,10 +41,10 @@ body {
 
 #conimg {
   background-image:url(/images/banner.png);
-  background-position:center;
-  background-size: cover;
-  padding-bottom: 79px;
-    padding-top: 79px;
+  background-position: bottom;
+    background-size: cover;
+    padding-bottom: 79px;
+    padding-top: 10px;
 }
   
 }
@@ -199,6 +199,9 @@ section {
   font-family: sans-serif;
   margin-bottom: 2rem;
   text-align: center;
+  position: relative;
+    top: 60px;
+}
 }
 
 /* OWNER STYLES */
