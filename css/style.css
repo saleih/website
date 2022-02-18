@@ -36,11 +36,14 @@ body {
   max-width: 960px;
   margin: 0 auto;
   padding: 1rem 2rem;
+  
 }
 
 #conimg {
   background-image:url(/images/banner2.png);
   background-position:center;
+  background-size: cover;
+}
   
 }
 
