@@ -76,7 +76,7 @@ header .container {
 /* BUTTONS */
 
 .btn {
-        COLOR: WHITE;
+           COLOR: WHITE;
     display: inline-block;
     padding: 1rem 2rem;
     /* background: var(--btn-bg-color); */
@@ -85,12 +85,13 @@ header .container {
     font-size: 1rem;
     text-transform: capitalize;
     transition: all 0.3s ease;
-    box-shadow: 4px 4px 0 0 WHITE;
     cursor: pointer;
     position: relative;
     text-decoration: none;
     outline: none;
-  BACKGROUND-COLOR: BLACK;
+    BACKGROUND-COLOR: BLACK;
+    BORDER: 3PX SOLID;
+    BORDER-COLOR: WHITE;
 
 }
 
@@ -112,8 +113,8 @@ header .container {
     outline: none;
   BACKGROUND-COLOR: BLACK;
   
-  PADDING: 13PX;
-    TEXT-ALIGN: end;
+ 
+   TEXT-ALIGN: CENTER;
 }
 
 
