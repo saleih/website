@@ -43,6 +43,8 @@ body {
   background-image:url(/images/banner.png);
   background-position:center;
   background-size: cover;
+  padding-bottom: 79px;
+    padding-top: 79px;
 }
   
 }
