@@ -3257,6 +3257,8 @@ figcaption {
   position: relative;
   z-index: 1;
   overflow: hidden;
+  -o-object-fit: contain;
+  object-fit: contain;
 }
 
 .punks-slider_content {
@@ -4095,9 +4097,11 @@ figcaption {
   margin-right: 6px;
   padding-bottom: 10px;
   float: right;
-  background-image: url('../images/tw.png');
-  background-position: 0px 0px;
-  background-size: contain;
+  background-image: url('../images/Black-and-white-Discord-Logo-768x588.png'), url('../images/tw.png');
+  background-position: 0px 0px, 0px 0px;
+  background-size: auto, contain;
+  background-repeat: repeat, no-repeat;
+  background-attachment: scroll, scroll;
 }
 
 .link-block-5.dw.ig {
@@ -4115,6 +4119,13 @@ figcaption {
   background-position: 0px 0px;
   background-size: contain;
   text-align: left;
+}
+
+.link-block-5.dw.d {
+  background-image: url('../images/Black-and-white-Discord-Logo-768x588.png');
+  background-position: 0px 0px;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 .italic-text {
@@ -4234,7 +4245,7 @@ figcaption {
 
 .heading-8 {
   font-family: 'Open Sans', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .bold-text {
@@ -4242,7 +4253,7 @@ figcaption {
 }
 
 .bold-text-2 {
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .bold-text-3 {
@@ -4275,6 +4286,17 @@ figcaption {
 
 .heading-13 {
   font-family: 'Open Sans', sans-serif;
+}
+
+.bold-text-5 {
+  font-weight: 400;
+}
+
+.link-block-6 {
+  background-image: url('https://d3e54v103j8qbb.cloudfront.net/img/background-image.svg');
+  background-position: 0px 0px;
+  background-size: auto;
+  text-align: right;
 }
 
 @media screen and (max-width: 991px) {
@@ -5319,6 +5341,13 @@ figcaption {
 }
 
 #w-node-_85d02215-4670-8914-939e-a37e6d1249b6-ceb748e5 {
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  -ms-grid-row-align: stretch;
+  align-self: stretch;
+}
+
+#w-node-a1e3cece-a8df-ca20-3147-1421ecfd0ece-ceb748e5 {
   -webkit-align-self: stretch;
   -ms-flex-item-align: stretch;
   -ms-grid-row-align: stretch;

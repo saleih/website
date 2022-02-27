@@ -88,7 +88,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 368);
+/******/ 	return __webpack_require__(__webpack_require__.s = 367);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -261,7 +261,7 @@ module.exports = function (argument) {
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toLength = __webpack_require__(383);
+var toLength = __webpack_require__(382);
 
 // `LengthOfArrayLike` abstract operation
 // https://tc39.es/ecma262/#sec-lengthofarraylike
@@ -569,6 +569,473 @@ module.exports = _defineProperty;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+var _interopRequireDefault2 = __webpack_require__(0);
+
+var _defineProperty2 = _interopRequireDefault2(__webpack_require__(20));
+
+var _PRODUCT_TYPE_HELP_TE;
+
+var _interopRequireDefault = __webpack_require__(0);
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _exportNames = {
+  ORDER_ID_RE: true,
+  SHIPPING_METHODS: true,
+  DEFAULT_TAX_CATEGORY: true,
+  INVENTORY_TYPE_FINITE: true,
+  INVENTORY_TYPE_INFINITE: true,
+  INFINITE_INVENTORY: true,
+  MAX_TOTAL_ORDER_PRICE: true,
+  MAX_PRODUCT_DIMENSION: true,
+  MAX_MEMBERSHIP_PRODUCTS: true,
+  MAX_SEARCH_LIMIT: true,
+  PRICE_TEMPLATE_CURRENCY_SYMBOL: true,
+  PRICE_TEMPLATE_AMOUNT: true,
+  PRICE_TEMPLATE_CURRENCY_CODE: true,
+  PRICE_TEMPLATE_OPTIONS: true,
+  DEFAULT_PRICE_TEMPLATE_VALUE: true,
+  CSV_CURRENCY_TEMPLATE: true,
+  CSV_INTEGRATION_CURRENCY_TEMPLATE: true,
+  DOWNLOAD_FILES_FAKE_DATA: true,
+  DOWNLOAD_FILES_KEY_PATH: true,
+  DOWNLOAD_FILES_EDITABLE_FIELDS: true,
+  SUBSCRIPTION_INTERVAL_ENUM: true,
+  SUBSCRIPTION_STATUS_ENUM: true,
+  SUBSCRIPTION_STATUS_PRETTY_ENUM: true,
+  STRIPE_SUBSCRIPTION_STATUS_ENUM: true,
+  ACTIVE_STRIPE_SUBSCRIPTION_STATUSES: true,
+  ECOMMERCE_PROVIDER_NAME_ENUM: true,
+  BILLING_METHOD_TYPES: true,
+  PHYSICAL_PRODUCT_TYPE: true,
+  DIGITAL_PRODUCT_TYPE: true,
+  SERVICE_PRODUCT_TYPE: true,
+  MEMBERSHIP_PRODUCT_TYPE: true,
+  ADVANCED_PRODUCT_TYPE: true,
+  TEMPLATE_PRODUCT_TYPES: true,
+  PRODUCT_TYPE_HELP_TEXT: true,
+  DEFAULT_PRODUCT_TYPE_ID: true,
+  DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS: true,
+  REQUIRED_DISCOUNT_IMPORT_FIELDS: true,
+  STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE: true,
+  ORDER_SORT_MODES: true,
+  SUBSCRIPTION_SORT_MODES: true,
+  PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY: true,
+  paypalCurrencyList: true,
+  stripeCurrencyList: true
+};
+Object.defineProperty(exports, "PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY", {
+  enumerable: true,
+  get: function get() {
+    return _bindingContextConstants.PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY;
+  }
+});
+Object.defineProperty(exports, "paypalCurrencyList", {
+  enumerable: true,
+  get: function get() {
+    return _paypalCurrencyList.paypalCurrencyList;
+  }
+});
+Object.defineProperty(exports, "stripeCurrencyList", {
+  enumerable: true,
+  get: function get() {
+    return _stripeCurrencyList.stripeCurrencyList;
+  }
+});
+exports.SUBSCRIPTION_SORT_MODES = exports.ORDER_SORT_MODES = exports.STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = exports.REQUIRED_DISCOUNT_IMPORT_FIELDS = exports.DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = exports.DEFAULT_PRODUCT_TYPE_ID = exports.PRODUCT_TYPE_HELP_TEXT = exports.TEMPLATE_PRODUCT_TYPES = exports.ADVANCED_PRODUCT_TYPE = exports.MEMBERSHIP_PRODUCT_TYPE = exports.SERVICE_PRODUCT_TYPE = exports.DIGITAL_PRODUCT_TYPE = exports.PHYSICAL_PRODUCT_TYPE = exports.BILLING_METHOD_TYPES = exports.ECOMMERCE_PROVIDER_NAME_ENUM = exports.ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = exports.STRIPE_SUBSCRIPTION_STATUS_ENUM = exports.SUBSCRIPTION_STATUS_PRETTY_ENUM = exports.SUBSCRIPTION_STATUS_ENUM = exports.SUBSCRIPTION_INTERVAL_ENUM = exports.DOWNLOAD_FILES_EDITABLE_FIELDS = exports.DOWNLOAD_FILES_KEY_PATH = exports.DOWNLOAD_FILES_FAKE_DATA = exports.CSV_INTEGRATION_CURRENCY_TEMPLATE = exports.CSV_CURRENCY_TEMPLATE = exports.DEFAULT_PRICE_TEMPLATE_VALUE = exports.PRICE_TEMPLATE_OPTIONS = exports.PRICE_TEMPLATE_CURRENCY_CODE = exports.PRICE_TEMPLATE_AMOUNT = exports.PRICE_TEMPLATE_CURRENCY_SYMBOL = exports.MAX_SEARCH_LIMIT = exports.MAX_MEMBERSHIP_PRODUCTS = exports.MAX_PRODUCT_DIMENSION = exports.MAX_TOTAL_ORDER_PRICE = exports.INFINITE_INVENTORY = exports.INVENTORY_TYPE_INFINITE = exports.INVENTORY_TYPE_FINITE = exports.DEFAULT_TAX_CATEGORY = exports.SHIPPING_METHODS = exports.ORDER_ID_RE = void 0;
+
+var _extends2 = _interopRequireDefault(__webpack_require__(12));
+
+var _camelCase = _interopRequireDefault(__webpack_require__(695));
+
+var _pluginConstants = __webpack_require__(711);
+
+Object.keys(_pluginConstants).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _pluginConstants[key];
+    }
+  });
+});
+
+var _bindingContextConstants = __webpack_require__(712);
+
+var _paypalCurrencyList = __webpack_require__(713);
+
+var _stripeCurrencyList = __webpack_require__(714); // REGEXES
+
+
+var ORDER_ID_RE = /^[0-9a-f]{5,}$/; // @TODO - Once we extract the Commerce plugin to packages, move `pluginConstants` there.
+
+exports.ORDER_ID_RE = ORDER_ID_RE;
+var SHIPPING_METHOD_FLAT = 'flat-rate';
+var SHIPPING_METHOD_PERCENTAGE = 'percentage';
+var SHIPPING_METHOD_PRICE = 'price';
+var SHIPPING_METHOD_QUANTITY = 'quantity';
+var SHIPPING_METHOD_WEIGHT = 'weight';
+var SHIPPING_METHODS = Object.freeze({
+  FLAT: SHIPPING_METHOD_FLAT,
+  PERCENTAGE: SHIPPING_METHOD_PERCENTAGE,
+  PRICE: SHIPPING_METHOD_PRICE,
+  QUANTITY: SHIPPING_METHOD_QUANTITY,
+  WEIGHT: SHIPPING_METHOD_WEIGHT
+});
+exports.SHIPPING_METHODS = SHIPPING_METHODS;
+var DEFAULT_TAX_CATEGORY = 'standard-taxable';
+exports.DEFAULT_TAX_CATEGORY = DEFAULT_TAX_CATEGORY;
+var INVENTORY_TYPE_FINITE = 'finite';
+exports.INVENTORY_TYPE_FINITE = INVENTORY_TYPE_FINITE;
+var INVENTORY_TYPE_INFINITE = 'infinite';
+exports.INVENTORY_TYPE_INFINITE = INVENTORY_TYPE_INFINITE;
+var INFINITE_INVENTORY = {
+  inventoryType: INVENTORY_TYPE_INFINITE,
+  quantity: 0
+}; // Stripe maximum charge. From stripe: The only limit to the maximum amount you can charge a customer
+// is a technical one. The amount value supports up to eight digits (e.g., a value of 99999999 for a
+// USD charge of $999,999.99).
+
+exports.INFINITE_INVENTORY = INFINITE_INVENTORY;
+var MAX_TOTAL_ORDER_PRICE = 99999999;
+exports.MAX_TOTAL_ORDER_PRICE = MAX_TOTAL_ORDER_PRICE;
+var MAX_PRODUCT_DIMENSION = 9000000000000000;
+exports.MAX_PRODUCT_DIMENSION = MAX_PRODUCT_DIMENSION;
+var MAX_MEMBERSHIP_PRODUCTS = 20;
+exports.MAX_MEMBERSHIP_PRODUCTS = MAX_MEMBERSHIP_PRODUCTS;
+var MAX_SEARCH_LIMIT = 100;
+exports.MAX_SEARCH_LIMIT = MAX_SEARCH_LIMIT;
+
+function _withDerivedValue(_ref) {
+  var label = _ref.label,
+      _ref$type = _ref.type,
+      type = _ref$type === void 0 ? 'PlainText' : _ref$type,
+      _ref$path = _ref.path,
+      path = _ref$path === void 0 ? (0, _camelCase["default"])(label) : _ref$path,
+      _ref$options = _ref.options,
+      options = _ref$options === void 0 ? {
+    readOnly: false,
+    isNotAddable: false
+  } : _ref$options;
+  return (0, _extends2["default"])({
+    label: label,
+    type: type
+  }, options, {
+    value: JSON.stringify({
+      path: path,
+      type: type
+    })
+  });
+}
+
+var PRICE_TEMPLATE_CURRENCY_SYMBOL = _withDerivedValue({
+  label: 'Currency symbol',
+  path: 'symbol'
+});
+
+exports.PRICE_TEMPLATE_CURRENCY_SYMBOL = PRICE_TEMPLATE_CURRENCY_SYMBOL;
+
+var PRICE_TEMPLATE_AMOUNT = _withDerivedValue({
+  label: 'Amount',
+  type: 'CommercePrice',
+  options: {
+    readOnly: true,
+    isNotAddable: true
+  }
+});
+
+exports.PRICE_TEMPLATE_AMOUNT = PRICE_TEMPLATE_AMOUNT;
+
+var PRICE_TEMPLATE_CURRENCY_CODE = _withDerivedValue({
+  label: 'Currency code'
+});
+
+exports.PRICE_TEMPLATE_CURRENCY_CODE = PRICE_TEMPLATE_CURRENCY_CODE;
+var PRICE_TEMPLATE_OPTIONS = [PRICE_TEMPLATE_CURRENCY_SYMBOL, PRICE_TEMPLATE_AMOUNT, PRICE_TEMPLATE_CURRENCY_CODE];
+exports.PRICE_TEMPLATE_OPTIONS = PRICE_TEMPLATE_OPTIONS;
+
+var _intoToken = function _intoToken(option) {
+  return "{{wf ".concat(option.value, " }}");
+};
+
+var DEFAULT_PRICE_TEMPLATE_VALUE = [_intoToken(PRICE_TEMPLATE_CURRENCY_SYMBOL), ' ', _intoToken(PRICE_TEMPLATE_AMOUNT), ' ', _intoToken(PRICE_TEMPLATE_CURRENCY_CODE)].join('');
+exports.DEFAULT_PRICE_TEMPLATE_VALUE = DEFAULT_PRICE_TEMPLATE_VALUE;
+var CSV_CURRENCY_TEMPLATE = [_intoToken(PRICE_TEMPLATE_CURRENCY_SYMBOL), _intoToken(PRICE_TEMPLATE_AMOUNT)].join('');
+exports.CSV_CURRENCY_TEMPLATE = CSV_CURRENCY_TEMPLATE;
+var CSV_INTEGRATION_CURRENCY_TEMPLATE = [_intoToken(PRICE_TEMPLATE_AMOUNT), ' ', _intoToken(PRICE_TEMPLATE_CURRENCY_CODE)].join('');
+exports.CSV_INTEGRATION_CURRENCY_TEMPLATE = CSV_INTEGRATION_CURRENCY_TEMPLATE;
+var DOWNLOAD_FILES_FAKE_DATA = [{
+  id: '5d8fcb6d94dd1853060fb3b3',
+  name: 'The modern web design process - Webflow Ebook.pdf',
+  url: 'https://assets-global.website-files.com/5cf6b7202bf8199f50d43e6c/5e9dd8a680b972888929747b_The%20modern%20web%20design%20process%20-%20Webflow%20Ebook.pdf'
+}, {
+  id: '5d8fcb6d94dd1853060fb3b4',
+  name: 'The freelance web designers guide - Webflow Ebook.pdf',
+  url: 'https://assets-global.website-files.com/5cf6b7202bf8199f50d43e6c/5e9dd8e6abe52b33243a22cf_The%20freelance%20web%20designer%E2%80%99s%20guide%20-%20Webflow%20Ebook.pdf'
+}];
+exports.DOWNLOAD_FILES_FAKE_DATA = DOWNLOAD_FILES_FAKE_DATA;
+var DOWNLOAD_FILES_KEY_PATH = 'download-files';
+exports.DOWNLOAD_FILES_KEY_PATH = DOWNLOAD_FILES_KEY_PATH;
+var DOWNLOAD_FILES_EDITABLE_FIELDS = {
+  name: true,
+  url: true
+}; // Subscriptions ----------------------------------------------------
+
+exports.DOWNLOAD_FILES_EDITABLE_FIELDS = DOWNLOAD_FILES_EDITABLE_FIELDS;
+var SUBSCRIPTION_INTERVAL_ENUM = ['day', 'week', 'month', 'year'];
+exports.SUBSCRIPTION_INTERVAL_ENUM = SUBSCRIPTION_INTERVAL_ENUM;
+var SUBSCRIPTION_STATUS_ENUM = {
+  active: 'active',
+  pastdue: 'pastdue',
+  unpaid: 'unpaid',
+  canceled: 'canceled',
+  cancelPending: 'cancelPending',
+  incomplete: 'incomplete',
+  incompleteExpired: 'incompleteExpired',
+  trialing: 'trialing',
+  unknown: "unknown"
+};
+exports.SUBSCRIPTION_STATUS_ENUM = SUBSCRIPTION_STATUS_ENUM;
+var SUBSCRIPTION_STATUS_PRETTY_ENUM = {
+  active: 'active',
+  pastdue: 'pastdue',
+  unpaid: 'unpaid',
+  canceled: 'canceled',
+  cancelPending: 'cancelPending',
+  incomplete: 'incomplete',
+  incompleteExpired: 'incompleteExpired',
+  trialing: 'in trial',
+  unknown: "unknown"
+};
+exports.SUBSCRIPTION_STATUS_PRETTY_ENUM = SUBSCRIPTION_STATUS_PRETTY_ENUM;
+var STRIPE_SUBSCRIPTION_STATUS_ENUM = {
+  active: 'active',
+  past_due: 'past_due',
+  unpaid: 'unpaid',
+  canceled: 'canceled',
+  incomplete: 'incomplete',
+  incomplete_expired: 'incomplete_expired',
+  trialing: 'trialing'
+};
+exports.STRIPE_SUBSCRIPTION_STATUS_ENUM = STRIPE_SUBSCRIPTION_STATUS_ENUM;
+var ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = [STRIPE_SUBSCRIPTION_STATUS_ENUM.active, STRIPE_SUBSCRIPTION_STATUS_ENUM.past_due, STRIPE_SUBSCRIPTION_STATUS_ENUM.trialing];
+exports.ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = ACTIVE_STRIPE_SUBSCRIPTION_STATUSES;
+var ECOMMERCE_PROVIDER_NAME_ENUM = {
+  stripe: 'stripe'
+};
+exports.ECOMMERCE_PROVIDER_NAME_ENUM = ECOMMERCE_PROVIDER_NAME_ENUM;
+var BILLING_METHOD_TYPES = {
+  subscription: 'subscription',
+  oneTime: 'one-time'
+}; // Product Types
+
+exports.BILLING_METHOD_TYPES = BILLING_METHOD_TYPES;
+var DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS = [{
+  fieldSlug: 'name',
+  required: true
+}, {
+  fieldSlug: 'slug',
+  required: true
+}, {
+  fieldSlug: 'sku-properties',
+  required: false
+}, {
+  fieldSlug: 'category',
+  required: false
+}, {
+  fieldSlug: 'description',
+  required: false
+}, {
+  fieldSlug: 'tax-category',
+  required: false
+}, {
+  fieldSlug: 'default-sku',
+  required: false
+}, {
+  fieldSlug: 'ec-product-type',
+  required: false
+}, {
+  fieldSlug: 'options',
+  required: false
+}];
+var DEFAULT_PRODUCT_TYPE_SKU_FIELDS = [{
+  fieldSlug: 'sku-values',
+  required: false
+}, {
+  fieldSlug: 'product',
+  required: false
+}, {
+  fieldSlug: 'main-image',
+  required: false
+}, {
+  fieldSlug: 'more-images',
+  required: false
+}, {
+  fieldSlug: 'price',
+  required: true
+}, {
+  fieldSlug: 'compare-at-price',
+  required: false
+}, {
+  fieldSlug: 'ec-sku-subscription-plan',
+  required: false
+}, {
+  fieldSlug: 'sku',
+  required: false
+}, {
+  fieldSlug: 'ec-sku-billing-method',
+  required: false
+}, {
+  fieldSlug: 'track-inventory',
+  required: false
+}, {
+  fieldSlug: 'quantity',
+  required: false
+}];
+var PHYSICAL_PRODUCT_TYPE = {
+  name: 'Physical',
+  id: 'ff42fee0113744f693a764e3431a9cc2',
+  fields: {
+    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS, [{
+      fieldSlug: 'shippable',
+      required: false
+    }]),
+    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
+      fieldSlug: 'weight',
+      required: false
+    }, {
+      fieldSlug: 'width',
+      required: false
+    }, {
+      fieldSlug: 'height',
+      required: false
+    }, {
+      fieldSlug: 'length',
+      required: false
+    }])
+  }
+};
+exports.PHYSICAL_PRODUCT_TYPE = PHYSICAL_PRODUCT_TYPE;
+var DIGITAL_PRODUCT_TYPE = {
+  name: 'Digital',
+  id: 'f22027db68002190aef89a4a2b7ac8a1',
+  fields: {
+    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS),
+    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
+      fieldSlug: 'download-files',
+      required: true
+    }])
+  }
+};
+exports.DIGITAL_PRODUCT_TYPE = DIGITAL_PRODUCT_TYPE;
+var SERVICE_PRODUCT_TYPE = {
+  name: 'Service',
+  id: 'c599e43b1a1c34d5a323aedf75d3adf6',
+  fields: {
+    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS),
+    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS)
+  }
+};
+exports.SERVICE_PRODUCT_TYPE = SERVICE_PRODUCT_TYPE;
+var MEMBERSHIP_PRODUCT_TYPE = {
+  name: 'Membership',
+  id: 'e348fd487d0102946c9179d2a94bb613',
+  fields: {
+    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS, [{
+      fieldSlug: 'shippable',
+      required: false
+    }]),
+    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
+      fieldSlug: 'weight',
+      required: false
+    }, {
+      fieldSlug: 'width',
+      required: false
+    }, {
+      fieldSlug: 'height',
+      required: false
+    }, {
+      fieldSlug: 'length',
+      required: false
+    }, {
+      fieldSlug: 'download-files',
+      required: false
+    }, {
+      fieldSlug: 'include-downloads',
+      required: false
+    }])
+  }
+};
+exports.MEMBERSHIP_PRODUCT_TYPE = MEMBERSHIP_PRODUCT_TYPE;
+var ADVANCED_PRODUCT_TYPE = {
+  name: 'Advanced',
+  id: 'b6ccc1830db4b1babeb06a9ac5f6dd76'
+};
+exports.ADVANCED_PRODUCT_TYPE = ADVANCED_PRODUCT_TYPE;
+var TEMPLATE_PRODUCT_TYPES = [PHYSICAL_PRODUCT_TYPE, DIGITAL_PRODUCT_TYPE, SERVICE_PRODUCT_TYPE, MEMBERSHIP_PRODUCT_TYPE, ADVANCED_PRODUCT_TYPE]; // only used to get type ProductTypeId
+
+exports.TEMPLATE_PRODUCT_TYPES = TEMPLATE_PRODUCT_TYPES;
+var templateProductTypeIds = TEMPLATE_PRODUCT_TYPES.reduce(function (ids, t) {
+  ids[t.id] = '';
+  return ids;
+}, {});
+var PRODUCT_TYPE_HELP_TEXT = (_PRODUCT_TYPE_HELP_TE = {}, (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, PHYSICAL_PRODUCT_TYPE.id, 'Physical products are shipped to the customer (e.g., merchandise, apparel).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, DIGITAL_PRODUCT_TYPE.id, 'Digital products are immediately downloadable by the customer after checkout (e.g., audio files, ebooks).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, SERVICE_PRODUCT_TYPE.id, 'Service products do not require a shipping address during checkout (e.g., classes, consultations).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, MEMBERSHIP_PRODUCT_TYPE.id, 'Membership products give users access to gated content through recurring or one-time payment (e.g., subscriptions, one-time membership fee). Membership products require a user login and can only be purchased once.'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, ADVANCED_PRODUCT_TYPE.id, 'Advanced products provide all available customizable options.'), _PRODUCT_TYPE_HELP_TE);
+exports.PRODUCT_TYPE_HELP_TEXT = PRODUCT_TYPE_HELP_TEXT;
+var DEFAULT_PRODUCT_TYPE_ID = PHYSICAL_PRODUCT_TYPE.id;
+exports.DEFAULT_PRODUCT_TYPE_ID = DEFAULT_PRODUCT_TYPE_ID;
+var DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = ['name', 'code', 'notes', 'type', 'percentOff', 'amountOff', 'validOn', 'expiresOn', 'enabled', // 'active' is being replaced with 'enabled'
+'orderMinimum', // archived is disabled until we have UI for it
+// 'archived',
+'totalUsage', 'maxAmountOff', // NOTE: for dot-notation fields to be properly expanded
+// during import, you need to add the camel-case flattened property to
+// the 'KEYS_TO_EXPAND' variable in `entrypoints/server/lib/ecommerce/csvImport/discountCsvImport.js`
+// Example: 'usage.limit.total' -> 'usageLimitTotal'
+'usage.limit.total', 'usage.limit.customer', 'appliesTo.scope', 'appliesTo.filter', 'appliesTo.applyOnce'];
+exports.DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS;
+var REQUIRED_DISCOUNT_IMPORT_FIELDS = ['name', 'code', 'type', ['percentOff', 'amountOff']];
+exports.REQUIRED_DISCOUNT_IMPORT_FIELDS = REQUIRED_DISCOUNT_IMPORT_FIELDS;
+var STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = 'Stripe disconnect attempted with non-canceled subscriptions';
+exports.STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE;
+var ORDER_SORT_MODES = Object.freeze({
+  '-count': '-purchasedItemsCount -_id',
+  count: 'purchasedItemsCount _id',
+  '-name': '-customerInfo.fullName -_id',
+  name: 'customerInfo.fullName _id',
+  '-orderid': '-orderId',
+  orderid: 'orderId',
+  '-paid': '-customerPaid.unit -customerPaid.value -_id',
+  paid: 'customerPaid.unit customerPaid.value _id',
+  '-status': '-statusCode -_id',
+  status: 'statusCode _id',
+  '-time': '-acceptedOn -_id',
+  time: 'acceptedOn _id'
+});
+exports.ORDER_SORT_MODES = ORDER_SORT_MODES;
+var SUBSCRIPTION_SORT_MODES = Object.freeze({
+  '-lastBilled': '-lastInvoiced -_id',
+  lastBilled: 'lastInvoiced _id',
+  '-nextBilling': '-paidUntil -_id',
+  nextBilling: 'paidUntil _id',
+  '-orderid': '-orderId',
+  orderid: 'orderId',
+  '-purchased': '-subCreatedOn -_id',
+  purchased: 'subCreatedOn _id',
+  '-status': '-status -_id',
+  status: 'status _id',
+  '-trialing': '-trialing -_id',
+  trialing: 'trialing _id'
+});
+exports.SUBSCRIPTION_SORT_MODES = SUBSCRIPTION_SORT_MODES;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
  // @wf-will-never-add-flow-to-this-file
 
 /* globals window, document, navigator, WEBFLOW_ENV_TEST */
@@ -588,7 +1055,7 @@ var $win = $(window);
 var $doc = $(document);
 var isFunction = $.isFunction;
 
-var _ = Webflow._ = __webpack_require__(370);
+var _ = Webflow._ = __webpack_require__(369);
 
 var tram = Webflow.tram = __webpack_require__(222) && $.tram;
 var domready = false;
@@ -904,7 +1371,7 @@ bindLoad(); // Export commonjs module
 module.exports = window.Webflow = Webflow;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 var call = Function.prototype.call;
@@ -915,7 +1382,7 @@ module.exports = call.bind ? call.bind(call) : function () {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -931,7 +1398,7 @@ module.exports = function (namespace, method) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -948,7 +1415,7 @@ var _exportNames = {
 };
 exports.IX2EngineConstants = exports.IX2EngineActionTypes = void 0;
 
-var _triggerEvents = __webpack_require__(396);
+var _triggerEvents = __webpack_require__(395);
 
 Object.keys(_triggerEvents).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -974,7 +1441,7 @@ Object.keys(_animationActions).forEach(function (key) {
   });
 });
 
-var _triggerInteractions = __webpack_require__(397);
+var _triggerInteractions = __webpack_require__(396);
 
 Object.keys(_triggerInteractions).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -987,7 +1454,7 @@ Object.keys(_triggerInteractions).forEach(function (key) {
   });
 });
 
-var _reducedMotion = __webpack_require__(398);
+var _reducedMotion = __webpack_require__(397);
 
 Object.keys(_reducedMotion).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -1000,447 +1467,13 @@ Object.keys(_reducedMotion).forEach(function (key) {
   });
 });
 
-var IX2EngineActionTypes = _interopRequireWildcard(__webpack_require__(399));
+var IX2EngineActionTypes = _interopRequireWildcard(__webpack_require__(398));
 
 exports.IX2EngineActionTypes = IX2EngineActionTypes;
 
-var IX2EngineConstants = _interopRequireWildcard(__webpack_require__(400));
+var IX2EngineConstants = _interopRequireWildcard(__webpack_require__(399));
 
 exports.IX2EngineConstants = IX2EngineConstants;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _interopRequireDefault2 = __webpack_require__(0);
-
-var _defineProperty2 = _interopRequireDefault2(__webpack_require__(20));
-
-var _PRODUCT_TYPE_HELP_TE;
-
-var _interopRequireDefault = __webpack_require__(0);
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _exportNames = {
-  ORDER_ID_RE: true,
-  SHIPPING_METHODS: true,
-  DEFAULT_TAX_CATEGORY: true,
-  INVENTORY_TYPE_FINITE: true,
-  INVENTORY_TYPE_INFINITE: true,
-  INFINITE_INVENTORY: true,
-  MAX_TOTAL_ORDER_PRICE: true,
-  MAX_PRODUCT_DIMENSION: true,
-  MAX_MEMBERSHIP_PRODUCTS: true,
-  MAX_SEARCH_LIMIT: true,
-  PRICE_TEMPLATE_CURRENCY_SYMBOL: true,
-  PRICE_TEMPLATE_AMOUNT: true,
-  PRICE_TEMPLATE_CURRENCY_CODE: true,
-  PRICE_TEMPLATE_OPTIONS: true,
-  DEFAULT_PRICE_TEMPLATE_VALUE: true,
-  CSV_CURRENCY_TEMPLATE: true,
-  CSV_INTEGRATION_CURRENCY_TEMPLATE: true,
-  DOWNLOAD_FILES_FAKE_DATA: true,
-  DOWNLOAD_FILES_KEY_PATH: true,
-  DOWNLOAD_FILES_EDITABLE_FIELDS: true,
-  SUBSCRIPTION_INTERVAL_ENUM: true,
-  SUBSCRIPTION_STATUS_ENUM: true,
-  STRIPE_SUBSCRIPTION_STATUS_ENUM: true,
-  ACTIVE_STRIPE_SUBSCRIPTION_STATUSES: true,
-  ECOMMERCE_PROVIDER_NAME_ENUM: true,
-  BILLING_METHOD_TYPES: true,
-  PHYSICAL_PRODUCT_TYPE: true,
-  DIGITAL_PRODUCT_TYPE: true,
-  SERVICE_PRODUCT_TYPE: true,
-  MEMBERSHIP_PRODUCT_TYPE: true,
-  ADVANCED_PRODUCT_TYPE: true,
-  TEMPLATE_PRODUCT_TYPES: true,
-  PRODUCT_TYPE_HELP_TEXT: true,
-  DEFAULT_PRODUCT_TYPE_ID: true,
-  DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS: true,
-  REQUIRED_DISCOUNT_IMPORT_FIELDS: true,
-  STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE: true,
-  ORDER_SORT_MODES: true,
-  SUBSCRIPTION_SORT_MODES: true,
-  PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY: true
-};
-Object.defineProperty(exports, "PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY", {
-  enumerable: true,
-  get: function get() {
-    return _bindingContextConstants.PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY;
-  }
-});
-exports.SUBSCRIPTION_SORT_MODES = exports.ORDER_SORT_MODES = exports.STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = exports.REQUIRED_DISCOUNT_IMPORT_FIELDS = exports.DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = exports.DEFAULT_PRODUCT_TYPE_ID = exports.PRODUCT_TYPE_HELP_TEXT = exports.TEMPLATE_PRODUCT_TYPES = exports.ADVANCED_PRODUCT_TYPE = exports.MEMBERSHIP_PRODUCT_TYPE = exports.SERVICE_PRODUCT_TYPE = exports.DIGITAL_PRODUCT_TYPE = exports.PHYSICAL_PRODUCT_TYPE = exports.BILLING_METHOD_TYPES = exports.ECOMMERCE_PROVIDER_NAME_ENUM = exports.ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = exports.STRIPE_SUBSCRIPTION_STATUS_ENUM = exports.SUBSCRIPTION_STATUS_ENUM = exports.SUBSCRIPTION_INTERVAL_ENUM = exports.DOWNLOAD_FILES_EDITABLE_FIELDS = exports.DOWNLOAD_FILES_KEY_PATH = exports.DOWNLOAD_FILES_FAKE_DATA = exports.CSV_INTEGRATION_CURRENCY_TEMPLATE = exports.CSV_CURRENCY_TEMPLATE = exports.DEFAULT_PRICE_TEMPLATE_VALUE = exports.PRICE_TEMPLATE_OPTIONS = exports.PRICE_TEMPLATE_CURRENCY_CODE = exports.PRICE_TEMPLATE_AMOUNT = exports.PRICE_TEMPLATE_CURRENCY_SYMBOL = exports.MAX_SEARCH_LIMIT = exports.MAX_MEMBERSHIP_PRODUCTS = exports.MAX_PRODUCT_DIMENSION = exports.MAX_TOTAL_ORDER_PRICE = exports.INFINITE_INVENTORY = exports.INVENTORY_TYPE_INFINITE = exports.INVENTORY_TYPE_FINITE = exports.DEFAULT_TAX_CATEGORY = exports.SHIPPING_METHODS = exports.ORDER_ID_RE = void 0;
-
-var _extends2 = _interopRequireDefault(__webpack_require__(12));
-
-var _camelCase = _interopRequireDefault(__webpack_require__(696));
-
-var _pluginConstants = __webpack_require__(712);
-
-Object.keys(_pluginConstants).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _pluginConstants[key];
-    }
-  });
-});
-
-var _bindingContextConstants = __webpack_require__(713); // REGEXES
-
-
-var ORDER_ID_RE = /^[0-9a-f]{5,}$/; // @TODO - Once we extract the Commerce plugin to packages, move `pluginConstants` there.
-
-exports.ORDER_ID_RE = ORDER_ID_RE;
-var SHIPPING_METHOD_FLAT = 'flat-rate';
-var SHIPPING_METHOD_PERCENTAGE = 'percentage';
-var SHIPPING_METHOD_PRICE = 'price';
-var SHIPPING_METHOD_QUANTITY = 'quantity';
-var SHIPPING_METHOD_WEIGHT = 'weight';
-var SHIPPING_METHODS = Object.freeze({
-  FLAT: SHIPPING_METHOD_FLAT,
-  PERCENTAGE: SHIPPING_METHOD_PERCENTAGE,
-  PRICE: SHIPPING_METHOD_PRICE,
-  QUANTITY: SHIPPING_METHOD_QUANTITY,
-  WEIGHT: SHIPPING_METHOD_WEIGHT
-});
-exports.SHIPPING_METHODS = SHIPPING_METHODS;
-var DEFAULT_TAX_CATEGORY = 'standard-taxable';
-exports.DEFAULT_TAX_CATEGORY = DEFAULT_TAX_CATEGORY;
-var INVENTORY_TYPE_FINITE = 'finite';
-exports.INVENTORY_TYPE_FINITE = INVENTORY_TYPE_FINITE;
-var INVENTORY_TYPE_INFINITE = 'infinite';
-exports.INVENTORY_TYPE_INFINITE = INVENTORY_TYPE_INFINITE;
-var INFINITE_INVENTORY = {
-  inventoryType: INVENTORY_TYPE_INFINITE,
-  quantity: 0
-}; // Stripe maximum charge. From stripe: The only limit to the maximum amount you can charge a customer
-// is a technical one. The amount value supports up to eight digits (e.g., a value of 99999999 for a
-// USD charge of $999,999.99).
-
-exports.INFINITE_INVENTORY = INFINITE_INVENTORY;
-var MAX_TOTAL_ORDER_PRICE = 99999999;
-exports.MAX_TOTAL_ORDER_PRICE = MAX_TOTAL_ORDER_PRICE;
-var MAX_PRODUCT_DIMENSION = 9000000000000000;
-exports.MAX_PRODUCT_DIMENSION = MAX_PRODUCT_DIMENSION;
-var MAX_MEMBERSHIP_PRODUCTS = 20;
-exports.MAX_MEMBERSHIP_PRODUCTS = MAX_MEMBERSHIP_PRODUCTS;
-var MAX_SEARCH_LIMIT = 100;
-exports.MAX_SEARCH_LIMIT = MAX_SEARCH_LIMIT;
-
-function _withDerivedValue(_ref) {
-  var label = _ref.label,
-      _ref$type = _ref.type,
-      type = _ref$type === void 0 ? 'PlainText' : _ref$type,
-      _ref$path = _ref.path,
-      path = _ref$path === void 0 ? (0, _camelCase["default"])(label) : _ref$path,
-      _ref$options = _ref.options,
-      options = _ref$options === void 0 ? {
-    readOnly: false,
-    isNotAddable: false
-  } : _ref$options;
-  return (0, _extends2["default"])({
-    label: label,
-    type: type
-  }, options, {
-    value: JSON.stringify({
-      path: path,
-      type: type
-    })
-  });
-}
-
-var PRICE_TEMPLATE_CURRENCY_SYMBOL = _withDerivedValue({
-  label: 'Currency symbol',
-  path: 'symbol'
-});
-
-exports.PRICE_TEMPLATE_CURRENCY_SYMBOL = PRICE_TEMPLATE_CURRENCY_SYMBOL;
-
-var PRICE_TEMPLATE_AMOUNT = _withDerivedValue({
-  label: 'Amount',
-  type: 'CommercePrice',
-  options: {
-    readOnly: true,
-    isNotAddable: true
-  }
-});
-
-exports.PRICE_TEMPLATE_AMOUNT = PRICE_TEMPLATE_AMOUNT;
-
-var PRICE_TEMPLATE_CURRENCY_CODE = _withDerivedValue({
-  label: 'Currency code'
-});
-
-exports.PRICE_TEMPLATE_CURRENCY_CODE = PRICE_TEMPLATE_CURRENCY_CODE;
-var PRICE_TEMPLATE_OPTIONS = [PRICE_TEMPLATE_CURRENCY_SYMBOL, PRICE_TEMPLATE_AMOUNT, PRICE_TEMPLATE_CURRENCY_CODE];
-exports.PRICE_TEMPLATE_OPTIONS = PRICE_TEMPLATE_OPTIONS;
-
-var _intoToken = function _intoToken(option) {
-  return "{{wf ".concat(option.value, " }}");
-};
-
-var DEFAULT_PRICE_TEMPLATE_VALUE = [_intoToken(PRICE_TEMPLATE_CURRENCY_SYMBOL), ' ', _intoToken(PRICE_TEMPLATE_AMOUNT), ' ', _intoToken(PRICE_TEMPLATE_CURRENCY_CODE)].join('');
-exports.DEFAULT_PRICE_TEMPLATE_VALUE = DEFAULT_PRICE_TEMPLATE_VALUE;
-var CSV_CURRENCY_TEMPLATE = [_intoToken(PRICE_TEMPLATE_CURRENCY_SYMBOL), _intoToken(PRICE_TEMPLATE_AMOUNT)].join('');
-exports.CSV_CURRENCY_TEMPLATE = CSV_CURRENCY_TEMPLATE;
-var CSV_INTEGRATION_CURRENCY_TEMPLATE = [_intoToken(PRICE_TEMPLATE_AMOUNT), ' ', _intoToken(PRICE_TEMPLATE_CURRENCY_CODE)].join('');
-exports.CSV_INTEGRATION_CURRENCY_TEMPLATE = CSV_INTEGRATION_CURRENCY_TEMPLATE;
-var DOWNLOAD_FILES_FAKE_DATA = [{
-  id: '5d8fcb6d94dd1853060fb3b3',
-  name: 'The modern web design process - Webflow Ebook.pdf',
-  url: 'https://assets-global.website-files.com/5cf6b7202bf8199f50d43e6c/5e9dd8a680b972888929747b_The%20modern%20web%20design%20process%20-%20Webflow%20Ebook.pdf'
-}, {
-  id: '5d8fcb6d94dd1853060fb3b4',
-  name: 'The freelance web designers guide - Webflow Ebook.pdf',
-  url: 'https://assets-global.website-files.com/5cf6b7202bf8199f50d43e6c/5e9dd8e6abe52b33243a22cf_The%20freelance%20web%20designer%E2%80%99s%20guide%20-%20Webflow%20Ebook.pdf'
-}];
-exports.DOWNLOAD_FILES_FAKE_DATA = DOWNLOAD_FILES_FAKE_DATA;
-var DOWNLOAD_FILES_KEY_PATH = 'download-files';
-exports.DOWNLOAD_FILES_KEY_PATH = DOWNLOAD_FILES_KEY_PATH;
-var DOWNLOAD_FILES_EDITABLE_FIELDS = {
-  name: true,
-  url: true
-}; // Subscriptions ----------------------------------------------------
-
-exports.DOWNLOAD_FILES_EDITABLE_FIELDS = DOWNLOAD_FILES_EDITABLE_FIELDS;
-var SUBSCRIPTION_INTERVAL_ENUM = ['day', 'week', 'month', 'year'];
-exports.SUBSCRIPTION_INTERVAL_ENUM = SUBSCRIPTION_INTERVAL_ENUM;
-var SUBSCRIPTION_STATUS_ENUM = {
-  active: 'active',
-  pastdue: 'pastdue',
-  unpaid: 'unpaid',
-  canceled: 'canceled',
-  cancelPending: 'cancelPending',
-  incomplete: 'incomplete',
-  incompleteExpired: 'incompleteExpired',
-  trialing: 'trialing',
-  unknown: "unknown"
-};
-exports.SUBSCRIPTION_STATUS_ENUM = SUBSCRIPTION_STATUS_ENUM;
-var STRIPE_SUBSCRIPTION_STATUS_ENUM = {
-  active: 'active',
-  past_due: 'past_due',
-  unpaid: 'unpaid',
-  canceled: 'canceled',
-  incomplete: 'incomplete',
-  incomplete_expired: 'incomplete_expired',
-  trialing: 'trialing'
-};
-exports.STRIPE_SUBSCRIPTION_STATUS_ENUM = STRIPE_SUBSCRIPTION_STATUS_ENUM;
-var ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = [STRIPE_SUBSCRIPTION_STATUS_ENUM.active, STRIPE_SUBSCRIPTION_STATUS_ENUM.past_due, STRIPE_SUBSCRIPTION_STATUS_ENUM.trialing];
-exports.ACTIVE_STRIPE_SUBSCRIPTION_STATUSES = ACTIVE_STRIPE_SUBSCRIPTION_STATUSES;
-var ECOMMERCE_PROVIDER_NAME_ENUM = {
-  stripe: 'stripe'
-};
-exports.ECOMMERCE_PROVIDER_NAME_ENUM = ECOMMERCE_PROVIDER_NAME_ENUM;
-var BILLING_METHOD_TYPES = {
-  subscription: 'subscription',
-  oneTime: 'one-time'
-}; // Product Types
-
-exports.BILLING_METHOD_TYPES = BILLING_METHOD_TYPES;
-var DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS = [{
-  fieldSlug: 'name',
-  required: true
-}, {
-  fieldSlug: 'slug',
-  required: true
-}, {
-  fieldSlug: 'sku-properties',
-  required: false
-}, {
-  fieldSlug: 'category',
-  required: false
-}, {
-  fieldSlug: 'description',
-  required: false
-}, {
-  fieldSlug: 'tax-category',
-  required: false
-}, {
-  fieldSlug: 'default-sku',
-  required: false
-}, {
-  fieldSlug: 'ec-product-type',
-  required: false
-}, {
-  fieldSlug: 'options',
-  required: false
-}];
-var DEFAULT_PRODUCT_TYPE_SKU_FIELDS = [{
-  fieldSlug: 'sku-values',
-  required: false
-}, {
-  fieldSlug: 'product',
-  required: false
-}, {
-  fieldSlug: 'main-image',
-  required: false
-}, {
-  fieldSlug: 'more-images',
-  required: false
-}, {
-  fieldSlug: 'price',
-  required: true
-}, {
-  fieldSlug: 'compare-at-price',
-  required: false
-}, {
-  fieldSlug: 'ec-sku-subscription-plan',
-  required: false
-}, {
-  fieldSlug: 'sku',
-  required: false
-}, {
-  fieldSlug: 'ec-sku-billing-method',
-  required: false
-}, {
-  fieldSlug: 'track-inventory',
-  required: false
-}, {
-  fieldSlug: 'quantity',
-  required: false
-}];
-var PHYSICAL_PRODUCT_TYPE = {
-  name: 'Physical',
-  id: 'ff42fee0113744f693a764e3431a9cc2',
-  fields: {
-    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS, [{
-      fieldSlug: 'shippable',
-      required: false
-    }]),
-    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
-      fieldSlug: 'weight',
-      required: false
-    }, {
-      fieldSlug: 'width',
-      required: false
-    }, {
-      fieldSlug: 'height',
-      required: false
-    }, {
-      fieldSlug: 'length',
-      required: false
-    }])
-  }
-};
-exports.PHYSICAL_PRODUCT_TYPE = PHYSICAL_PRODUCT_TYPE;
-var DIGITAL_PRODUCT_TYPE = {
-  name: 'Digital',
-  id: 'f22027db68002190aef89a4a2b7ac8a1',
-  fields: {
-    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS),
-    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
-      fieldSlug: 'download-files',
-      required: true
-    }])
-  }
-};
-exports.DIGITAL_PRODUCT_TYPE = DIGITAL_PRODUCT_TYPE;
-var SERVICE_PRODUCT_TYPE = {
-  name: 'Service',
-  id: 'c599e43b1a1c34d5a323aedf75d3adf6',
-  fields: {
-    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS),
-    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS)
-  }
-};
-exports.SERVICE_PRODUCT_TYPE = SERVICE_PRODUCT_TYPE;
-var MEMBERSHIP_PRODUCT_TYPE = {
-  name: 'Membership',
-  id: 'e348fd487d0102946c9179d2a94bb613',
-  fields: {
-    product: [].concat(DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS, [{
-      fieldSlug: 'shippable',
-      required: false
-    }]),
-    sku: [].concat(DEFAULT_PRODUCT_TYPE_SKU_FIELDS, [{
-      fieldSlug: 'weight',
-      required: false
-    }, {
-      fieldSlug: 'width',
-      required: false
-    }, {
-      fieldSlug: 'height',
-      required: false
-    }, {
-      fieldSlug: 'length',
-      required: false
-    }, {
-      fieldSlug: 'download-files',
-      required: false
-    }, {
-      fieldSlug: 'include-downloads',
-      required: false
-    }])
-  }
-};
-exports.MEMBERSHIP_PRODUCT_TYPE = MEMBERSHIP_PRODUCT_TYPE;
-var ADVANCED_PRODUCT_TYPE = {
-  name: 'Advanced',
-  id: 'b6ccc1830db4b1babeb06a9ac5f6dd76'
-};
-exports.ADVANCED_PRODUCT_TYPE = ADVANCED_PRODUCT_TYPE;
-var TEMPLATE_PRODUCT_TYPES = [PHYSICAL_PRODUCT_TYPE, DIGITAL_PRODUCT_TYPE, SERVICE_PRODUCT_TYPE, MEMBERSHIP_PRODUCT_TYPE, ADVANCED_PRODUCT_TYPE]; // only used to get type ProductTypeId
-
-exports.TEMPLATE_PRODUCT_TYPES = TEMPLATE_PRODUCT_TYPES;
-var templateProductTypeIds = TEMPLATE_PRODUCT_TYPES.reduce(function (ids, t) {
-  ids[t.id] = '';
-  return ids;
-}, {});
-var PRODUCT_TYPE_HELP_TEXT = (_PRODUCT_TYPE_HELP_TE = {}, (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, PHYSICAL_PRODUCT_TYPE.id, 'Physical products are shipped to the customer (e.g., merchandise, apparel).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, DIGITAL_PRODUCT_TYPE.id, 'Digital products are immediately downloadable by the customer after checkout (e.g., audio files, ebooks).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, SERVICE_PRODUCT_TYPE.id, 'Service products do not require a shipping address during checkout (e.g., classes, consultations).'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, MEMBERSHIP_PRODUCT_TYPE.id, 'Membership products give users access to gated content through recurring or one-time payment (e.g., subscriptions, one-time membership fee). Membership products require a user login and can only be purchased once.'), (0, _defineProperty2["default"])(_PRODUCT_TYPE_HELP_TE, ADVANCED_PRODUCT_TYPE.id, 'Advanced products provide all available customizable options.'), _PRODUCT_TYPE_HELP_TE);
-exports.PRODUCT_TYPE_HELP_TEXT = PRODUCT_TYPE_HELP_TEXT;
-var DEFAULT_PRODUCT_TYPE_ID = PHYSICAL_PRODUCT_TYPE.id;
-exports.DEFAULT_PRODUCT_TYPE_ID = DEFAULT_PRODUCT_TYPE_ID;
-var DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = ['name', 'code', 'notes', 'type', 'percentOff', 'amountOff', 'validOn', 'expiresOn', 'enabled', // 'active' is being replaced with 'enabled'
-'orderMinimum', // archived is disabled until we have UI for it
-// 'archived',
-'totalUsage', 'maxAmountOff', // NOTE: for dot-notation fields to be properly expanded
-// during import, you need to add the camel-case flattened property to
-// the 'KEYS_TO_EXPAND' variable in `entrypoints/server/lib/ecommerce/csvImport/discountCsvImport.js`
-// Example: 'usage.limit.total' -> 'usageLimitTotal'
-'usage.limit.total', 'usage.limit.customer', 'appliesTo.scope', 'appliesTo.filter', 'appliesTo.applyOnce'];
-exports.DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS = DISCOUNTS_CSV_IMPORT_EXPORT_COLUMNS;
-var REQUIRED_DISCOUNT_IMPORT_FIELDS = ['name', 'code', 'type', ['percentOff', 'amountOff']];
-exports.REQUIRED_DISCOUNT_IMPORT_FIELDS = REQUIRED_DISCOUNT_IMPORT_FIELDS;
-var STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = 'Stripe disconnect attempted with non-canceled subscriptions';
-exports.STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE = STRIPE_DISCONNECT_SUBSCRIPTIONS_ERROR_MESSAGE;
-var ORDER_SORT_MODES = Object.freeze({
-  '-count': '-purchasedItemsCount -_id',
-  count: 'purchasedItemsCount _id',
-  '-name': '-customerInfo.fullName -_id',
-  name: 'customerInfo.fullName _id',
-  '-orderid': '-orderId',
-  orderid: 'orderId',
-  '-paid': '-customerPaid.unit -customerPaid.value -_id',
-  paid: 'customerPaid.unit customerPaid.value _id',
-  '-status': '-statusCode -_id',
-  status: 'statusCode _id',
-  '-time': '-acceptedOn -_id',
-  time: 'acceptedOn _id'
-});
-exports.ORDER_SORT_MODES = ORDER_SORT_MODES;
-var SUBSCRIPTION_SORT_MODES = Object.freeze({
-  '-lastBilled': '-lastInvoiced -_id',
-  lastBilled: 'lastInvoiced _id',
-  '-nextBilling': '-paidUntil -_id',
-  nextBilling: 'paidUntil _id',
-  '-orderid': '-orderId',
-  orderid: 'orderId',
-  '-purchased': '-subCreatedOn -_id',
-  purchased: 'subCreatedOn _id',
-  '-status': '-status -_id',
-  status: 'status _id'
-});
-exports.SUBSCRIPTION_SORT_MODES = SUBSCRIPTION_SORT_MODES;
 
 /***/ }),
 /* 26 */
@@ -1582,8 +1615,8 @@ module.exports = function (argument) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68),
-    getRawTag = __webpack_require__(416),
-    objectToString = __webpack_require__(417);
+    getRawTag = __webpack_require__(415),
+    objectToString = __webpack_require__(416);
 
 /** `Object#toString` result references. */
 var nullTag = '[object Null]',
@@ -1750,7 +1783,7 @@ var _apolloClient = _interopRequireDefault(__webpack_require__(132));
 
 var _graphqlTag = _interopRequireDefault(__webpack_require__(60));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 /* globals document, window, CustomEvent */
 
 
@@ -2100,11 +2133,11 @@ exports.trackOrder = trackOrder;
 /* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseMatches = __webpack_require__(403),
-    baseMatchesProperty = __webpack_require__(452),
+var baseMatches = __webpack_require__(402),
+    baseMatchesProperty = __webpack_require__(451),
     identity = __webpack_require__(92),
     isArray = __webpack_require__(10),
-    property = __webpack_require__(459);
+    property = __webpack_require__(458);
 
 /**
  * The base implementation of `_.iteratee`.
@@ -2181,7 +2214,7 @@ module.exports = _classCallCheck;
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var NATIVE_WEAK_MAP = __webpack_require__(381);
+var NATIVE_WEAK_MAP = __webpack_require__(380);
 var global = __webpack_require__(1);
 var uncurryThis = __webpack_require__(3);
 var isObject = __webpack_require__(13);
@@ -4287,7 +4320,7 @@ __webpack_require__.r(__webpack_exports__);
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(739)("./" + name);
+                __webpack_require__(740)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -7024,7 +7057,7 @@ module.exports = version;
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 
 module.exports = getBuiltIn('navigator', 'userAgent') || '';
 
@@ -7047,8 +7080,8 @@ module.exports = function (V, P) {
 /* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsNative = __webpack_require__(415),
-    getValue = __webpack_require__(420);
+var baseIsNative = __webpack_require__(414),
+    getValue = __webpack_require__(419);
 
 /**
  * Gets the native function at `key` of `object`.
@@ -7113,10 +7146,10 @@ module.exports = keys;
 /* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var DataView = __webpack_require__(448),
+var DataView = __webpack_require__(447),
     Map = __webpack_require__(160),
-    Promise = __webpack_require__(449),
-    Set = __webpack_require__(450),
+    Promise = __webpack_require__(448),
+    Set = __webpack_require__(449),
     WeakMap = __webpack_require__(255),
     baseGetTag = __webpack_require__(32),
     toSource = __webpack_require__(245);
@@ -7177,7 +7210,7 @@ module.exports = getTag;
 /* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToString = __webpack_require__(455);
+var baseToString = __webpack_require__(454);
 
 /**
  * Converts `value` to a string. An empty string is returned for `null`
@@ -7967,7 +8000,7 @@ module.exports = _taggedTemplateLiteral;
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parser = __webpack_require__(715);
+var parser = __webpack_require__(716);
 
 var parse = parser.parse;
 
@@ -8260,7 +8293,7 @@ var IX2EasingUtils = _interopRequireWildcard(__webpack_require__(263));
 
 exports.IX2EasingUtils = IX2EasingUtils;
 
-var IX2ElementsReducer = _interopRequireWildcard(__webpack_require__(467));
+var IX2ElementsReducer = _interopRequireWildcard(__webpack_require__(466));
 
 exports.IX2ElementsReducer = IX2ElementsReducer;
 
@@ -8268,7 +8301,7 @@ var IX2VanillaPlugins = _interopRequireWildcard(__webpack_require__(265));
 
 exports.IX2VanillaPlugins = IX2VanillaPlugins;
 
-var IX2VanillaUtils = _interopRequireWildcard(__webpack_require__(469));
+var IX2VanillaUtils = _interopRequireWildcard(__webpack_require__(468));
 
 exports.IX2VanillaUtils = IX2VanillaUtils;
 
@@ -8332,7 +8365,7 @@ module.exports = Symbol;
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(27),
-    stubFalse = __webpack_require__(445);
+    stubFalse = __webpack_require__(444);
 
 /** Detect free variable `exports`. */
 var freeExports =  true && exports && !exports.nodeType && exports;
@@ -8415,11 +8448,11 @@ module.exports = get;
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(465);
+var arrayWithoutHoles = __webpack_require__(464);
 
 var iterableToArray = __webpack_require__(264);
 
-var nonIterableSpread = __webpack_require__(466);
+var nonIterableSpread = __webpack_require__(465);
 
 function _toConsumableArray(arr) {
   return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
@@ -8448,7 +8481,7 @@ var uncurryThis = __webpack_require__(3);
 var fails = __webpack_require__(5);
 var isCallable = __webpack_require__(6);
 var classof = __webpack_require__(128);
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var inspectSource = __webpack_require__(111);
 
 var noop = function () { /* empty */ };
@@ -8764,7 +8797,7 @@ exports["default"] = _default;
 
 var arrayWithHoles = __webpack_require__(348);
 
-var iterableToArrayLimit = __webpack_require__(736);
+var iterableToArrayLimit = __webpack_require__(737);
 
 var nonIterableRest = __webpack_require__(349);
 
@@ -8779,7 +8812,7 @@ module.exports = _slicedToArray;
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(14);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var propertyIsEnumerableModule = __webpack_require__(149);
 var createPropertyDescriptor = __webpack_require__(79);
 var toIndexedObject = __webpack_require__(26);
@@ -9619,7 +9652,7 @@ module.exports = eq;
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsArguments = __webpack_require__(444),
+var baseIsArguments = __webpack_require__(443),
     isObjectLike = __webpack_require__(19);
 
 /** Used for built-in method references. */
@@ -9689,7 +9722,7 @@ module.exports = function(module) {
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsTypedArray = __webpack_require__(446),
+var baseIsTypedArray = __webpack_require__(445),
     baseUnary = __webpack_require__(120),
     nodeUtil = __webpack_require__(121);
 
@@ -9808,7 +9841,7 @@ module.exports = baseAssignValue;
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeKeys = __webpack_require__(253),
-    baseKeysIn = __webpack_require__(488),
+    baseKeysIn = __webpack_require__(487),
     isArrayLike = __webpack_require__(42);
 
 /**
@@ -10302,7 +10335,7 @@ var _StyleMapObserver = _interopRequireDefault(__webpack_require__(332));
 
 var _debug = _interopRequireDefault(__webpack_require__(76));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 /* globals window */
 
 
@@ -10531,7 +10564,7 @@ module.exports = copyObject;
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var isCallable = __webpack_require__(6);
 var isPrototypeOf = __webpack_require__(63);
 var USE_SYMBOL_AS_UID = __webpack_require__(225);
@@ -10674,11 +10707,11 @@ module.exports = isForced;
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(115),
-    stackClear = __webpack_require__(410),
-    stackDelete = __webpack_require__(411),
-    stackGet = __webpack_require__(412),
-    stackHas = __webpack_require__(413),
-    stackSet = __webpack_require__(414);
+    stackClear = __webpack_require__(409),
+    stackDelete = __webpack_require__(410),
+    stackGet = __webpack_require__(411),
+    stackHas = __webpack_require__(412),
+    stackSet = __webpack_require__(413);
 
 /**
  * Creates a stack cache object to store key-value pairs.
@@ -10706,11 +10739,11 @@ module.exports = Stack;
 /* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var listCacheClear = __webpack_require__(405),
-    listCacheDelete = __webpack_require__(406),
-    listCacheGet = __webpack_require__(407),
-    listCacheHas = __webpack_require__(408),
-    listCacheSet = __webpack_require__(409);
+var listCacheClear = __webpack_require__(404),
+    listCacheDelete = __webpack_require__(405),
+    listCacheGet = __webpack_require__(406),
+    listCacheHas = __webpack_require__(407),
+    listCacheSet = __webpack_require__(408);
 
 /**
  * Creates an list cache object.
@@ -10783,7 +10816,7 @@ module.exports = nativeCreate;
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isKeyable = __webpack_require__(429);
+var isKeyable = __webpack_require__(428);
 
 /**
  * Gets the data for `map`.
@@ -10921,7 +10954,7 @@ module.exports = isPrototype;
 
 var isArray = __webpack_require__(10),
     isKey = __webpack_require__(167),
-    stringToPath = __webpack_require__(453),
+    stringToPath = __webpack_require__(452),
     toString = __webpack_require__(54);
 
 /**
@@ -11103,7 +11136,7 @@ module.exports = typeof Reflect == 'object' && Reflect.apply || (bind ? call.bin
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var aCallable = __webpack_require__(29);
 var anObject = __webpack_require__(17);
 var tryToString = __webpack_require__(107);
@@ -13118,15 +13151,15 @@ exports.renderTree = exports.applySkuBoundConditionalVisibility = void 0;
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _Transformers = __webpack_require__(777);
+var _Transformers = __webpack_require__(778);
 
-var _escape = _interopRequireDefault(__webpack_require__(361));
+var _escape = _interopRequireDefault(__webpack_require__(360));
 
-var _cloneDeep = _interopRequireDefault(__webpack_require__(781));
+var _cloneDeep = _interopRequireDefault(__webpack_require__(782));
 
-var _transform = _interopRequireDefault(__webpack_require__(796));
+var _transform = _interopRequireDefault(__webpack_require__(797));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _constants2 = __webpack_require__(145);
 
@@ -13134,7 +13167,7 @@ var _RenderingUtils = __webpack_require__(347);
 
 var _commerceUtils = __webpack_require__(35);
 
-var _DynamoFormattingUtils = __webpack_require__(362);
+var _DynamoFormattingUtils = __webpack_require__(361);
 
 var _Commerce = __webpack_require__(346);
 /* globals window, document, HTMLElement */
@@ -13684,13 +13717,13 @@ var _StyleMapObserver = _interopRequireDefault(__webpack_require__(332));
 
 var _stripeStore = __webpack_require__(104);
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _rendering = __webpack_require__(146);
 
 var _webPaymentsEvents = __webpack_require__(220);
 
-var _checkoutMutations = __webpack_require__(363);
+var _checkoutMutations = __webpack_require__(362);
 /* globals window, document, Event, HTMLInputElement */
 
 
@@ -14198,7 +14231,7 @@ exports.applyDiscount = applyDiscount;
 // eslint-disable-next-line strict
 
 
-var IXEvents = __webpack_require__(374);
+var IXEvents = __webpack_require__(373);
 
 function dispatchCustomEvent(element, eventName) {
   var event = document.createEvent('CustomEvent');
@@ -14768,7 +14801,7 @@ exports.TRANSFORM_STYLE_PREFIXED = TRANSFORM_STYLE_PREFIXED;
 /***/ (function(module, exports, __webpack_require__) {
 
 var createFind = __webpack_require__(243),
-    findIndex = __webpack_require__(461);
+    findIndex = __webpack_require__(460);
 
 /**
  * Iterates over elements of `collection`, returning the first element
@@ -14828,11 +14861,11 @@ module.exports = Map;
 /* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var mapCacheClear = __webpack_require__(421),
-    mapCacheDelete = __webpack_require__(428),
-    mapCacheGet = __webpack_require__(430),
-    mapCacheHas = __webpack_require__(431),
-    mapCacheSet = __webpack_require__(432);
+var mapCacheClear = __webpack_require__(420),
+    mapCacheDelete = __webpack_require__(427),
+    mapCacheGet = __webpack_require__(429),
+    mapCacheHas = __webpack_require__(430),
+    mapCacheSet = __webpack_require__(431);
 
 /**
  * Creates a map cache object to store key-value pairs.
@@ -14892,7 +14925,7 @@ module.exports = arrayPush;
 /* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayFilter = __webpack_require__(442),
+var arrayFilter = __webpack_require__(441),
     stubArray = __webpack_require__(252);
 
 /** Used for built-in method references. */
@@ -14970,7 +15003,7 @@ module.exports = isLength;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isPrototype = __webpack_require__(122),
-    nativeKeys = __webpack_require__(447);
+    nativeKeys = __webpack_require__(446);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -15097,7 +15130,7 @@ module.exports = arrayMap;
 /* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var toFinite = __webpack_require__(462);
+var toFinite = __webpack_require__(461);
 
 /**
  * Converts `value` to an integer.
@@ -15139,7 +15172,7 @@ module.exports = toInteger;
 /* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTrim = __webpack_require__(463),
+var baseTrim = __webpack_require__(462),
     isObject = __webpack_require__(18),
     isSymbol = __webpack_require__(124);
 
@@ -15210,7 +15243,7 @@ module.exports = toNumber;
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseForOwn = __webpack_require__(125),
-    createBaseEach = __webpack_require__(472);
+    createBaseEach = __webpack_require__(471);
 
 /**
  * The base implementation of `_.forEach` without support for iteratee shorthands.
@@ -15297,7 +15330,7 @@ module.exports = assignValue;
 
 var arrayEach = __webpack_require__(175),
     baseEach = __webpack_require__(171),
-    castFunction = __webpack_require__(492),
+    castFunction = __webpack_require__(491),
     isArray = __webpack_require__(10);
 
 /**
@@ -15382,7 +15415,7 @@ exports.mediaQueriesDefined = exports.viewportWidthChanged = exports.actionListP
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _shared = __webpack_require__(66);
 
@@ -15776,7 +15809,7 @@ module.exports = String(test) === '[object z]';
 
 var TO_STRING_TAG_SUPPORT = __webpack_require__(181);
 var redefine = __webpack_require__(30);
-var toString = __webpack_require__(523);
+var toString = __webpack_require__(522);
 
 // `Object.prototype.toString` method
 // https://tc39.es/ecma262/#sec-object.prototype.tostring
@@ -15792,7 +15825,7 @@ if (!TO_STRING_TAG_SUPPORT) {
 "use strict";
 
 var $ = __webpack_require__(2);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var IS_PURE = __webpack_require__(64);
 var FunctionName = __webpack_require__(227);
 var isCallable = __webpack_require__(6);
@@ -15900,7 +15933,7 @@ var hasOwn = __webpack_require__(15);
 var isCallable = __webpack_require__(6);
 var toObject = __webpack_require__(9);
 var sharedKey = __webpack_require__(112);
-var CORRECT_PROTOTYPE_GETTER = __webpack_require__(543);
+var CORRECT_PROTOTYPE_GETTER = __webpack_require__(542);
 
 var IE_PROTO = sharedKey('IE_PROTO');
 var Object = global.Object;
@@ -15925,7 +15958,7 @@ module.exports = CORRECT_PROTOTYPE_GETTER ? Object.getPrototypeOf : function (O)
 /* eslint-disable no-proto -- safe */
 var uncurryThis = __webpack_require__(3);
 var anObject = __webpack_require__(17);
-var aPossiblePrototype = __webpack_require__(544);
+var aPossiblePrototype = __webpack_require__(543);
 
 // `Object.setPrototypeOf` method
 // https://tc39.es/ecma262/#sec-object.setprototypeof
@@ -16020,7 +16053,7 @@ module.exports = !STRICT_METHOD ? function forEach(callbackfn /* , thisArg */) {
 
 "use strict";
 
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var definePropertyModule = __webpack_require__(16);
 var wellKnownSymbol = __webpack_require__(4);
 var DESCRIPTORS = __webpack_require__(14);
@@ -16046,7 +16079,7 @@ module.exports = function (CONSTRUCTOR_NAME) {
 
 var global = __webpack_require__(1);
 var bind = __webpack_require__(34);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var anObject = __webpack_require__(17);
 var tryToString = __webpack_require__(107);
 var isArrayIteratorMethod = __webpack_require__(291);
@@ -16434,7 +16467,7 @@ var Observable = zen_observable__WEBPACK_IMPORTED_MODULE_0___default.a;
 /* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(660).Observable;
+module.exports = __webpack_require__(659).Observable;
 
 
 /***/ }),
@@ -16585,9 +16618,9 @@ var OperationBatcher = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "defaultDataIdFromObject", function() { return defaultDataIdFromObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "InMemoryCache", function() { return InMemoryCache; });
-/* harmony import */ var _fixPolyfills__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(672);
+/* harmony import */ var _fixPolyfills__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(671);
 /* harmony import */ var _fixPolyfills__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_fixPolyfills__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var apollo_cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(673);
+/* harmony import */ var apollo_cache__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(672);
 /* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(102);
 /* harmony import */ var _fragmentMatcher__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(205);
 /* harmony import */ var _readFromStore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(206);
@@ -17185,7 +17218,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(102);
 /* harmony import */ var _optimism__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(207);
 /* harmony import */ var _depTrackingCache__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(208);
-/* harmony import */ var _queryKeyMaker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(679);
+/* harmony import */ var _queryKeyMaker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(678);
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -17541,7 +17574,7 @@ function shallowCopyForMerge(value, pastCopies) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "wrap", function() { return wrap; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CacheKeyNode", function() { return CacheKeyNode; });
-var wrap = __webpack_require__(675).wrap;
+var wrap = __webpack_require__(674).wrap;
 
 var CacheKeyNode = (function () {
     function CacheKeyNode() {
@@ -18156,7 +18189,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
 /* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(142);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(682);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(681);
 /* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(136);
 /* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wry_equality__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(143);
@@ -19157,7 +19190,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
 /* harmony import */ var graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(graphql_language_visitor__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var ts_invariant__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(142);
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(686);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(685);
 /* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(136);
 /* harmony import */ var fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(fast_json_stable_stringify__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _wry_equality__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(143);
@@ -20264,8 +20297,8 @@ GraphQLError.prototype = Object.create(Error.prototype, {
 /* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var moment = module.exports = __webpack_require__(738);
-moment.tz.load(__webpack_require__(740));
+var moment = module.exports = __webpack_require__(739);
+moment.tz.load(__webpack_require__(741));
 
 
 /***/ }),
@@ -20326,9 +20359,9 @@ var _eventHandlerProxyWithApolloClient = _interopRequireDefault(__webpack_requir
 
 var _checkoutUtils = __webpack_require__(147);
 
-var _cartUtils = __webpack_require__(364);
+var _cartUtils = __webpack_require__(363);
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _debug = _interopRequireDefault(__webpack_require__(76));
 /* globals window */
@@ -21809,11 +21842,11 @@ addToUnscopables('includes');
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var isObject = __webpack_require__(13);
 var isSymbol = __webpack_require__(106);
 var getMethod = __webpack_require__(50);
-var ordinaryToPrimitive = __webpack_require__(380);
+var ordinaryToPrimitive = __webpack_require__(379);
 var wellKnownSymbol = __webpack_require__(4);
 
 var TypeError = global.TypeError;
@@ -21893,7 +21926,7 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 var hasOwn = __webpack_require__(15);
-var ownKeys = __webpack_require__(382);
+var ownKeys = __webpack_require__(381);
 var getOwnPropertyDescriptorModule = __webpack_require__(78);
 var definePropertyModule = __webpack_require__(16);
 
@@ -21971,7 +22004,7 @@ module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperti
 /* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 
 module.exports = getBuiltIn('document', 'documentElement');
 
@@ -22033,9 +22066,9 @@ if (false) {}
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _baseGetTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(384);
-/* harmony import */ var _getPrototype_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(389);
-/* harmony import */ var _isObjectLike_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(391);
+/* harmony import */ var _baseGetTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(383);
+/* harmony import */ var _getPrototype_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(388);
+/* harmony import */ var _isObjectLike_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(390);
 
 
 
@@ -22106,7 +22139,7 @@ function isPlainObject(value) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(385);
+/* harmony import */ var _root_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(384);
 
 
 /** Built-in value references. */
@@ -22121,7 +22154,7 @@ var Symbol = _root_js__WEBPACK_IMPORTED_MODULE_0__["default"].Symbol;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(393);
+/* WEBPACK VAR INJECTION */(function(global, module) {/* harmony import */ var _ponyfill_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(392);
 /* global window */
 
 
@@ -22140,7 +22173,7 @@ if (typeof self !== 'undefined') {
 var result = Object(_ponyfill_js__WEBPACK_IMPORTED_MODULE_0__["default"])(root);
 /* harmony default export */ __webpack_exports__["default"] = (result);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47), __webpack_require__(392)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47), __webpack_require__(391)(module)))
 
 /***/ }),
 /* 238 */
@@ -22530,7 +22563,7 @@ module.exports = toSource;
 /* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsEqualDeep = __webpack_require__(433),
+var baseIsEqualDeep = __webpack_require__(432),
     isObjectLike = __webpack_require__(19);
 
 /**
@@ -22564,9 +22597,9 @@ module.exports = baseIsEqual;
 /* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var SetCache = __webpack_require__(434),
-    arraySome = __webpack_require__(437),
-    cacheHas = __webpack_require__(438);
+var SetCache = __webpack_require__(433),
+    arraySome = __webpack_require__(436),
+    cacheHas = __webpack_require__(437);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -22767,7 +22800,7 @@ module.exports = stubArray;
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseTimes = __webpack_require__(443),
+var baseTimes = __webpack_require__(442),
     isArguments = __webpack_require__(88),
     isArray = __webpack_require__(10),
     isBuffer = __webpack_require__(69),
@@ -23555,9 +23588,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.isPluginType = isPluginType;
 exports.clearPlugin = exports.renderPlugin = exports.createPluginInstance = exports.getPluginDestination = exports.getPluginDuration = exports.getPluginOrigin = exports.getPluginConfig = void 0;
 
-var _IX2LottieUtils = __webpack_require__(468);
+var _IX2LottieUtils = __webpack_require__(467);
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _IX2BrowserSupport = __webpack_require__(158); // eslint-disable-next-line webflow/module-top-level-imports, webflow/packages-must-be-defined
 
@@ -23683,7 +23716,7 @@ module.exports = arrayReduce;
 /* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createBaseFor = __webpack_require__(471);
+var createBaseFor = __webpack_require__(470);
 
 /**
  * The base implementation of `baseForOwn` which iterates over `object`
@@ -23734,27 +23767,27 @@ var _find = _interopRequireDefault(__webpack_require__(159));
 
 var _get = _interopRequireDefault(__webpack_require__(70));
 
-var _size = _interopRequireDefault(__webpack_require__(479));
+var _size = _interopRequireDefault(__webpack_require__(478));
 
-var _omitBy = _interopRequireDefault(__webpack_require__(483));
+var _omitBy = _interopRequireDefault(__webpack_require__(482));
 
-var _isEmpty = _interopRequireDefault(__webpack_require__(490));
+var _isEmpty = _interopRequireDefault(__webpack_require__(489));
 
-var _mapValues = _interopRequireDefault(__webpack_require__(491));
+var _mapValues = _interopRequireDefault(__webpack_require__(490));
 
 var _forEach = _interopRequireDefault(__webpack_require__(174));
 
-var _throttle = _interopRequireDefault(__webpack_require__(493));
+var _throttle = _interopRequireDefault(__webpack_require__(492));
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _shared = __webpack_require__(66);
 
 var _IX2EngineActions = __webpack_require__(176);
 
-var elementApi = _interopRequireWildcard(__webpack_require__(495));
+var elementApi = _interopRequireWildcard(__webpack_require__(494));
 
-var _IX2VanillaEvents = _interopRequireDefault(__webpack_require__(496));
+var _IX2VanillaEvents = _interopRequireDefault(__webpack_require__(495));
 /* eslint-env browser */
 
 
@@ -25003,7 +25036,7 @@ module.exports = getSymbolsIn;
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(18),
-    now = __webpack_require__(494),
+    now = __webpack_require__(493),
     toNumber = __webpack_require__(170);
 
 /** Error message constants. */
@@ -25199,7 +25232,7 @@ module.exports = debounce;
 /* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var apply = __webpack_require__(503);
+var apply = __webpack_require__(502);
 
 /* Built-in method references for those with the same name as other `lodash` methods. */
 var nativeMax = Math.max;
@@ -25241,8 +25274,8 @@ module.exports = overRest;
 /* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSetToString = __webpack_require__(504),
-    shortOut = __webpack_require__(505);
+var baseSetToString = __webpack_require__(503),
+    shortOut = __webpack_require__(504);
 
 /**
  * Sets the `toString` method of `func` to return `string`.
@@ -25293,8 +25326,8 @@ module.exports = constant;
 /* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var metaMap = __webpack_require__(506),
-    noop = __webpack_require__(507);
+var metaMap = __webpack_require__(505),
+    noop = __webpack_require__(506);
 
 /**
  * Gets metadata for `func`.
@@ -25314,7 +25347,7 @@ module.exports = getData;
 /* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var realNames = __webpack_require__(508);
+var realNames = __webpack_require__(507);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -25680,7 +25713,7 @@ module.exports = {
 /* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var anObject = __webpack_require__(17);
 var getMethod = __webpack_require__(50);
 
@@ -25853,7 +25886,7 @@ var defineProperty = __webpack_require__(16).f;
 var getOwnPropertyNamesModule = __webpack_require__(84);
 var getOwnPropertyNamesExternalModule = __webpack_require__(283);
 var uid = __webpack_require__(109);
-var FREEZING = __webpack_require__(594);
+var FREEZING = __webpack_require__(593);
 
 var REQUIRED = false;
 var METADATA = uid('meta');
@@ -26129,8 +26162,8 @@ var create = __webpack_require__(41);
 var getMethod = __webpack_require__(50);
 var redefineAll = __webpack_require__(191);
 var InternalStateModule = __webpack_require__(40);
-var getBuiltIn = __webpack_require__(23);
-var AsyncIteratorPrototype = __webpack_require__(610);
+var getBuiltIn = __webpack_require__(24);
+var AsyncIteratorPrototype = __webpack_require__(609);
 
 var Promise = getBuiltIn('Promise');
 
@@ -26998,9 +27031,9 @@ function execute(link, operation) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
 /* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(56);
-/* harmony import */ var _core_QueryManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(661);
-/* harmony import */ var _data_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(666);
-/* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(667);
+/* harmony import */ var _core_QueryManager__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(660);
+/* harmony import */ var _data_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(665);
+/* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(666);
 /* harmony import */ var _version__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_version__WEBPACK_IMPORTED_MODULE_4__);
 var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -27465,8 +27498,8 @@ var DedupLink = /** @class */ (function (_super) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BatchHttpLink", function() { return BatchHttpLink; });
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
-/* harmony import */ var apollo_link_http_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(669);
-/* harmony import */ var apollo_link_batch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(670);
+/* harmony import */ var apollo_link_http_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(668);
+/* harmony import */ var apollo_link_batch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(669);
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -27701,7 +27734,7 @@ var BatchLink = /** @class */ (function (_super) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApolloCache", function() { return ApolloCache; });
 /* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(102);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(674);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(673);
 
 
 var ApolloCache = (function () {
@@ -28330,7 +28363,7 @@ exports.createRetryLink = exports.waitForInFlightQueries = void 0;
 
 var _apolloClient = _interopRequireDefault(__webpack_require__(132));
 
-var _apolloLinkRetry = __webpack_require__(684);
+var _apolloLinkRetry = __webpack_require__(683);
 
 var waitForInFlightQueries = function waitForInFlightQueries(apolloClient) {
   if (!apolloClient || !apolloClient.queryManager) {
@@ -28404,11 +28437,11 @@ var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(20));
 
-var _merge = _interopRequireDefault(__webpack_require__(687));
+var _merge = _interopRequireDefault(__webpack_require__(686));
 
-var _tinycolor = _interopRequireDefault(__webpack_require__(694));
+var _tinycolor = _interopRequireDefault(__webpack_require__(693));
 
-var _breakpointsConfig = __webpack_require__(695);
+var _breakpointsConfig = __webpack_require__(694);
 
 var _breakpointIds = __webpack_require__(340);
 
@@ -28585,7 +28618,7 @@ exports["default"] = StyleMapObserver;
 var Stack = __webpack_require__(114),
     assignMergeValue = __webpack_require__(334),
     baseFor = __webpack_require__(268),
-    baseMergeDeep = __webpack_require__(688),
+    baseMergeDeep = __webpack_require__(687),
     isObject = __webpack_require__(18),
     keysIn = __webpack_require__(94),
     safeGet = __webpack_require__(338);
@@ -28771,8 +28804,8 @@ module.exports = safeGet;
 /* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseRest = __webpack_require__(692),
-    isIterateeCall = __webpack_require__(693);
+var baseRest = __webpack_require__(691),
+    isIterateeCall = __webpack_require__(692);
 
 /**
  * Creates a function like `_.assign`.
@@ -28885,7 +28918,7 @@ Object.defineProperty(exports, 'GraphQLError', {
   }
 });
 
-var _syntaxError = __webpack_require__(717);
+var _syntaxError = __webpack_require__(718);
 
 Object.defineProperty(exports, 'syntaxError', {
   enumerable: true,
@@ -28894,7 +28927,7 @@ Object.defineProperty(exports, 'syntaxError', {
   }
 });
 
-var _locatedError = __webpack_require__(718);
+var _locatedError = __webpack_require__(719);
 
 Object.defineProperty(exports, 'locatedError', {
   enumerable: true,
@@ -28912,7 +28945,7 @@ Object.defineProperty(exports, 'printError', {
   }
 });
 
-var _formatError = __webpack_require__(719);
+var _formatError = __webpack_require__(720);
 
 Object.defineProperty(exports, 'formatError', {
   enumerable: true,
@@ -29058,13 +29091,13 @@ Object.defineProperty(exports, "__esModule", {
 exports.zipCat = zipCat;
 exports.nth = exports.getDeepestValues = exports.entries = exports.values = exports.mapValues = exports.traverseObjectResults = exports.traverseResults = exports.traverseOptions = exports.optionToArray = exports.extractFunctionFromResult = exports.extractFunctionFromOption = exports.extractArray = exports.extractBool = exports.tap = exports.errToOption = exports.okToOption = exports.noneToErr = exports.constantNone = exports.set = exports.over = exports.view = exports.lensProp = exports.lens = exports.split = exports.replace = exports.match = exports.test = exports.flat = exports.flatMap = exports.length = exports.tail = exports.last = exports.head = exports.parseInt = exports.parseIntWithRadix = exports.max = exports.inc = exports.add = exports.constantIdentity = exports.append = exports.concatTo = exports.concat = exports.objOf = exports.reduceObject = exports.reduce = exports.filter = exports.mapArray = exports.map = exports.zip = exports.zipWith = exports.pipe = exports.find = exports.lookupWithDefault = exports.lookup = exports.pickBy = exports.pick = exports.omit = exports.unionTo = exports.union = exports.unionWith = exports.adjust = exports.dissoc = exports.assoc = exports.prop = exports.has = exports.when = exports.both = exports.either = exports.notNil = exports.isNil = exports.notEqual = exports.equals = exports.resultToBool = exports.optionToBool = exports.allPass = exports.anyPass = exports.complement = exports.not = exports.constantTrue = exports.constantFalse = exports.fix = exports.substitution = exports.thrush = exports.flip = exports.blackbird = exports.compose = exports.constant = exports.identity = exports.emptyObject = exports.emptyArray = exports.objectKeys = void 0;
 
-var _Const = __webpack_require__(725);
+var _Const = __webpack_require__(726);
 
-var _Identity = __webpack_require__(726);
+var _Identity = __webpack_require__(727);
 
-var _option = __webpack_require__(727);
+var _option = __webpack_require__(728);
 
-var _result = __webpack_require__(728);
+var _result = __webpack_require__(729);
 
 var hasOwn = Object.prototype.hasOwnProperty;
 var objectKeys = Object.keys;
@@ -30078,7 +30111,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _RenderingUtils = __webpack_require__(733);
+var _RenderingUtils = __webpack_require__(734);
 
 Object.keys(_RenderingUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -30532,7 +30565,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ParamFieldPathUtils = __webpack_require__(741);
+var _ParamFieldPathUtils = __webpack_require__(742);
 
 Object.keys(_ParamFieldPathUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -30550,9172 +30583,12 @@ Object.keys(_ParamFieldPathUtils).forEach(function (key) {
 
 "use strict";
 
-/**
- * Contains static config shared by server and designer
- */
-
-/* global window */
-
-(function () {
-  'use strict';
-
-  var api = {};
-  var index;
-  var innerIndex; // Stripe supported countries extracted from:
-  // https://stripe.com/global
-
-  var STRIPE_SUPPORTED_COUNTRIES = [{
-    name: 'Australia',
-    code: 'AU'
-  }, {
-    name: 'Austria',
-    code: 'AT'
-  }, {
-    name: 'Belgium',
-    code: 'BE'
-  }, {
-    name: 'Bulgaria',
-    code: 'BG'
-  }, {
-    name: 'Brazil',
-    code: 'BR'
-  }, {
-    name: 'Canada',
-    code: 'CA'
-  }, {
-    name: 'Cyprus',
-    code: 'CY'
-  }, {
-    name: 'Czech Republic',
-    code: 'CZ'
-  }, {
-    name: 'Denmark',
-    code: 'DK'
-  }, {
-    name: 'Estonia',
-    code: 'EE'
-  }, {
-    name: 'Finland',
-    code: 'FI'
-  }, {
-    name: 'France',
-    code: 'FR'
-  }, {
-    name: 'Germany',
-    code: 'DE'
-  }, {
-    name: 'Gibraltar',
-    code: 'GI'
-  }, {
-    name: 'Greece',
-    code: 'GR'
-  }, {
-    name: 'Hong Kong',
-    code: 'HK'
-  }, {
-    name: 'Hungary',
-    code: 'HU'
-  }, {
-    name: 'India',
-    code: 'IN'
-  }, {
-    name: 'Ireland',
-    code: 'IE'
-  }, {
-    name: 'Italy',
-    code: 'IT'
-  }, {
-    name: 'Japan',
-    code: 'JP'
-  }, {
-    name: 'Latvia',
-    code: 'LV'
-  }, {
-    name: 'Liechtenstein',
-    code: 'LI'
-  }, {
-    name: 'Lithuania',
-    code: 'LT'
-  }, {
-    name: 'Luxembourg',
-    code: 'LU'
-  }, {
-    name: 'Malaysia',
-    code: 'MY'
-  }, {
-    name: 'Malta',
-    code: 'MT'
-  }, {
-    name: 'Mexico',
-    code: 'MX'
-  }, {
-    name: 'Netherlands',
-    code: 'NL'
-  }, {
-    name: 'New Zealand',
-    code: 'NZ'
-  }, {
-    name: 'Norway',
-    code: 'NO'
-  }, {
-    name: 'Philippines',
-    code: 'PH'
-  }, {
-    name: 'Poland',
-    code: 'PL'
-  }, {
-    name: 'Portugal',
-    code: 'PT'
-  }, {
-    name: 'Romania',
-    code: 'RO'
-  }, {
-    name: 'Singapore',
-    code: 'SG'
-  }, {
-    name: 'Slovakia',
-    code: 'SK'
-  }, {
-    name: 'Slovenia',
-    code: 'SI'
-  }, {
-    name: 'Spain',
-    code: 'ES'
-  }, {
-    name: 'Sweden',
-    code: 'SE'
-  }, {
-    name: 'Switzerland',
-    code: 'CH'
-  }, {
-    name: 'United Arab Emirates',
-    code: 'AE'
-  }, {
-    name: 'United Kingdom',
-    code: 'GB'
-  }, {
-    name: 'United States',
-    code: 'US'
-  }]; // PayPal supported countries extracted from:
-  // curl https://developer.paypal.com/docs/api/reference/country-codes/
-
-  var PAYPAL_SUPPORTED_COUNTRIES = [{
-    name: 'Albania',
-    code: 'AL',
-    postalCodeRequired: false
-  }, {
-    name: 'Algeria',
-    code: 'DZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Andorra',
-    code: 'AD',
-    postalCodeRequired: false
-  }, {
-    name: 'Angola',
-    code: 'AO',
-    postalCodeRequired: false
-  }, {
-    name: 'Anguilla',
-    code: 'AI',
-    postalCodeRequired: false
-  }, {
-    name: 'Antigua and Barbuda',
-    code: 'AG',
-    postalCodeRequired: false
-  }, {
-    name: 'Argentina',
-    code: 'AR',
-    postalCodeRequired: true
-  }, {
-    name: 'Armenia',
-    code: 'AM',
-    postalCodeRequired: false
-  }, {
-    name: 'Aruba',
-    code: 'AW',
-    postalCodeRequired: false
-  }, {
-    name: 'Australia',
-    code: 'AU',
-    postalCodeRequired: true
-  }, {
-    name: 'Austria',
-    code: 'AT',
-    postalCodeRequired: true
-  }, {
-    name: 'Azerbaijan',
-    code: 'AZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Bahamas',
-    code: 'BS',
-    postalCodeRequired: false
-  }, {
-    name: 'Bahrain',
-    code: 'BH',
-    postalCodeRequired: false
-  }, {
-    name: 'Barbados',
-    code: 'BB',
-    postalCodeRequired: false
-  }, {
-    name: 'Belarus',
-    code: 'BY',
-    postalCodeRequired: false
-  }, {
-    name: 'Belgium',
-    code: 'BE',
-    postalCodeRequired: false
-  }, {
-    name: 'Belize',
-    code: 'BZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Benin',
-    code: 'BJ',
-    postalCodeRequired: false
-  }, {
-    name: 'Bermuda',
-    code: 'BM',
-    postalCodeRequired: false
-  }, {
-    name: 'Bhutan',
-    code: 'BT',
-    postalCodeRequired: true
-  }, {
-    name: 'Bolivia',
-    code: 'BO',
-    postalCodeRequired: false
-  }, {
-    name: 'Bosnia and Herzegovina',
-    code: 'BA',
-    postalCodeRequired: false
-  }, {
-    name: 'Botswana',
-    code: 'BW',
-    postalCodeRequired: false
-  }, {
-    name: 'Brazil',
-    code: 'BR',
-    postalCodeRequired: true
-  }, {
-    name: 'British Virgin Islands',
-    code: 'VG',
-    postalCodeRequired: false
-  }, {
-    name: 'Brunei',
-    code: 'BN',
-    postalCodeRequired: false
-  }, {
-    name: 'Bulgaria',
-    code: 'BG',
-    postalCodeRequired: false
-  }, {
-    name: 'Burkina Faso',
-    code: 'BF',
-    postalCodeRequired: false
-  }, {
-    name: 'Burundi',
-    code: 'BI',
-    postalCodeRequired: false
-  }, {
-    name: 'Cambodia',
-    code: 'KH',
-    postalCodeRequired: false
-  }, {
-    name: 'Cameroon',
-    code: 'CM',
-    postalCodeRequired: false
-  }, {
-    name: 'Canada',
-    code: 'CA',
-    postalCodeRequired: true
-  }, {
-    name: 'Cape Verde',
-    code: 'CV',
-    postalCodeRequired: false
-  }, {
-    name: 'Cayman Islands',
-    code: 'KY',
-    postalCodeRequired: false
-  }, {
-    name: 'Chad',
-    code: 'TD',
-    postalCodeRequired: false
-  }, {
-    name: 'Chile',
-    code: 'CL',
-    postalCodeRequired: false
-  }, {
-    name: 'China',
-    code: 'C2',
-    postalCodeRequired: true
-  }, {
-    name: 'Colombia',
-    code: 'CO',
-    postalCodeRequired: false
-  }, {
-    name: 'Comoros',
-    code: 'KM',
-    postalCodeRequired: true
-  }, {
-    name: 'Congo - Brazzaville',
-    code: 'CG',
-    postalCodeRequired: false
-  }, {
-    name: 'Congo - Kinshasa',
-    code: 'CD',
-    postalCodeRequired: false
-  }, {
-    name: 'Cook Islands',
-    code: 'CK',
-    postalCodeRequired: false
-  }, {
-    name: 'Costa Rica',
-    code: 'CR',
-    postalCodeRequired: false
-  }, {
-    name: 'Côte D’ivoire',
-    code: 'CI',
-    postalCodeRequired: false
-  }, {
-    name: 'Croatia',
-    code: 'HR',
-    postalCodeRequired: false
-  }, {
-    name: 'Cyprus',
-    code: 'CY',
-    postalCodeRequired: false
-  }, {
-    name: 'Czech Republic',
-    code: 'CZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Denmark',
-    code: 'DK',
-    postalCodeRequired: true
-  }, {
-    name: 'Djibouti',
-    code: 'DJ',
-    postalCodeRequired: false
-  }, {
-    name: 'Dominica',
-    code: 'DM',
-    postalCodeRequired: false
-  }, {
-    name: 'Dominican Republic',
-    code: 'DO',
-    postalCodeRequired: false
-  }, {
-    name: 'Ecuador',
-    code: 'EC',
-    postalCodeRequired: false
-  }, {
-    name: 'Egypt',
-    code: 'EG',
-    postalCodeRequired: false
-  }, {
-    name: 'El Salvador',
-    code: 'SV',
-    postalCodeRequired: false
-  }, {
-    name: 'Eritrea',
-    code: 'ER',
-    postalCodeRequired: false
-  }, {
-    name: 'Estonia',
-    code: 'EE',
-    postalCodeRequired: false
-  }, {
-    name: 'Ethiopia',
-    code: 'ET',
-    postalCodeRequired: false
-  }, {
-    name: 'Falkland Islands',
-    code: 'FK',
-    postalCodeRequired: true
-  }, {
-    name: 'Faroe Islands',
-    code: 'FO',
-    postalCodeRequired: true
-  }, {
-    name: 'Fiji',
-    code: 'FJ',
-    postalCodeRequired: false
-  }, {
-    name: 'Finland',
-    code: 'FI',
-    postalCodeRequired: false
-  }, {
-    name: 'France',
-    code: 'FR',
-    postalCodeRequired: true
-  }, {
-    name: 'French Guiana',
-    code: 'GF',
-    postalCodeRequired: false
-  }, {
-    name: 'French Polynesia',
-    code: 'PF',
-    postalCodeRequired: false
-  }, {
-    name: 'Gabon',
-    code: 'GA',
-    postalCodeRequired: false
-  }, {
-    name: 'Gambia',
-    code: 'GM',
-    postalCodeRequired: true
-  }, {
-    name: 'Georgia',
-    code: 'GE',
-    postalCodeRequired: false
-  }, {
-    name: 'Germany',
-    code: 'DE',
-    postalCodeRequired: true
-  }, {
-    name: 'Gibraltar',
-    code: 'GI',
-    postalCodeRequired: false
-  }, {
-    name: 'Greece',
-    code: 'GR',
-    postalCodeRequired: false
-  }, {
-    name: 'Greenland',
-    code: 'GL',
-    postalCodeRequired: true
-  }, {
-    name: 'Grenada',
-    code: 'GD',
-    postalCodeRequired: false
-  }, {
-    name: 'Guadeloupe',
-    code: 'GP',
-    postalCodeRequired: false
-  }, {
-    name: 'Guatemala',
-    code: 'GT',
-    postalCodeRequired: false
-  }, {
-    name: 'Guinea',
-    code: 'GN',
-    postalCodeRequired: false
-  }, {
-    name: 'Guinea-bissau',
-    code: 'GW',
-    postalCodeRequired: false
-  }, {
-    name: 'Guyana',
-    code: 'GY',
-    postalCodeRequired: false
-  }, {
-    name: 'Honduras',
-    code: 'HN',
-    postalCodeRequired: false
-  }, {
-    name: 'Hong Kong Sar China',
-    code: 'HK',
-    postalCodeRequired: false
-  }, {
-    name: 'Hungary',
-    code: 'HU',
-    postalCodeRequired: false
-  }, {
-    name: 'Iceland',
-    code: 'IS',
-    postalCodeRequired: false
-  }, {
-    name: 'India',
-    code: 'IN',
-    postalCodeRequired: false
-  }, {
-    name: 'Indonesia',
-    code: 'ID',
-    postalCodeRequired: false
-  }, {
-    name: 'Ireland',
-    code: 'IE',
-    postalCodeRequired: false
-  }, {
-    name: 'Israel',
-    code: 'IL',
-    postalCodeRequired: false
-  }, {
-    name: 'Italy',
-    code: 'IT',
-    postalCodeRequired: true
-  }, {
-    name: 'Jamaica',
-    code: 'JM',
-    postalCodeRequired: false
-  }, {
-    name: 'Japan',
-    code: 'JP',
-    postalCodeRequired: true
-  }, {
-    name: 'Jordan',
-    code: 'JO',
-    postalCodeRequired: false
-  }, {
-    name: 'Kazakhstan',
-    code: 'KZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Kenya',
-    code: 'KE',
-    postalCodeRequired: false
-  }, {
-    name: 'Kiribati',
-    code: 'KI',
-    postalCodeRequired: true
-  }, {
-    name: 'Kuwait',
-    code: 'KW',
-    postalCodeRequired: false
-  }, {
-    name: 'Kyrgyzstan',
-    code: 'KG',
-    postalCodeRequired: true
-  }, {
-    name: 'Laos',
-    code: 'LA',
-    postalCodeRequired: false
-  }, {
-    name: 'Latvia',
-    code: 'LV',
-    postalCodeRequired: false
-  }, {
-    name: 'Lesotho',
-    code: 'LS',
-    postalCodeRequired: false
-  }, {
-    name: 'Liechtenstein',
-    code: 'LI',
-    postalCodeRequired: false
-  }, {
-    name: 'Lithuania',
-    code: 'LT',
-    postalCodeRequired: false
-  }, {
-    name: 'Luxembourg',
-    code: 'LU',
-    postalCodeRequired: false
-  }, {
-    name: 'Macedonia',
-    code: 'MK',
-    postalCodeRequired: false
-  }, {
-    name: 'Madagascar',
-    code: 'MG',
-    postalCodeRequired: false
-  }, {
-    name: 'Malawi',
-    code: 'MW',
-    postalCodeRequired: true
-  }, {
-    name: 'Malaysia',
-    code: 'MY',
-    postalCodeRequired: false
-  }, {
-    name: 'Maldives',
-    code: 'MV',
-    postalCodeRequired: false
-  }, {
-    name: 'Mali',
-    code: 'ML',
-    postalCodeRequired: false
-  }, {
-    name: 'Malta',
-    code: 'MT',
-    postalCodeRequired: false
-  }, {
-    name: 'Marshall Islands',
-    code: 'MH',
-    postalCodeRequired: false
-  }, {
-    name: 'Martinique',
-    code: 'MQ',
-    postalCodeRequired: false
-  }, {
-    name: 'Mauritania',
-    code: 'MR',
-    postalCodeRequired: true
-  }, {
-    name: 'Mauritius',
-    code: 'MU',
-    postalCodeRequired: false
-  }, {
-    name: 'Mayotte',
-    code: 'YT',
-    postalCodeRequired: true
-  }, {
-    name: 'Mexico',
-    code: 'MX',
-    postalCodeRequired: true
-  }, {
-    name: 'Micronesia',
-    code: 'FM',
-    postalCodeRequired: false
-  }, {
-    name: 'Moldova',
-    code: 'MD',
-    postalCodeRequired: false
-  }, {
-    name: 'Monaco',
-    code: 'MC',
-    postalCodeRequired: false
-  }, {
-    name: 'Mongolia',
-    code: 'MN',
-    postalCodeRequired: false
-  }, {
-    name: 'Montenegro',
-    code: 'ME',
-    postalCodeRequired: false
-  }, {
-    name: 'Montserrat',
-    code: 'MS',
-    postalCodeRequired: false
-  }, {
-    name: 'Morocco',
-    code: 'MA',
-    postalCodeRequired: false
-  }, {
-    name: 'Mozambique',
-    code: 'MZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Namibia',
-    code: 'NA',
-    postalCodeRequired: false
-  }, {
-    name: 'Nauru',
-    code: 'NR',
-    postalCodeRequired: true
-  }, {
-    name: 'Nepal',
-    code: 'NP',
-    postalCodeRequired: false
-  }, {
-    name: 'Netherlands',
-    code: 'NL',
-    postalCodeRequired: true
-  }, {
-    name: 'New Caledonia',
-    code: 'NC',
-    postalCodeRequired: false
-  }, {
-    name: 'New Zealand',
-    code: 'NZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Nicaragua',
-    code: 'NI',
-    postalCodeRequired: false
-  }, {
-    name: 'Niger',
-    code: 'NE',
-    postalCodeRequired: true
-  }, {
-    name: 'Nigeria',
-    code: 'NG',
-    postalCodeRequired: false
-  }, {
-    name: 'Niue',
-    code: 'NU',
-    postalCodeRequired: true
-  }, {
-    name: 'Norfolk Island',
-    code: 'NF',
-    postalCodeRequired: true
-  }, {
-    name: 'Norway',
-    code: 'NO',
-    postalCodeRequired: true
-  }, {
-    name: 'Oman',
-    code: 'OM',
-    postalCodeRequired: false
-  }, {
-    name: 'Palau',
-    code: 'PW',
-    postalCodeRequired: false
-  }, {
-    name: 'Panama',
-    code: 'PA',
-    postalCodeRequired: false
-  }, {
-    name: 'Papua New Guinea',
-    code: 'PG',
-    postalCodeRequired: false
-  }, {
-    name: 'Paraguay',
-    code: 'PY',
-    postalCodeRequired: false
-  }, {
-    name: 'Peru',
-    code: 'PE',
-    postalCodeRequired: false
-  }, {
-    name: 'Philippines',
-    code: 'PH',
-    postalCodeRequired: false
-  }, {
-    name: 'Pitcairn Islands',
-    code: 'PN',
-    postalCodeRequired: true
-  }, {
-    name: 'Poland',
-    code: 'PL',
-    postalCodeRequired: true
-  }, {
-    name: 'Portugal',
-    code: 'PT',
-    postalCodeRequired: false
-  }, {
-    name: 'Qatar',
-    code: 'QA',
-    postalCodeRequired: false
-  }, {
-    name: 'Réunion',
-    code: 'RE',
-    postalCodeRequired: false
-  }, {
-    name: 'Romania',
-    code: 'RO',
-    postalCodeRequired: false
-  }, {
-    name: 'Russion',
-    code: 'RU',
-    postalCodeRequired: true
-  }, {
-    name: 'Rwanda',
-    code: 'RW',
-    postalCodeRequired: false
-  }, {
-    name: 'Samoa',
-    code: 'WS',
-    postalCodeRequired: false
-  }, {
-    name: 'San Marino',
-    code: 'SM',
-    postalCodeRequired: false
-  }, {
-    name: 'São Tomé and Príncipe',
-    code: 'ST',
-    postalCodeRequired: false
-  }, {
-    name: 'Saudi Arabia',
-    code: 'SA',
-    postalCodeRequired: false
-  }, {
-    name: 'Senegal',
-    code: 'SN',
-    postalCodeRequired: false
-  }, {
-    name: 'Serbia',
-    code: 'RS',
-    postalCodeRequired: false
-  }, {
-    name: 'Seychelles',
-    code: 'SC',
-    postalCodeRequired: false
-  }, {
-    name: 'Sierra Leone',
-    code: 'SL',
-    postalCodeRequired: false
-  }, {
-    name: 'Singapore',
-    code: 'SG',
-    postalCodeRequired: true
-  }, {
-    name: 'Slovakia',
-    code: 'SK',
-    postalCodeRequired: false
-  }, {
-    name: 'Slovenia',
-    code: 'SI',
-    postalCodeRequired: false
-  }, {
-    name: 'Solomon Islands',
-    code: 'SB',
-    postalCodeRequired: false
-  }, {
-    name: 'Somalia',
-    code: 'SO',
-    postalCodeRequired: false
-  }, {
-    name: 'South Africa',
-    code: 'ZA',
-    postalCodeRequired: false
-  }, {
-    name: 'South Korea',
-    code: 'KR',
-    postalCodeRequired: false
-  }, {
-    name: 'Spain',
-    code: 'ES',
-    postalCodeRequired: true
-  }, {
-    name: 'Sri Lanka',
-    code: 'LK',
-    postalCodeRequired: false
-  }, {
-    name: 'St. Helena',
-    code: 'SH',
-    postalCodeRequired: true
-  }, {
-    name: 'St. Kitts and Nevis',
-    code: 'KN',
-    postalCodeRequired: false
-  }, {
-    name: 'St. Lucia',
-    code: 'LC',
-    postalCodeRequired: false
-  }, {
-    name: 'St. Pierre and Miquelon',
-    code: 'PM',
-    postalCodeRequired: true
-  }, {
-    name: 'St. Vincent and Grenadines',
-    code: 'VC',
-    postalCodeRequired: false
-  }, {
-    name: 'Suriname',
-    code: 'SR',
-    postalCodeRequired: true
-  }, {
-    name: 'Svalbard and Jan Mayen',
-    code: 'SJ',
-    postalCodeRequired: true
-  }, {
-    name: 'Swaziland',
-    code: 'SZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Sweden',
-    code: 'SE',
-    postalCodeRequired: true
-  }, {
-    name: 'Switzerland',
-    code: 'CH',
-    postalCodeRequired: true
-  }, {
-    name: 'Taiwan',
-    code: 'TW',
-    postalCodeRequired: false
-  }, {
-    name: 'Tajikistan',
-    code: 'TJ',
-    postalCodeRequired: false
-  }, {
-    name: 'Tanzania',
-    code: 'TZ',
-    postalCodeRequired: false
-  }, {
-    name: 'Thailand',
-    code: 'TH',
-    postalCodeRequired: false
-  }, {
-    name: 'Togo',
-    code: 'TG',
-    postalCodeRequired: false
-  }, {
-    name: 'Tonga',
-    code: 'TO',
-    postalCodeRequired: false
-  }, {
-    name: 'Trinidad and Tobago',
-    code: 'TT',
-    postalCodeRequired: false
-  }, {
-    name: 'Tunisia',
-    code: 'TN',
-    postalCodeRequired: false
-  }, {
-    name: 'Turkmenistan',
-    code: 'TM',
-    postalCodeRequired: false
-  }, {
-    name: 'Turks and Caicos Islands',
-    code: 'TC',
-    postalCodeRequired: false
-  }, {
-    name: 'Tuvalu',
-    code: 'TV',
-    postalCodeRequired: true
-  }, {
-    name: 'Uganda',
-    code: 'UG',
-    postalCodeRequired: false
-  }, {
-    name: 'Ukraine',
-    code: 'UA',
-    postalCodeRequired: false
-  }, {
-    name: 'United Arab Emirates',
-    code: 'AE',
-    postalCodeRequired: false
-  }, {
-    name: 'United Kingdom',
-    code: 'GB',
-    postalCodeRequired: true
-  }, {
-    name: 'United States',
-    code: 'US',
-    postalCodeRequired: true
-  }, {
-    name: 'Uruguay',
-    code: 'UY',
-    postalCodeRequired: false
-  }, {
-    name: 'Vanuatu',
-    code: 'VU',
-    postalCodeRequired: false
-  }, {
-    name: 'Vatican City',
-    code: 'VA',
-    postalCodeRequired: true
-  }, {
-    name: 'Venezuela',
-    code: 'VE',
-    postalCodeRequired: false
-  }, {
-    name: 'Vietnam',
-    code: 'VN',
-    postalCodeRequired: false
-  }, {
-    name: 'Wallis and Futuna',
-    code: 'WF',
-    postalCodeRequired: true
-  }, {
-    name: 'Yemen',
-    code: 'YE',
-    postalCodeRequired: false
-  }, {
-    name: 'Zambia',
-    code: 'ZM',
-    postalCodeRequired: false
-  }, {
-    name: 'Zimbabwe',
-    code: 'ZW',
-    postalCodeRequired: false
-  }]; // list of country codes extracted from STRIPE_SUPPORTED_COUNTRIES
-
-  var STRIPE_COUNTRY_LIST = [];
-
-  for (index = 0; index < STRIPE_SUPPORTED_COUNTRIES.length; index++) {
-    STRIPE_COUNTRY_LIST.push(STRIPE_SUPPORTED_COUNTRIES[index].code);
-  } // list of country codes extracted from paypalSupportedCountries
-
-
-  var PAYPAL_COUNTRY_LIST = [];
-
-  for (index = 0; index < PAYPAL_SUPPORTED_COUNTRIES.length; index++) {
-    // PayPal uses C2 country code to indicate Chinese users who trade in USD
-    if (PAYPAL_SUPPORTED_COUNTRIES[index].code === 'C2') {
-      PAYPAL_COUNTRY_LIST.push('CN');
-    } else {
-      PAYPAL_COUNTRY_LIST.push(PAYPAL_SUPPORTED_COUNTRIES[index].code);
-    }
-  }
-
-  var COMBINED_COUNTRY_LIST = STRIPE_COUNTRY_LIST.concat(PAYPAL_COUNTRY_LIST); // list of country codes supported by available payment gateways (currently PayPal and Stripe)
-
-  var COMMERCE_SUPPORTED_COUNTRY_LIST = COMBINED_COUNTRY_LIST.filter(function (countryCode, i) {
-    return COMBINED_COUNTRY_LIST.indexOf(countryCode) === i;
-  });
-  /**
-   * SharedConfig.paths - common CDN asset path constants
-   */
-
-  var paths = api.paths = {};
-  var CDN_ROOT = 'https://d3e54v103j8qbb.cloudfront.net/';
-  var PLACEHOLDER_ROOT = CDN_ROOT + 'img/'; // Date sites have to be published after to have the editor code published on them.
-
-  var DYNAMO_PUBLISH_DATE = new Date('2015/10/07 07:00:00 GMT+0000'); // Update on public release.
-  // Placeholder inline image
-
-  paths.EXAMPLE_IMG_ID = 'example_img';
-  paths.EXAMPLE_IMG_NAME = 'image-placeholder.svg';
-  paths.EXAMPLE_IMG_URL = PLACEHOLDER_ROOT + paths.EXAMPLE_IMG_NAME;
-  paths.EXAMPLE_IMG_WIDTH_HEIGHT = 150;
-  paths.EXAMPLE_IMG_FILESIZE = 2063; // Placeholder background image
-
-  paths.EXAMPLE_BG_ID = 'example_bg';
-  paths.EXAMPLE_BG_NAME = 'background-image.svg';
-  paths.EXAMPLE_BG_URL = PLACEHOLDER_ROOT + paths.EXAMPLE_BG_NAME; // Placeholder thumbnail image
-
-  paths.EXAMPLE_THUMB_ID = 'example_thumb';
-  paths.EXAMPLE_THUMB_NAME = 'placeholder-thumb.svg';
-  paths.EXAMPLE_THUMB_URL = PLACEHOLDER_ROOT + paths.EXAMPLE_THUMB_NAME; // Placeholder prebuilt layouts v2 background image
-
-  paths.EXAMPLE_PREBUILTS_V2_BG_ID = 'example_prebuilts_bg';
-  paths.EXAMPLE_PREBUILTS_V2_BG_NAME = 'prebuilts-hero-placeholder.ddc7100a8c.svg';
-  paths.EXAMPLE_PREBUILTS_V2_BG_URL = PLACEHOLDER_ROOT + paths.EXAMPLE_PREBUILTS_V2_BG_NAME;
-  var STATIC_ROOT = CDN_ROOT + 'static/';
-  paths.PAGE_NOT_FOUND_ICON_ID = 'page_not_found';
-  paths.PAGE_NOT_FOUND_ICON_NAME = 'page-not-found.svg';
-  paths.PAGE_NOT_FOUND_ICON_URL = STATIC_ROOT + 'page-not-found.211a85e40c.svg';
-  paths.PASSWORD_PAGE_ICON_ID = 'password_page_icon';
-  paths.PASSWORD_PAGE_ICON_NAME = 'password-page-lock.svg';
-  paths.PASSWORD_PAGE_ICON_URL = STATIC_ROOT + 'password-page-lock.832ca8e2c9.svg';
-  paths.YOUTUBE_PLACEHOLDER_ID = 'youtube_placeholder';
-  paths.YOUTUBE_PLACEHOLDER_NAME = 'youtube-placeholder.svg';
-  paths.YOUTUBE_PLACEHOLDER_URL = STATIC_ROOT + 'youtube-placeholder.2b05e7d68d.svg';
-  paths.CUSTOM_CHECKBOX_CHECK_ID = 'custom_checkbox_check';
-  paths.CUSTOM_CHECKBOX_CHECK_NAME = 'custom-checkbox-check.svg';
-  paths.CUSTOM_CHECKBOX_CHECK_URL = STATIC_ROOT + 'custom-checkbox-checkmark.589d534424.svg'; // Should match sslCdn in production.js
-
-  paths.UPLOADS_CDN_ROOT = 'https://daks2k3a4ib2z.cloudfront.net/'; // Lambda prism root
-
-  var PRISM_ENDPOINTS = {
-    dev: 'https://aco4jiy5g9.execute-api.us-east-1.amazonaws.com/dev/',
-    staging: 'https://kkbii6szaa.execute-api.us-east-1.amazonaws.com/staging/',
-    production: 'https://prism.webflow.com/' // prism.webflow.com -> https://n1hn78c5ge.execute-api.us-east-1.amazonaws.com/production/
-
-  }; // NOTE: When developing new PRISM code, you can manually set PRISM_DEV_ROOT to PRISM_ENDPOINTS.dev
-  // other devs not working on PRISM should be hitting the PRISM_ENDPOINTS.staging endpoint.
-  // NOTE: When merging a feature branch into dev that contains PRISM changes, you should deploy the new PRISM code to PRISM_ENDPOINTS.staging
-  // NOTE: When merging dev into main that contains PRISM changes, you should deploy the new PRISM code to PRISM_ENDPOINTS.production
-
-  paths.PRISM_DEV_ROOT = PRISM_ENDPOINTS.staging;
-  paths.PRISM_ROOT = PRISM_ENDPOINTS.production; // Sample images
-
-  paths.GENERAL_SAMPLE_IMG_PATH = CDN_ROOT + 'img/generic/image';
-  paths.PEOPLE_SAMPLE_IMG_PATH = CDN_ROOT + 'img/people/image'; // Each node in the canvas that has a DomNode attached to it will also have a data-w-id attribute that stores the node's guid
-  // In most cases, these IDs are not persisted to the server, but they saved for typographic node descendants (micro nodes)
-
-  api.WEBFLOW_NODE_ID_ATTR = 'data-w-id'; // This is the dom node attribute used to express the exact path to a dom node.
-
-  api.WEBFLOW_NODE_ID_PATH_ATTR = 'data-wf-id'; // For symbol instance descendants we keep the original id in a different attribute
-
-  api.webflowNodeInstanceIdAttr = 'data-w-instance-of';
-  api.VALID_CONTENT_NODES = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'figure', 'figcaption', 'a', 'strong', 'em', 'div', 'span', 'img', 'iframe', 'ul', 'ol', 'li', 'br'];
-  api.VALID_TYPOGRAPHIC_CONTENT_NODES = ['a', 'strong', 'em', 'br', 'span']; // RTE link attributes, used when an element lacks a domNode
-
-  api.RTE_LINK_TYPE_ATTR = 'data-rt-link-type';
-  api.RTE_LINK_PAGE_ID_ATTR = 'data-rt-link-pageid';
-  api.RTE_LINK_ITEM_ID_ATTR = 'data-rt-link-itemid';
-  api.RTE_LINK_COLLECTION_ID_ATTR = 'data-rt-link-collectionid';
-  api.RTE_LINK_DOM_ID_ATTR = 'data-rt-link-domid';
-  api.RTE_LINK_DATA_ATTRS = [api.RTE_LINK_PAGE_ID_ATTR, api.RTE_LINK_TYPE_ATTR, api.RTE_LINK_ITEM_ID_ATTR, api.RTE_LINK_COLLECTION_ID_ATTR, api.RTE_LINK_DOM_ID_ATTR]; // RTE figure attributes, used when a figure lacks a domNode
-
-  api.RTE_FIGURE_TYPE_ATTR = 'data-rt-type';
-  api.RTE_FIGURE_ALIGN_ATTR = 'data-rt-align';
-  api.RTE_FIGURE_MAX_WIDTH_ATTR = 'data-rt-max-width';
-  api.RTE_FIGURE_MAX_HEIGHT_ATTR = 'data-rt-max-height';
-  api.RTE_FIGURE_DIMENSIONS_ATTR = 'data-rt-dimensions';
-  api.RTE_FIGURE_PAGE_URL_ATTR = 'data-page-url';
-  api.RTE_FIGURE_DATA_ATTRS = [api.RTE_FIGURE_TYPE_ATTR, api.RTE_FIGURE_ALIGN_ATTR, api.RTE_FIGURE_MAX_WIDTH_ATTR, api.RTE_FIGURE_MAX_HEIGHT_ATTR, api.RTE_FIGURE_DIMENSIONS_ATTR, api.RTE_FIGURE_PAGE_URL_ATTR];
-  api.HREF = 'href';
-  api.HREF_DISABLED = api.HREF + '-disabled';
-  api.HREF_DISABLED_DEFAULT_COLOR = api.HREF_DISABLED + '-default-color';
-  api.HREF_DISABLED_UNDERLINE = api.HREF_DISABLED + '-underline';
-  api.MAILTO_EMAIL_REGEX = /^mailto:([^?$]*)/;
-  api.MAILTO_SUBJECT_REGEX = /^mailto:.*\?.*subject=([^&$]+)/;
-  api.TEL_NUMBER_REGEX = /^tel:([^$]*)/;
-  api.DEPRECATED_WF_GOOGLE_MAPS_KEY = 'AIzaSyBQ4EYEg4aRz9-yiCnerTV7bk8GCWgZOhk';
-  api.RTE_FIGURE_TYPE_CLASS = 'w-richtext-figure-type-';
-  api.RTE_FIGURE_TYPE_IMAGE_CLASS = api.RTE_FIGURE_TYPE_CLASS + 'image';
-  api.RTE_FIGURE_TYPE_VIDEO_CLASS = api.RTE_FIGURE_TYPE_CLASS + 'video';
-  api.FIGURE_ALIGN_MAP = {
-    center: 'w-richtext-align-center',
-    fullwidth: 'w-richtext-align-fullwidth',
-    normal: 'w-richtext-align-normal',
-    floatleft: 'w-richtext-align-floatleft',
-    floatright: 'w-richtext-align-floatright'
-  }; // An attribute used to mark newly created typographic content node links and span nodes so that we can auto-select them after the RTE unbinds in the designer-canvas.
-
-  api.RTE_LEGACY_TEMP_ELEM_ATTR = 'wf-temp-elem';
-  api.RTE_NEW_ELEMENT_MARKER_ATTR = 'wf-rte-new-element';
-  api.TYPOGRAPHIC_TAG_REGEX = /^(?:h[1-6]|p|blockquote|span|label|button|q|i|em|strong|b|u|s|small|abbr|cite|dfn|sub|sup|time|code|kbd)$/;
-  api.richTextPageAnchorRegex = new RegExp('<a[^>]+' + api.RTE_LINK_PAGE_ID_ATTR + '[^>]+>', 'g'); // used to replace the href value from an opening anchor tag matched in richTextPageAnchorRegex. $0 is the attr="val", $1 is just val
-
-  api.richTextHrefReplaceRegex = /href=(?:"|')([^'"]+)(?:"|')/; // used on the opening tag of an anchor to remove the RTE link attributes. (mostly on publish and export)
-
-  api.richTextLinkAttrsReplaceRegex = new RegExp('(' + [api.RTE_LINK_TYPE_ATTR, api.RTE_LINK_PAGE_ID_ATTR, api.RTE_LINK_ITEM_ID_ATTR, api.RTE_LINK_COLLECTION_ID_ATTR, api.RTE_LINK_DOM_ID_ATTR].join('|') + ')=(\'|")[^\'"]*(\'|") ?', 'g'); // used to match the value of the static page id attribute (RTE_LINK_PAGE_ID_ATTR)
-
-  api.richTextPageAttrRegex = new RegExp(api.RTE_LINK_PAGE_ID_ATTR + '=(?:"|\')([^\'"]+)(?:"|\')');
-  api.editorPublishDate = DYNAMO_PUBLISH_DATE; // used for detecting legacy micro node ids
-
-  api.microNodeIdLength = 8;
-  api.DYN_BOUND_PLACEHOLDER_TEXT = '[dynamic-text]';
-  api.MAX_DYNLISTS_PER_PAGE = 20;
-  api.MAX_NESTED_DYNLISTS_PER_PAGE = 1;
-  api.allowedTypoContentTags = ['a', 'span', 'strong', 'em', 'br']; // Nodes that should not be closed in HTML5
-
-  api.VOID_HTML_TAGS = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr'];
-  api.dynamicContextConstant = 'DYN_CONTEXT'; // Lowercase field names that are reserved/denied
-
-  api.FIELD_NAME_DENYLIST = ['_id', 'id', '_fileRefs']; // Managed Plan limits:
-
-  api.MAX_MANAGED_PLAN_AMOUNT = 20000000; // in cents
-
-  /**
-   * Default fields - should be in the format in which they are stored in the Collection model.
-   * @type {Array}
-   */
-
-  api.dynamoCollectionDefaultFields = [{
-    name: 'Name',
-    slug: 'name',
-    type: 'PlainText',
-    required: true,
-    editable: true,
-    validations: {
-      maxLength: 256
-    }
-  }, {
-    name: 'Slug',
-    slug: 'slug',
-    type: 'PlainText',
-    required: true,
-    editable: true,
-    unique: true,
-    validations: {
-      maxLength: 256,
-      pattern: /^[_a-zA-Z0-9][-_a-zA-Z0-9]*$/,
-      messages: {
-        pattern: 'Must be alphanumerical and not contain any spaces or special characters',
-        maxLength: 'Must be less than 256 characters'
-      }
-    }
-  }, {
-    name: 'Archived',
-    slug: '_archived',
-    type: 'Bool',
-    required: true,
-    editable: true,
-    "default": false
-  }, {
-    name: 'Draft',
-    slug: '_draft',
-    type: 'Bool',
-    required: true,
-    editable: true,
-    "default": false
-  }, {
-    name: 'Created On',
-    slug: 'created-on',
-    type: 'Date',
-    required: false,
-    editable: false
-  }, {
-    name: 'Updated On',
-    slug: 'updated-on',
-    type: 'Date',
-    required: false,
-    editable: false
-  }, {
-    name: 'Published On',
-    slug: 'published-on',
-    type: 'Date',
-    required: false,
-    editable: false
-  }, {
-    name: 'Created By',
-    slug: 'created-by',
-    type: 'User',
-    required: false,
-    editable: false
-  }, {
-    name: 'Updated By',
-    slug: 'updated-by',
-    type: 'User',
-    required: false,
-    editable: false
-  }, {
-    name: 'Published By',
-    slug: 'published-by',
-    type: 'User',
-    required: false,
-    editable: false
-  }]; // In addition to the "default" fields, these are other fields that the user gets for "free":
-  // Note: These get baked into site data when a store is set up, so they will not change on an
-  // existing site without a migration. New not-required fields will get added via `upgradeEcommCollections`.
-  // ---------------------------------------------------------------------------------------------------
-  // Adding a new field may require published site snapshots in Cypress tests to be updated, refer to
-  // `docs/tools/cypress/published-site-tests.md` for steps.
-  // ---------------------------------------------------------------------------------------------------
-  // In order for new fields to show up for a certain product type on the product or variant form, the field will
-  // need to be added to a specific template type or a default (`DEFAULT_PRODUCT_TYPE_PRODUCT_FIELDS` or `DEFAULT_PRODUCT_TYPE_SKU_FIELDS`).
-  // See `docs/app/ecommerce/product-types.md/#ii-template-product-types` for more info.
-  // ---------------------------------------------------------------------------------------------------
-
-  api.ecommExtraFields = {
-    category: [],
-    product: [{
-      name: 'SKU Properties',
-      slug: 'sku-properties',
-      type: 'CommercePropTable',
-      required: false,
-      editable: true
-    }, {
-      name: 'Categories',
-      slug: 'category',
-      type: 'ItemRefSet',
-      helpText: 'Add this product to one or more categories.',
-      required: false,
-      editable: true,
-      validations: {
-        collectionId: null // Will be populated with correct value at creation.
-
-      }
-    }, {
-      name: 'Description',
-      slug: 'description',
-      type: 'PlainText',
-      required: false,
-      editable: true
-    }, {
-      name: 'Requires Shipping',
-      slug: 'shippable',
-      type: 'Bool',
-      required: false,
-      editable: true
-    }, {
-      name: 'Tax Category',
-      slug: 'tax-category',
-      type: 'EnumOption',
-      required: false,
-      editable: true,
-      validations: {
-        enumName: 'TaxCategories'
-      }
-    }, {
-      name: 'Default SKU',
-      slug: 'default-sku',
-      type: 'ItemRef',
-      required: false,
-      // False, so we can create the SKU, and then update.
-      editable: true,
-      validations: {
-        collectionId: null // Will be populated with correct value at creation.
-
-      }
-    }, {
-      name: 'Product type',
-      slug: 'ec-product-type',
-      type: 'Option',
-      required: false,
-      editable: true,
-      validations: {
-        options: [{
-          id: 'ff42fee0113744f693a764e3431a9cc2',
-          name: 'Physical'
-        }, {
-          id: 'f22027db68002190aef89a4a2b7ac8a1',
-          name: 'Digital'
-        }, {
-          id: 'c599e43b1a1c34d5a323aedf75d3adf6',
-          name: 'Service'
-        }, {
-          id: 'e348fd487d0102946c9179d2a94bb613',
-          name: 'Membership'
-        }, {
-          id: 'b6ccc1830db4b1babeb06a9ac5f6dd76',
-          name: 'Advanced'
-        }]
-      }
-    }],
-    sku: [{
-      name: 'SKU Values',
-      slug: 'sku-values',
-      type: 'CommercePropValues',
-      required: true,
-      editable: true
-    }, {
-      name: 'Product',
-      slug: 'product',
-      type: 'ItemRef',
-      required: true,
-      editable: true,
-      validations: {
-        collectionId: null // Will be populated with correct value at creation.
-
-      }
-    }, {
-      name: 'Main Image',
-      slug: 'main-image',
-      type: 'ImageRef',
-      required: false,
-      editable: true,
-      validations: {
-        acceptedExtensions: ['jpeg', 'jpg', 'gif', 'png'] // To prevent upload svg as product image, as it is not render properly in Gmail web client
-
-      }
-    }, {
-      name: 'More Images',
-      slug: 'more-images',
-      type: 'Set',
-      innerType: 'ImageRef',
-      required: false,
-      editable: true,
-      validations: {
-        acceptedExtensions: ['jpeg', 'jpg', 'gif', 'png'] // To prevent upload svg as product image, as it is not render properly in Gmail web client
-
-      }
-    }, {
-      name: 'Price',
-      slug: 'price',
-      type: 'CommercePrice',
-      required: true,
-      editable: true
-    }, {
-      name: 'Compare-at price',
-      slug: 'compare-at-price',
-      type: 'CommercePrice',
-      required: false,
-      editable: true
-    }, {
-      name: 'Downloads',
-      slug: 'download-files',
-      type: 'Set',
-      innerType: 'ExtFileRef',
-      required: false,
-      editable: true
-    }, {
-      name: 'Subscription Plan',
-      slug: 'ec-sku-subscription-plan',
-      type: 'SubscriptionPlan',
-      required: false,
-      editable: true
-    }, {
-      name: 'Width',
-      slug: 'width',
-      type: 'Number',
-      required: false,
-      editable: true,
-      validations: {
-        minValue: 0
-      }
-    }, {
-      name: 'Length',
-      slug: 'length',
-      type: 'Number',
-      required: false,
-      editable: true,
-      validations: {
-        minValue: 0
-      }
-    }, {
-      name: 'Height',
-      slug: 'height',
-      type: 'Number',
-      required: false,
-      editable: true,
-      validations: {
-        minValue: 0
-      }
-    }, {
-      name: 'Weight',
-      slug: 'weight',
-      type: 'Number',
-      required: false,
-      editable: true,
-      validations: {
-        minValue: 0
-      }
-    }, {
-      name: 'SKU',
-      slug: 'sku',
-      type: 'PlainText',
-      required: false,
-      editable: true,
-      validations: {
-        singleLine: true
-      }
-    }, {
-      name: 'Billing method',
-      slug: 'ec-sku-billing-method',
-      type: 'EnumOption',
-      required: false,
-      editable: true,
-      validations: {
-        enumName: 'BillingMethods'
-      }
-    }]
-  };
-
-  api.dynamoCollectionDefaultFieldSlugs = function () {
-    var ret = [];
-    api.dynamoCollectionDefaultFields.forEach(function (field) {
-      ret.push(field.slug);
-    });
-    return ret;
-  }();
-
-  api.RESERVED_CUSTOM_FIELD_SLUG_REGEX_PATTERNS = [{
-    type: 'prefix',
-    value: /^ec-product-/
-  }, {
-    type: 'prefix',
-    value: /^ec-sku-/
-  }, {
-    type: 'prefix',
-    value: /^ec-category-/
-  }];
-
-  api.frontEndReservedFieldSlugPatterns = function () {
-    var ret = [];
-    var DYNAMO_RESERVED_SLUG_REGEX_PATTERNS = api.dynamoCollectionDefaultFieldSlugs.map(function (slug) {
-      return {
-        type: 'is',
-        value: new RegExp('^' + slug + '$')
-      };
-    });
-    var FIELD_NAME_DENYLIST_REGEX_PATTERNS = api.FIELD_NAME_DENYLIST.map(function (fieldName) {
-      return {
-        type: 'is',
-        value: new RegExp('^' + fieldName + '$', 'i')
-      };
-    });
-    return ret.concat(DYNAMO_RESERVED_SLUG_REGEX_PATTERNS).concat(FIELD_NAME_DENYLIST_REGEX_PATTERNS).concat(api.RESERVED_CUSTOM_FIELD_SLUG_REGEX_PATTERNS);
-  }();
-
-  api.frontEndReservedFieldNames = function () {
-    var ret = [];
-    api.dynamoCollectionDefaultFields.forEach(function (field) {
-      ret.push(field.name);
-    });
-    return ret;
-  }();
-
-  api.enumOptionValueSets = {
-    TaxCategories: ['books', 'books-religious', 'books-textbook', 'clothing', 'clothing-swimwear', 'digital-goods', 'digital-service', 'drugs-non-prescription', 'drugs-prescription', 'food-bottled-water', 'food-candy', 'food-groceries', 'food-prepared', 'food-soda', 'food-supplements', 'magazine-individual', 'magazine-subscription', 'service-admission', 'service-advertising', 'service-dry-cleaning', 'service-hairdressing', 'service-installation', 'service-miscellaneous', 'service-parking', 'service-printing', 'service-professional', 'service-repair', 'service-training', 'standard-exempt', 'standard-taxable'],
-    BillingMethods: ['one-time', 'subscription'],
-    BillingPeriods: ['day', 'week', 'month', 'year']
-  };
-  api.enumOptionMapSets = {
-    TaxCategories: [{
-      code: 'standard-taxable',
-      name: 'Standard automatic tax calculation'
-    }, {
-      code: 'standard-exempt',
-      name: 'Exempt from taxes'
-    }, {
-      code: 'books',
-      name: 'Books'
-    }, {
-      code: 'books-religious',
-      name: 'Books - Religious'
-    }, {
-      code: 'books-textbook',
-      name: 'Books - Textbooks'
-    }, {
-      code: 'clothing',
-      name: 'Clothing'
-    }, {
-      code: 'clothing-swimwear',
-      name: 'Clothing - Swimwear'
-    }, {
-      code: 'digital-goods',
-      name: 'Digital Goods'
-    }, {
-      code: 'digital-service',
-      name: 'Digital Services'
-    }, {
-      code: 'drugs-non-prescription',
-      name: 'Drugs - Non-Prescription'
-    }, {
-      code: 'drugs-prescription',
-      name: 'Drugs - Prescription'
-    }, {
-      code: 'food-bottled-water',
-      name: 'Food - Bottled Water'
-    }, {
-      code: 'food-candy',
-      name: 'Food - Candy'
-    }, {
-      code: 'food-groceries',
-      name: 'Food - Groceries'
-    }, {
-      code: 'food-prepared',
-      name: 'Food - Prepared'
-    }, {
-      code: 'food-soda',
-      name: 'Food - Soda'
-    }, {
-      code: 'food-supplements',
-      name: 'Food - Supplements'
-    }, {
-      code: 'magazine-individual',
-      name: 'Magazine - Individual'
-    }, {
-      code: 'magazine-subscription',
-      name: 'Magazine - Subscription'
-    }, {
-      code: 'service-admission',
-      name: 'Service - Admission'
-    }, {
-      code: 'service-advertising',
-      name: 'Service - Advertising'
-    }, {
-      code: 'service-dry-cleaning',
-      name: 'Service - Dry Cleaning'
-    }, {
-      code: 'service-hairdressing',
-      name: 'Service - Hairdressing'
-    }, {
-      code: 'service-installation',
-      name: 'Service - Installation'
-    }, {
-      code: 'service-miscellaneous',
-      name: 'Service - Miscellaneous'
-    }, {
-      code: 'service-parking',
-      name: 'Service - Parking'
-    }, {
-      code: 'service-printing',
-      name: 'Service - Printing'
-    }, {
-      code: 'service-professional',
-      name: 'Service - Professional'
-    }, {
-      code: 'service-repair',
-      name: 'Service - Repair'
-    }, {
-      code: 'service-training',
-      name: 'Service - Training'
-    }],
-    BillingMethods: [{
-      code: 'one-time',
-      name: 'One-time payment'
-    }, {
-      code: 'subscription',
-      name: 'Subscription'
-    }],
-    BillingPeriods: [{
-      code: 'day',
-      name: 'Day'
-    }, {
-      code: 'week',
-      name: 'Week'
-    }, {
-      code: 'month',
-      name: 'Month'
-    }, {
-      code: 'year',
-      name: 'Year'
-    }]
-  };
-  api.dynamoPageSlugPrefix = 'detail_';
-  api.collectionPresets = [{
-    id: 'blog-post',
-    // The id field is not important, any random field that doesn't clash with other ids defined here is good.
-    name: 'Blog Post',
-    // Name in drop down
-    properties: {
-      editable: true,
-      // Editable by contributors
-      name: 'Blog Post',
-      slug: 'blog-post',
-      fields: [{
-        name: 'Blog Post Body',
-        type: 'RichText',
-        required: true,
-        validations: {
-          minLength: 20
-        }
-      }, {
-        name: 'Thumbnail Image',
-        type: 'ImageRef',
-        required: false
-      }, {
-        name: 'Main Image',
-        type: 'ImageRef',
-        required: false
-      }, {
-        name: 'Category',
-        slug: 'category',
-        type: 'PlainText',
-        validations: {
-          minLength: 1,
-          maxLength: 100
-        }
-      }]
-    }
-  }];
-  /**
-    These field types are the ones visible in the Data Manager list view.
-   */
-
-  api.listableFieldTypes = ['Date', 'PlainText', 'Bool', 'Color', 'ItemRef', 'Option', 'Number', 'Link', 'Email', 'Phone', 'CommercePrice', 'FileRef', 'ID', 'Status'];
-  /**
-    A "direction" sort is defined by being useful to the user, and one that we can perform on the backend, such as:
-      - Alphabetical (Plaintext)
-      - Ascending/descending (Number)
-      - Earliest/latest (Date)
-      - True/False first (Bool)
-   */
-
-  api.sortableByDirectionFieldTypes = ['PlainText', 'Number', 'Date', 'Bool'];
-  /**
-    An "existence" sort is defined by whether or not the field has a value
-     This array must be a subset of listableFieldTypes
-  */
-
-  api.sortableByExistenceFieldTypes = ['Color', 'Email', 'FileRef', 'ItemRef', 'Link', 'Option', 'Phone'];
-  api.expandableFieldTypes = ['ItemRef', 'ItemRefSet', 'Option'];
-  api.heavyExpandableFieldTypes = ['ItemRef', 'ItemRefSet'];
-  api.richTextSanitizerOptions = {
-    tags: {
-      p: true,
-      div: {
-        "class": true
-      },
-      span: true,
-      a: {
-        href: true
-      },
-      strong: true,
-      ul: true,
-      ol: true,
-      li: true,
-      br: true,
-      b: true,
-      i: true,
-      h1: true,
-      h2: true,
-      h3: true,
-      h4: true,
-      h5: true,
-      h6: true,
-      img: {
-        src: true,
-        style: true
-      },
-      blockquote: true
-    }
-  }; // NOTE: Some of these versions have corresponding constants in /render/lib/versions.js
-
-  api.MIN_VERSION_CONDITIONAL_VISIBILITY = '1.1.0';
-  api.MIN_VERSION_JSON_RENDER = '2.0.2';
-  api.MIN_VERSION_EXPANDED_TEXT_NODES = '3.0.0';
-  api.SITE_PLANS = {
-    "static": {
-      price: 1500,
-      numCollaborators: 0,
-      numCollections: 0,
-      pageViews: 25000,
-      planId: 'hosting-static01',
-      stripePlanName: 'Basic Hosting',
-      currency: 'usd',
-      maxPages: 80,
-      metadata: {
-        type: 'static'
-      }
-    },
-    cms: {
-      price: 2000,
-      numCollaborators: 1,
-      numCollections: 20,
-      pageViews: 25000,
-      maxItems: 500,
-      planId: 'hosting-cms01',
-      stripePlanName: 'CMS Hosting',
-      currency: 'usd',
-      maxPages: 80,
-      metadata: {
-        type: 'cms'
-      }
-    }
-  };
-  api.SITE_STRIPE_PLANS = {
-    "static": {
-      free: {
-        price: 1500,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-static01-free',
-        stripePlanName: 'Basic Hosting',
-        currency: 'usd'
-      },
-      micro: {
-        price: 1500,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-static01-micro',
-        stripePlanName: 'Basic Hosting (Micro)',
-        currency: 'usd'
-      },
-      personal: {
-        price: 500,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-static01-personal',
-        stripePlanName: 'Basic Hosting (Personal)',
-        currency: 'usd'
-      },
-      professional: {
-        price: 500,
-        brandingPrice: 500,
-        interval: 'month',
-        planId: 'hosting-static01-professional',
-        stripePlanName: 'Basic Hosting (Professional)',
-        currency: 'usd'
-      }
-    },
-    cms: {
-      free: {
-        price: 2000,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-cms01-free',
-        stripePlanName: 'CMS Hosting',
-        currency: 'usd'
-      },
-      micro: {
-        price: 2000,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-cms01-micro',
-        stripePlanName: 'CMS Hosting (Micro)',
-        currency: 'usd'
-      },
-      personal: {
-        price: 1000,
-        brandingPrice: 1000,
-        interval: 'month',
-        planId: 'hosting-cms01-personal',
-        stripePlanName: 'CMS Hosting (Personal)',
-        currency: 'usd'
-      },
-      professional: {
-        price: 1000,
-        brandingPrice: 500,
-        interval: 'month',
-        planId: 'hosting-cms01-professional',
-        stripePlanName: 'CMS Hosting (Professional)',
-        currency: 'usd'
-      }
-    }
-  }; // TODO: Remove this:
-
-  api.SITE_STRIPE_YEARLY_PLANS = {
-    "static": {
-      free: {
-        price: 1500 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-static01-year-free',
-        stripePlanName: 'Yearly Basic Hosting',
-        currency: 'usd'
-      },
-      micro: {
-        price: 1500 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-static01-year-micro',
-        stripePlanName: 'Yearly Basic Hosting (Micro)',
-        currency: 'usd'
-      },
-      personal: {
-        price: 500 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-static01-year-personal',
-        stripePlanName: 'Yearly Basic Hosting (Personal)',
-        currency: 'usd'
-      },
-      professional: {
-        price: 500 * 12,
-        brandingPrice: 500,
-        interval: 'year',
-        planId: 'hosting-static01-year-professional',
-        stripePlanName: 'Yearly Basic Hosting (Professional)',
-        currency: 'usd'
-      }
-    },
-    cms: {
-      free: {
-        price: 2000 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-cms01-year-free',
-        stripePlanName: 'Yearly CMS Hosting',
-        currency: 'usd'
-      },
-      micro: {
-        price: 2000 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-cms01-year-micro',
-        stripePlanName: 'Yearly CMS Hosting (Micro)',
-        currency: 'usd'
-      },
-      personal: {
-        price: 1000 * 12,
-        brandingPrice: 1000,
-        interval: 'year',
-        planId: 'hosting-cms01-year-personal',
-        stripePlanName: 'Yearly CMS Hosting (Personal)',
-        currency: 'usd'
-      },
-      professional: {
-        price: 1000 * 12,
-        brandingPrice: 500,
-        interval: 'year',
-        planId: 'hosting-cms01-year-professional',
-        stripePlanName: 'Yearly CMS Hosting (Professional)',
-        currency: 'usd'
-      }
-    }
-  };
-  api.ADDITIONAL_PRICES = {
-    pageViews: {
-      mode: 'tier',
-      price: 1000,
-      forEach: 100000,
-      after: 100000
-    },
-    cmsItems: {
-      mode: 'tier',
-      price: 1000,
-      forEach: 500,
-      after: 500
-    },
-    collaborators: {
-      mode: 'tier',
-      price: 600,
-      forEach: 1,
-      after: 1
-    },
-    formSubmissions: {
-      mode: 'tier',
-      price: 200,
-      forEach: 100,
-      after: 100
-    },
-    customBranding: {
-      mode: 'bool',
-      price: 1000 // Overridden by plan's branding price.
-
-    }
-  };
-  api.DYNAMO_PLANS = {
-    free: {
-      price: {
-        month: 0,
-        year: 0,
-        forms: 2,
-        customDomain: 0
-      },
-      numFreeFormEntries: 500,
-      maxPages: 2,
-      maxSites: 2,
-      maxPublicSites: 5,
-      numExports: 0,
-      canCustomFont: true,
-      canSetTypeKit: true,
-      numDomains: 0,
-      numBackups: 20
-    },
-    micro: {
-      price: {
-        month: 1600,
-        year: 1400 * 12,
-        forms: 2,
-        customDomain: 0
-      },
-      numFreeFormEntries: 500,
-      maxPages: 100,
-      maxSites: 1,
-      maxPublicSites: 20,
-      numDomains: 1,
-      canCustomFont: true,
-      canSetTypeKit: false,
-      stripeIdPre: 'micro',
-      name: 'Micro'
-    },
-    personal: {
-      price: {
-        month: 2000,
-        year: 1600 * 12,
-        forms: 1,
-        customDomain: 499
-      },
-      numFreeFormEntries: 500,
-      maxPages: 100,
-      maxSites: 20,
-      maxPublicSites: 100,
-      numDomains: 0,
-      canCustomFont: true,
-      canSetTypeKit: true,
-      stripeIdPre: 'personal',
-      name: 'Personal',
-      hostingDiscount: {
-        "static": 66 / 100,
-        cms: 50 / 100
-      }
-    },
-    professional: {
-      price: {
-        month: 4200,
-        year: 3500 * 12,
-        forms: 1,
-        customDomain: 499
-      },
-      numFreeFormEntries: 500,
-      maxPages: 100,
-      maxSites: 100,
-      maxPublicSites: 100,
-      numDomains: 0,
-      canCustomFont: true,
-      canSetTypeKit: true,
-      stripeIdPre: 'professional',
-      name: 'Professional',
-      hostingDiscount: {
-        "static": 66 / 100,
-        cms: 50 / 100
-      }
-    }
-  };
-  api.ORG_DISCOUNT = {
-    "static": api.DYNAMO_PLANS.professional.hostingDiscount["static"],
-    // assuming static hosting is $15, static custom domains should cost $5 for orgs
-    cms: api.DYNAMO_PLANS.professional.hostingDiscount.cms
-  };
-  api.ORG_PLANS = {
-    small: {
-      seats: 2,
-      maxTemplates: 3,
-      maxSites: 100,
-      maxPages: 100,
-      price: {
-        month: 8400,
-        year: 7800 * 12,
-        customDomain: 499
-      },
-      stripeIdPre: 'team-small',
-      name: 'Team Small'
-    },
-    medium: {
-      seats: 4,
-      maxTemplates: 6,
-      maxSites: 200,
-      maxPages: 100,
-      price: {
-        month: 16800,
-        year: 15600 * 12,
-        customDomain: 499
-      },
-      stripeIdPre: 'team-medium',
-      name: 'Team Medium'
-    },
-    large: {
-      seats: 8,
-      maxTemplates: 12,
-      maxSites: 400,
-      maxPages: 100,
-      price: {
-        month: 33600,
-        year: 31500 * 12,
-        customDomain: 499
-      },
-      stripeIdPre: 'team-large',
-      name: 'Team Large'
-    }
-  };
-  api.managedBilling = {}; // https://en.wikipedia.org/wiki/Single_Euro_Payments_Area
-  // For SEPA states, we have to also collect names / addresses / id documents for
-  // anybody with more than 25% ownership of the company. Implementing this is a
-  // massive PITA, so we'll filter this for now...
-
-  api.managedBilling.sepaCountries = ['AT', 'BE', 'DK', 'FI', 'FR', 'DE', 'IE', 'IT', 'LU', 'NL', 'NO', 'SP', 'SE', 'GB'];
-  api.managedBilling.supportedCountryList = [{
-    name: 'Australia',
-    code: 'AU',
-    status: '',
-    bankMode: 'BSB',
-    bankCurrencies: ['AUD'],
-    className: 'australia'
-  }, {
-    name: 'Austria',
-    code: 'AT',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'austria'
-  }, {
-    name: 'Belgium',
-    code: 'BE',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'belgium'
-  }, {
-    name: 'Bulgaria',
-    code: 'BG',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['BGN', 'EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'bulgaria'
-  }, {
-    name: 'Canada',
-    code: 'CA',
-    status: '',
-    bankMode: 'TRANSIT',
-    bankCurrencies: ['CAD', 'USD'],
-    className: 'canada'
-  }, {
-    name: 'Cyprus',
-    code: 'CY',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'cyprus'
-  }, {
-    name: 'Czech Republic',
-    code: 'CZ',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['CZK', 'EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'czech-republic'
-  }, {
-    name: 'Denmark',
-    code: 'DK',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'denmark'
-  }, {
-    name: 'Estonia',
-    code: 'EE',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'estonia'
-  }, {
-    name: 'Finland',
-    code: 'FI',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'finland'
-  }, {
-    name: 'France',
-    code: 'FR',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'france'
-  }, {
-    name: 'Germany',
-    code: 'DE',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'germany'
-  }, {
-    name: 'Greece',
-    code: 'GR',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'greece'
-  }, {
-    name: 'Hong Kong',
-    code: 'HK',
-    status: '',
-    bankMode: 'CBA',
-    bankCurrencies: ['HKD'],
-    className: 'hong-kong'
-  }, {
-    name: 'Hungary',
-    code: 'HU',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['HUF', 'EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'hungary'
-  }, {
-    name: 'Ireland',
-    code: 'IE',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'ireland'
-  }, {
-    name: 'Italy',
-    code: 'IT',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'italy'
-  }, {
-    name: 'Japan',
-    code: 'JP',
-    status: '',
-    bankMode: 'FULL',
-    bankCurrencies: ['JPY'],
-    className: 'japan'
-  }, {
-    name: 'Latvia',
-    code: 'LV',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'latvia'
-  }, {
-    name: 'Lithuania',
-    code: 'LT',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'lithuania'
-  }, {
-    name: 'Luxembourg',
-    code: 'LU',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'luxembourg'
-  }, // { name: 'Malaysia', code: 'MY', status: '', bankMode: 'AN', bankCurrencies: ['MYR'], className: 'malaysia' },
-  {
-    name: 'Malta',
-    code: 'MT',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'malta'
-  }, // { name: 'Mexico', code: 'MX', status: '', bankMode: 'CLABE', bankCurrencies: ['MXN'], className: 'mexico' },
-  {
-    name: 'Netherlands',
-    code: 'NL',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'netherlands'
-  }, {
-    name: 'New Zealand',
-    code: 'NZ',
-    status: '',
-    bankMode: 'AN',
-    bankCurrencies: ['NZD'],
-    className: 'new-zealand'
-  }, {
-    name: 'Norway',
-    code: 'NO',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'norway'
-  }, {
-    name: 'Poland',
-    code: 'PL',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['PLN', 'EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'poland'
-  }, {
-    name: 'Portugal',
-    code: 'PT',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'portugal'
-  }, {
-    name: 'Romania',
-    code: 'RO',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['RON', 'EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'romania'
-  }, {
-    name: 'Singapore',
-    code: 'SG',
-    status: '',
-    bankMode: 'BBA',
-    bankCurrencies: ['SGD'],
-    className: 'singapore'
-  }, {
-    name: 'Slovakia',
-    code: 'SK',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'slovakia'
-  }, {
-    name: 'Slovenia',
-    code: 'SI',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'slovenia'
-  }, {
-    name: 'Spain',
-    code: 'ES',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'spain'
-  }, {
-    name: 'Sweden',
-    code: 'SE',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'sweden'
-  }, {
-    name: 'Switzerland',
-    code: 'CH',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'switzerland'
-  }, {
-    name: 'United Kingdom',
-    code: 'GB',
-    status: '',
-    bankMode: 'IBAN',
-    bankCurrencies: ['EUR', 'CHF', 'DKK', 'GBP', 'NOK', 'SEK', 'USD'],
-    className: 'united-kingdom'
-  }, {
-    name: 'United States',
-    code: 'US',
-    status: '',
-    bankMode: 'ROUTE',
-    bankCurrencies: ['USD'],
-    className: 'united-states'
-  }]; // Note: These currencies are extracted by getting Stripe compatible currencies with:
-  //
-  // curl https://api.stripe.com/v1/country_specs\?limit\=100 -u $STRIPE_TEST_KEY: -G \
-  //   | jq '.data|.[]|.supported_payment_currencies|.[]' \
-  //   | sort \
-  //   | uniq
-  //
-  // And then populating in the names from ISO 4217:
-  //
-  // Digit counts are also added. Stripe is treated as the source-of-truth for that number, even though their
-  // numbers are often at odds with ISO 4217. Notes:
-  //
-  //  - CVE had a subunit (centavo), that has been discontinued. The ISO reflects this, but stripe sticks
-  //    with 2 digits, since the currency is still commonly formatted as "1$00". ¯\_(ツ)_/¯
-  //  - ISK had a subunit (eyrir) that was obsoleted in 2003, but Stripe sticks with 2 digits instead of
-  //    the ISO's 0.
-  //  - MGA is strange, since its smallest denomination is a 1/5th piece (the Iraimbilanja), but is
-  //    represented as a decimal, so the currency goes "1.3, 1.4, 2.0, ...". Stripe dodges this strangeness
-  //    by ignoring that minimum unit, and so do we, since it has so little value.
-  //  - UGX had a subunit (cent) that was discontinued in 2013. Stripe still counts it, tho, even though
-  //    that cent is work 1/350000th of a penny.
-
-  api.stripeCurrencyList = [{
-    code: 'AED',
-    digits: 2,
-    minCharge: 0,
-    name: 'United Arab Emirates Dirham'
-  }, {
-    code: 'AFN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Afghanistan Afghani'
-  }, {
-    code: 'ALL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Albanian Lek'
-  }, {
-    code: 'AMD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Armenia Dram'
-  }, {
-    code: 'ANG',
-    digits: 2,
-    minCharge: 0,
-    name: 'Netherlands Antillean Gulden'
-  }, {
-    code: 'AOA',
-    digits: 2,
-    minCharge: 0,
-    name: 'Angola Kwanza'
-  }, {
-    code: 'ARS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Argentine Peso'
-  }, {
-    code: 'AUD',
-    digits: 2,
-    minCharge: 50,
-    name: 'Australian Dollar'
-  }, {
-    code: 'AWG',
-    digits: 2,
-    minCharge: 0,
-    name: 'Aruban Florin'
-  }, {
-    code: 'AZN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Azerbaijan Manat'
-  }, {
-    code: 'BAM',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bosnia and Herzegovina Convertible Marka'
-  }, {
-    code: 'BBD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Barbadian Dollar'
-  }, {
-    code: 'BDT',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bangladeshi Taka'
-  }, {
-    code: 'BGN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bulgaria Lev'
-  }, {
-    code: 'BIF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Burundian Franc'
-  }, {
-    code: 'BMD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bermudian Dollar'
-  }, {
-    code: 'BND',
-    digits: 2,
-    minCharge: 0,
-    name: 'Brunei Dollar'
-  }, {
-    code: 'BOB',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bolivian Boliviano'
-  }, {
-    code: 'BRL',
-    digits: 2,
-    minCharge: 50,
-    name: 'Brazilian Real'
-  }, {
-    code: 'BSD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Bahamian Dollar'
-  }, {
-    code: 'BWP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Botswana Pula'
-  }, {
-    code: 'BZD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Belize Dollar'
-  }, {
-    code: 'CAD',
-    digits: 2,
-    minCharge: 50,
-    name: 'Canadian Dollar'
-  }, {
-    code: 'CDF',
-    digits: 2,
-    minCharge: 0,
-    name: 'Congo/Kinshasa Franc'
-  }, {
-    code: 'CHF',
-    digits: 2,
-    minCharge: 50,
-    name: 'Swiss Franc'
-  }, {
-    code: 'CLP',
-    digits: 0,
-    minCharge: 0,
-    name: 'Chilean Peso'
-  }, {
-    code: 'CNY',
-    digits: 2,
-    minCharge: 0,
-    name: 'Chinese Renminbi Yuan'
-  }, {
-    code: 'COP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Colombian Peso'
-  }, {
-    code: 'CRC',
-    digits: 2,
-    minCharge: 0,
-    name: 'Costa Rican Colón'
-  }, {
-    code: 'CVE',
-    digits: 2,
-    minCharge: 0,
-    name: 'Cape Verdean Escudo'
-  }, // See above.
-  {
-    code: 'CZK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Czech Koruna'
-  }, {
-    code: 'DJF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Djiboutian Franc'
-  }, {
-    code: 'DKK',
-    digits: 2,
-    minCharge: 250,
-    name: 'Danish Krone'
-  }, {
-    code: 'DOP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Dominican Peso'
-  }, {
-    code: 'DZD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Algerian Dinar'
-  }, {
-    code: 'EGP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Egyptian Pound'
-  }, {
-    code: 'ETB',
-    digits: 2,
-    minCharge: 0,
-    name: 'Ethiopian Birr'
-  }, {
-    code: 'EUR',
-    digits: 2,
-    minCharge: 50,
-    name: 'Euro'
-  }, {
-    code: 'FJD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Fijian Dollar'
-  }, {
-    code: 'FKP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Falkland Islands Pound'
-  }, {
-    code: 'GBP',
-    digits: 2,
-    minCharge: 30,
-    name: 'British Pound'
-  }, {
-    code: 'GEL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Georgia Lari'
-  }, {
-    code: 'GIP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Gibraltar Pound'
-  }, {
-    code: 'GMD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Gambian Dalasi'
-  }, {
-    code: 'GNF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Guinean Franc'
-  }, {
-    code: 'GTQ',
-    digits: 2,
-    minCharge: 0,
-    name: 'Guatemalan Quetzal'
-  }, {
-    code: 'GYD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Guyanese Dollar'
-  }, {
-    code: 'HKD',
-    digits: 2,
-    minCharge: 400,
-    name: 'Hong Kong Dollar'
-  }, {
-    code: 'HNL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Honduran Lempira'
-  }, {
-    code: 'HRK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Croatian Kuna'
-  }, {
-    code: 'HTG',
-    digits: 2,
-    minCharge: 0,
-    name: 'Haitian Gourde'
-  }, {
-    code: 'HUF',
-    digits: 2,
-    minCharge: 0,
-    name: 'Hungarian Forint'
-  }, {
-    code: 'IDR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Indonesian Rupiah'
-  }, {
-    code: 'ILS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Israeli New Sheqel'
-  }, {
-    code: 'INR',
-    digits: 2,
-    minCharge: 50,
-    name: 'Indian Rupee'
-  }, {
-    code: 'ISK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Icelandic Króna'
-  }, // See above.
-  {
-    code: 'JMD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Jamaican Dollar'
-  }, {
-    code: 'JPY',
-    digits: 0,
-    minCharge: 50,
-    name: 'Japanese Yen'
-  }, {
-    code: 'KES',
-    digits: 2,
-    minCharge: 0,
-    name: 'Kenyan Shilling'
-  }, {
-    code: 'KGS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Kyrgyzstan Som'
-  }, {
-    code: 'KHR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Cambodian Riel'
-  }, {
-    code: 'KMF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Comorian Franc'
-  }, {
-    code: 'KRW',
-    digits: 0,
-    minCharge: 0,
-    name: 'South Korean Won'
-  }, {
-    code: 'KYD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Cayman Islands Dollar'
-  }, {
-    code: 'KZT',
-    digits: 2,
-    minCharge: 0,
-    name: 'Kazakhstani Tenge'
-  }, {
-    code: 'LAK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Lao Kip'
-  }, {
-    code: 'LBP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Lebanese Pound'
-  }, {
-    code: 'LKR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Sri Lankan Rupee'
-  }, {
-    code: 'LRD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Liberian Dollar'
-  }, {
-    code: 'LSL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Lesotho Loti'
-  }, {
-    code: 'MAD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Moroccan Dirham'
-  }, {
-    code: 'MDL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Moldovan Leu'
-  }, {
-    code: 'MGA',
-    digits: 0,
-    minCharge: 0,
-    name: 'Madagascar Ariary'
-  }, // See above.
-  {
-    code: 'MKD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Macedonia Denar'
-  }, {
-    code: 'MMK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Myanmar (Burma) Kyat'
-  }, {
-    code: 'MNT',
-    digits: 2,
-    minCharge: 0,
-    name: 'Mongolian Tögrög'
-  }, {
-    code: 'MOP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Macanese Pataca'
-  }, {
-    code: 'MRO',
-    digits: 2,
-    minCharge: 0,
-    name: 'Mauritanian Ouguiya'
-  }, {
-    code: 'MUR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Mauritian Rupee'
-  }, {
-    code: 'MVR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Maldivian Rufiyaa'
-  }, {
-    code: 'MWK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Malawian Kwacha'
-  }, {
-    code: 'MXN',
-    digits: 2,
-    minCharge: 1000,
-    name: 'Mexican Peso'
-  }, {
-    code: 'MYR',
-    digits: 2,
-    minCharge: 200,
-    name: 'Malaysian Ringgit'
-  }, {
-    code: 'MZN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Mozambique Metical'
-  }, {
-    code: 'NAD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Namibian Dollar'
-  }, {
-    code: 'NGN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Nigerian Naira'
-  }, {
-    code: 'NIO',
-    digits: 2,
-    minCharge: 0,
-    name: 'Nicaraguan Córdoba'
-  }, {
-    code: 'NOK',
-    digits: 2,
-    minCharge: 300,
-    name: 'Norwegian Krone'
-  }, {
-    code: 'NPR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Nepalese Rupee'
-  }, {
-    code: 'NZD',
-    digits: 2,
-    minCharge: 50,
-    name: 'New Zealand Dollar'
-  }, {
-    code: 'PAB',
-    digits: 2,
-    minCharge: 0,
-    name: 'Panamanian Balboa'
-  }, {
-    code: 'PEN',
-    digits: 2,
-    minCharge: 0,
-    name: 'Peruvian Nuevo Sol'
-  }, {
-    code: 'PGK',
-    digits: 2,
-    minCharge: 0,
-    name: 'Papua New Guinean Kina'
-  }, {
-    code: 'PHP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Philippine Peso'
-  }, {
-    code: 'PKR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Pakistani Rupee'
-  }, {
-    code: 'PLN',
-    digits: 2,
-    minCharge: 200,
-    name: 'Polish Złoty'
-  }, {
-    code: 'PYG',
-    digits: 0,
-    minCharge: 0,
-    name: 'Paraguayan Guaraní'
-  }, {
-    code: 'QAR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Qatari Riyal'
-  }, {
-    code: 'RON',
-    digits: 2,
-    minCharge: 0,
-    name: 'Romania Leu'
-  }, {
-    code: 'RSD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Serbia Dinar'
-  }, {
-    code: 'RUB',
-    digits: 2,
-    minCharge: 0,
-    name: 'Russian Ruble'
-  }, {
-    code: 'RWF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Rwanda Franc'
-  }, {
-    code: 'SAR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Saudi Riyal'
-  }, {
-    code: 'SBD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Solomon Islands Dollar'
-  }, {
-    code: 'SCR',
-    digits: 2,
-    minCharge: 0,
-    name: 'Seychellois Rupee'
-  }, {
-    code: 'SEK',
-    digits: 2,
-    minCharge: 300,
-    name: 'Swedish Krona'
-  }, {
-    code: 'SGD',
-    digits: 2,
-    minCharge: 50,
-    name: 'Singapore Dollar'
-  }, {
-    code: 'SHP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Saint Helenian Pound'
-  }, {
-    code: 'SLL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Sierra Leonean Leone'
-  }, {
-    code: 'SOS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Somali Shilling'
-  }, {
-    code: 'SRD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Suriname Dollar'
-  }, {
-    code: 'STD',
-    digits: 2,
-    minCharge: 0,
-    name: 'São Tomé and Príncipe Dobra'
-  }, {
-    code: 'SZL',
-    digits: 2,
-    minCharge: 0,
-    name: 'Swazi Lilangeni'
-  }, {
-    code: 'THB',
-    digits: 2,
-    minCharge: 0,
-    name: 'Thai Baht'
-  }, {
-    code: 'TJS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Tajikistan Somoni'
-  }, {
-    code: 'TOP',
-    digits: 2,
-    minCharge: 0,
-    name: 'Tongan Paʻanga'
-  }, {
-    code: 'TRY',
-    digits: 2,
-    minCharge: 0,
-    name: 'Turkey Lira'
-  }, {
-    code: 'TTD',
-    digits: 2,
-    minCharge: 0,
-    name: 'Trinidad and Tobago Dollar'
-  }, {
-    code: 'TWD',
-    digits: 2,
-    minCharge: 0,
-    name: 'New Taiwan Dollar'
-  }, {
-    code: 'TZS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Tanzanian Shilling'
-  }, {
-    code: 'UAH',
-    digits: 2,
-    minCharge: 0,
-    name: 'Ukrainian Hryvnia'
-  }, {
-    code: 'UGX',
-    digits: 0,
-    minCharge: 0,
-    name: 'Ugandan Shilling'
-  }, // See above.
-  {
-    code: 'USD',
-    digits: 2,
-    minCharge: 50,
-    name: 'United States Dollar'
-  }, {
-    code: 'UYU',
-    digits: 2,
-    minCharge: 0,
-    name: 'Uruguayan Peso'
-  }, {
-    code: 'UZS',
-    digits: 2,
-    minCharge: 0,
-    name: 'Uzbekistani Som'
-  }, {
-    code: 'VND',
-    digits: 0,
-    minCharge: 0,
-    name: 'Vietnamese Đồng'
-  }, {
-    code: 'VUV',
-    digits: 0,
-    minCharge: 0,
-    name: 'Vanuatu Vatu'
-  }, {
-    code: 'WST',
-    digits: 2,
-    minCharge: 0,
-    name: 'Samoan Tala'
-  }, {
-    code: 'XAF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Central African Cfa Franc'
-  }, {
-    code: 'XCD',
-    digits: 2,
-    minCharge: 0,
-    name: 'East Caribbean Dollar'
-  }, {
-    code: 'XOF',
-    digits: 0,
-    minCharge: 0,
-    name: 'West African Cfa Franc'
-  }, {
-    code: 'XPF',
-    digits: 0,
-    minCharge: 0,
-    name: 'Cfp Franc'
-  }, {
-    code: 'YER',
-    digits: 2,
-    minCharge: 0,
-    name: 'Yemeni Rial'
-  }, {
-    code: 'ZAR',
-    digits: 2,
-    minCharge: 0,
-    name: 'South African Rand'
-  }, {
-    code: 'ZMW',
-    digits: 2,
-    minCharge: 0,
-    name: 'Zambia Kwacha'
-  }]; // used to determine Stripe support for a currency
-
-  api.stripeCurrencyCodes = {};
-
-  for (index = 0; index < api.stripeCurrencyList.length; index++) {
-    api.stripeCurrencyCodes[api.stripeCurrencyList[index].code] = true;
-  } // Note: These currencies are extracted by getting PayPal compatible currencies from:
-  //
-  // curl https://developer.paypal.com/docs/api/reference/currency-codes
-  //
-  // And then populating in the names from ISO 4217:
-
-
-  api.paypalCurrencyList = [{
-    code: 'AUD',
-    digits: 2,
-    minCharge: 1,
-    name: 'Australian Dollar'
-  }, {
-    code: 'BRL',
-    digits: 2,
-    minCharge: 1,
-    name: 'Brazilian Real'
-  }, {
-    code: 'CAD',
-    digits: 2,
-    minCharge: 1,
-    name: 'Canadian Dollar'
-  }, {
-    code: 'CNY',
-    digits: 2,
-    minCharge: 1,
-    name: 'Chinese Renmenbi'
-  }, {
-    code: 'CZK',
-    digits: 2,
-    minCharge: 1,
-    name: 'Czech Koruna'
-  }, {
-    code: 'DKK',
-    digits: 2,
-    minCharge: 1,
-    name: 'Danish Krone'
-  }, {
-    code: 'EUR',
-    digits: 2,
-    minCharge: 1,
-    name: 'Euro'
-  }, {
-    code: 'HKD',
-    digits: 2,
-    minCharge: 1,
-    name: 'Hong Kong Dollar'
-  }, // HUF is currently disabled, due to issues with PayPal's 0-decimal implementation
-  // See: https://github.com/webflow/webflow/issues/32865
-  // {code: 'HUF', digits: 0, minCharge: 1, name: 'Hungarian Forint'},
-  {
-    code: 'INR',
-    digits: 2,
-    minCharge: 1,
-    name: 'Indian Rupee'
-  }, {
-    code: 'ILS',
-    digits: 2,
-    minCharge: 1,
-    name: 'Israeli New Sheqel'
-  }, {
-    code: 'JPY',
-    digits: 0,
-    minCharge: 1,
-    name: 'Japanese Yen'
-  }, {
-    code: 'MYR',
-    digits: 2,
-    minCharge: 1,
-    name: 'Malaysian Ringgit'
-  }, {
-    code: 'MXN',
-    digits: 2,
-    minCharge: 1,
-    name: 'Mexican Peso'
-  }, {
-    code: 'TWD',
-    digits: 0,
-    minCharge: 1,
-    name: 'New Taiwan Dollar'
-  }, {
-    code: 'NZD',
-    digits: 2,
-    minCharge: 1,
-    name: 'New Zealand Dollar'
-  }, {
-    code: 'NOK',
-    digits: 2,
-    minCharge: 1,
-    name: 'Norwegian Krone'
-  }, {
-    code: 'PHP',
-    digits: 2,
-    minCharge: 1,
-    name: 'Philippine Peso'
-  }, {
-    code: 'PLN',
-    digits: 2,
-    minCharge: 1,
-    name: 'Polish Złoty'
-  }, {
-    code: 'GBP',
-    digits: 2,
-    minCharge: 1,
-    name: 'British Pound'
-  }, {
-    code: 'RUB',
-    digits: 2,
-    minCharge: 1,
-    name: 'Russian Ruble'
-  }, {
-    code: 'SGD',
-    digits: 2,
-    minCharge: 1,
-    name: 'Singapore Dollar'
-  }, {
-    code: 'SEK',
-    digits: 2,
-    minCharge: 1,
-    name: 'Swedish Krona'
-  }, {
-    code: 'CHF',
-    digits: 2,
-    minCharge: 1,
-    name: 'Swiss Franc'
-  }, {
-    code: 'THB',
-    digits: 2,
-    minCharge: 1,
-    name: 'Thai Baht'
-  }, {
-    code: 'USD',
-    digits: 2,
-    minCharge: 1,
-    name: 'United States Dollar'
-  }]; // used to determine PayPal support for a currency
-
-  api.paypalCurrencyCodes = {};
-
-  for (index = 0; index < api.paypalCurrencyList.length; index++) {
-    api.paypalCurrencyCodes[api.paypalCurrencyList[index].code] = true;
-  }
-
-  api.popularCommerceCountryList = [{
-    code: 'US',
-    code3: 'USA',
-    name: 'United States',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'NA',
-    group: 'Popular countries'
-  }, {
-    code: 'GB',
-    code3: 'GBR',
-    name: 'United Kingdom',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'Popular countries'
-  }, {
-    code: 'CA',
-    code3: 'CAN',
-    name: 'Canada',
-    currency: 'CAD',
-    units: 'metric',
-    priceIncludesTax: false,
-    continent: 'NA',
-    group: 'Popular countries'
-  }]; // Built by running `./bin/babel-run ./entrypoints/server/ops/refreshCountryList.js`
-
-  api.commerceCountryList = [{
-    code: 'AF',
-    code3: 'AFG',
-    name: 'Afghanistan',
-    currency: 'AFN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'AX',
-    code3: 'ALA',
-    name: 'Aland Islands',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'AL',
-    code3: 'ALB',
-    name: 'Albania',
-    currency: 'ALL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'DZ',
-    code3: 'DZA',
-    name: 'Algeria',
-    currency: 'DZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'AS',
-    code3: 'ASM',
-    name: 'American Samoa',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'AD',
-    code3: 'AND',
-    name: 'Andorra',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'AO',
-    code3: 'AGO',
-    name: 'Angola',
-    currency: 'AOA',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'AI',
-    code3: 'AIA',
-    name: 'Anguilla',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'AG',
-    code3: 'ATG',
-    name: 'Antigua and Barbuda',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'AR',
-    code3: 'ARG',
-    name: 'Argentina',
-    currency: 'ARS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'AM',
-    code3: 'ARM',
-    name: 'Armenia',
-    currency: 'AMD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'AW',
-    code3: 'ABW',
-    name: 'Aruba',
-    currency: 'AWG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'AU',
-    code3: 'AUS',
-    name: 'Australia',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'AT',
-    code3: 'AUT',
-    name: 'Austria',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'AZ',
-    code3: 'AZE',
-    name: 'Azerbaijan',
-    currency: 'AZN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'BS',
-    code3: 'BHS',
-    name: 'Bahamas',
-    currency: 'BSD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BH',
-    code3: 'BHR',
-    name: 'Bahrain',
-    currency: 'BHD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'BD',
-    code3: 'BGD',
-    name: 'Bangladesh',
-    currency: 'BDT',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'BB',
-    code3: 'BRB',
-    name: 'Barbados',
-    currency: 'BBD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BY',
-    code3: 'BLR',
-    name: 'Belarus',
-    currency: 'BYN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'BE',
-    code3: 'BEL',
-    name: 'Belgium',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'BZ',
-    code3: 'BLZ',
-    name: 'Belize',
-    currency: 'BZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BJ',
-    code3: 'BEN',
-    name: 'Benin',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'BM',
-    code3: 'BMU',
-    name: 'Bermuda',
-    currency: 'BMD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BT',
-    code3: 'BTN',
-    name: 'Bhutan',
-    currency: 'BTN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'BO',
-    code3: 'BOL',
-    name: 'Bolivia',
-    currency: 'BOB',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'BQ',
-    code3: 'BES',
-    name: 'Bonaire, Saint Eustatius and Saba',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BA',
-    code3: 'BIH',
-    name: 'Bosnia and Herzegovina',
-    currency: 'BAM',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'BW',
-    code3: 'BWA',
-    name: 'Botswana',
-    currency: 'BWP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'BR',
-    code3: 'BRA',
-    name: 'Brazil',
-    currency: 'BRL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'IO',
-    code3: 'IOT',
-    name: 'British Indian Ocean Territory',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'VG',
-    code3: 'VGB',
-    name: 'British Virgin Islands',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'BN',
-    code3: 'BRN',
-    name: 'Brunei',
-    currency: 'BND',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'BG',
-    code3: 'BGR',
-    name: 'Bulgaria',
-    currency: 'BGN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'BF',
-    code3: 'BFA',
-    name: 'Burkina Faso',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'BI',
-    code3: 'BDI',
-    name: 'Burundi',
-    currency: 'BIF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'CV',
-    code3: 'CPV',
-    name: 'Cabo Verde',
-    currency: 'CVE',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'KH',
-    code3: 'KHM',
-    name: 'Cambodia',
-    currency: 'KHR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'CM',
-    code3: 'CMR',
-    name: 'Cameroon',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'CA',
-    code3: 'CAN',
-    name: 'Canada',
-    currency: 'CAD',
-    units: 'metric',
-    priceIncludesTax: false,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'KY',
-    code3: 'CYM',
-    name: 'Cayman Islands',
-    currency: 'KYD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'CF',
-    code3: 'CAF',
-    name: 'Central African Republic',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'TD',
-    code3: 'TCD',
-    name: 'Chad',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'CL',
-    code3: 'CHL',
-    name: 'Chile',
-    currency: 'CLP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'CN',
-    code3: 'CHN',
-    name: 'China',
-    currency: 'CNY',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'CX',
-    code3: 'CXR',
-    name: 'Christmas Island',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'CC',
-    code3: 'CCK',
-    name: 'Cocos Islands',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'CO',
-    code3: 'COL',
-    name: 'Colombia',
-    currency: 'COP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'KM',
-    code3: 'COM',
-    name: 'Comoros',
-    currency: 'KMF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'CK',
-    code3: 'COK',
-    name: 'Cook Islands',
-    currency: 'NZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'CR',
-    code3: 'CRI',
-    name: 'Costa Rica',
-    currency: 'CRC',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'HR',
-    code3: 'HRV',
-    name: 'Croatia',
-    currency: 'HRK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'CU',
-    code3: 'CUB',
-    name: 'Cuba',
-    currency: 'CUP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'CW',
-    code3: 'CUW',
-    name: 'Curacao',
-    currency: 'ANG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'CY',
-    code3: 'CYP',
-    name: 'Cyprus',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'CZ',
-    code3: 'CZE',
-    name: 'Czechia',
-    currency: 'CZK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'CD',
-    code3: 'COD',
-    name: 'Democratic Republic of the Congo',
-    currency: 'CDF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'DK',
-    code3: 'DNK',
-    name: 'Denmark',
-    currency: 'DKK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'DJ',
-    code3: 'DJI',
-    name: 'Djibouti',
-    currency: 'DJF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'DM',
-    code3: 'DMA',
-    name: 'Dominica',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'DO',
-    code3: 'DOM',
-    name: 'Dominican Republic',
-    currency: 'DOP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'EC',
-    code3: 'ECU',
-    name: 'Ecuador',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'EG',
-    code3: 'EGY',
-    name: 'Egypt',
-    currency: 'EGP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'SV',
-    code3: 'SLV',
-    name: 'El Salvador',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'GQ',
-    code3: 'GNQ',
-    name: 'Equatorial Guinea',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'ER',
-    code3: 'ERI',
-    name: 'Eritrea',
-    currency: 'ERN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'EE',
-    code3: 'EST',
-    name: 'Estonia',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SZ',
-    code3: 'SWZ',
-    name: 'Eswatini',
-    currency: 'SZL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'ET',
-    code3: 'ETH',
-    name: 'Ethiopia',
-    currency: 'ETB',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'FK',
-    code3: 'FLK',
-    name: 'Falkland Islands',
-    currency: 'FKP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'FO',
-    code3: 'FRO',
-    name: 'Faroe Islands',
-    currency: 'DKK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'FJ',
-    code3: 'FJI',
-    name: 'Fiji',
-    currency: 'FJD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'FI',
-    code3: 'FIN',
-    name: 'Finland',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'FR',
-    code3: 'FRA',
-    name: 'France',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'GF',
-    code3: 'GUF',
-    name: 'French Guiana',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'PF',
-    code3: 'PYF',
-    name: 'French Polynesia',
-    currency: 'XPF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'TF',
-    code3: 'ATF',
-    name: 'French Southern Territories',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AN',
-    group: 'All countries'
-  }, {
-    code: 'GA',
-    code3: 'GAB',
-    name: 'Gabon',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GM',
-    code3: 'GMB',
-    name: 'Gambia',
-    currency: 'GMD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GE',
-    code3: 'GEO',
-    name: 'Georgia',
-    currency: 'GEL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'DE',
-    code3: 'DEU',
-    name: 'Germany',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'GH',
-    code3: 'GHA',
-    name: 'Ghana',
-    currency: 'GHS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GI',
-    code3: 'GIB',
-    name: 'Gibraltar',
-    currency: 'GIP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'GR',
-    code3: 'GRC',
-    name: 'Greece',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'GL',
-    code3: 'GRL',
-    name: 'Greenland',
-    currency: 'DKK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'GD',
-    code3: 'GRD',
-    name: 'Grenada',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'GP',
-    code3: 'GLP',
-    name: 'Guadeloupe',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'GU',
-    code3: 'GUM',
-    name: 'Guam',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'GT',
-    code3: 'GTM',
-    name: 'Guatemala',
-    currency: 'GTQ',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'GG',
-    code3: 'GGY',
-    name: 'Guernsey',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'GN',
-    code3: 'GIN',
-    name: 'Guinea',
-    currency: 'GNF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GW',
-    code3: 'GNB',
-    name: 'Guinea-Bissau',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GY',
-    code3: 'GUY',
-    name: 'Guyana',
-    currency: 'GYD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'HT',
-    code3: 'HTI',
-    name: 'Haiti',
-    currency: 'HTG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'HN',
-    code3: 'HND',
-    name: 'Honduras',
-    currency: 'HNL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'HK',
-    code3: 'HKG',
-    name: 'Hong Kong',
-    currency: 'HKD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'HU',
-    code3: 'HUN',
-    name: 'Hungary',
-    currency: 'HUF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'IS',
-    code3: 'ISL',
-    name: 'Iceland',
-    currency: 'ISK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'IN',
-    code3: 'IND',
-    name: 'India',
-    currency: 'INR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'ID',
-    code3: 'IDN',
-    name: 'Indonesia',
-    currency: 'IDR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'IR',
-    code3: 'IRN',
-    name: 'Iran',
-    currency: 'IRR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'IQ',
-    code3: 'IRQ',
-    name: 'Iraq',
-    currency: 'IQD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'IE',
-    code3: 'IRL',
-    name: 'Ireland',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'IM',
-    code3: 'IMN',
-    name: 'Isle of Man',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'IL',
-    code3: 'ISR',
-    name: 'Israel',
-    currency: 'ILS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'IT',
-    code3: 'ITA',
-    name: 'Italy',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'CI',
-    code3: 'CIV',
-    name: 'Ivory Coast',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'JM',
-    code3: 'JAM',
-    name: 'Jamaica',
-    currency: 'JMD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'JP',
-    code3: 'JPN',
-    name: 'Japan',
-    currency: 'JPY',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'JE',
-    code3: 'JEY',
-    name: 'Jersey',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'JO',
-    code3: 'JOR',
-    name: 'Jordan',
-    currency: 'JOD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'KZ',
-    code3: 'KAZ',
-    name: 'Kazakhstan',
-    currency: 'KZT',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'KE',
-    code3: 'KEN',
-    name: 'Kenya',
-    currency: 'KES',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'KI',
-    code3: 'KIR',
-    name: 'Kiribati',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'XK',
-    code3: 'XKX',
-    name: 'Kosovo',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'KW',
-    code3: 'KWT',
-    name: 'Kuwait',
-    currency: 'KWD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'KG',
-    code3: 'KGZ',
-    name: 'Kyrgyzstan',
-    currency: 'KGS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'LA',
-    code3: 'LAO',
-    name: 'Laos',
-    currency: 'LAK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'LV',
-    code3: 'LVA',
-    name: 'Latvia',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'LB',
-    code3: 'LBN',
-    name: 'Lebanon',
-    currency: 'LBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'LS',
-    code3: 'LSO',
-    name: 'Lesotho',
-    currency: 'LSL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'LR',
-    code3: 'LBR',
-    name: 'Liberia',
-    currency: 'LRD',
-    units: 'imperial',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'LY',
-    code3: 'LBY',
-    name: 'Libya',
-    currency: 'LYD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'LI',
-    code3: 'LIE',
-    name: 'Liechtenstein',
-    currency: 'CHF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'LT',
-    code3: 'LTU',
-    name: 'Lithuania',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'LU',
-    code3: 'LUX',
-    name: 'Luxembourg',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MO',
-    code3: 'MAC',
-    name: 'Macao',
-    currency: 'MOP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'MG',
-    code3: 'MDG',
-    name: 'Madagascar',
-    currency: 'MGA',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MW',
-    code3: 'MWI',
-    name: 'Malawi',
-    currency: 'MWK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MY',
-    code3: 'MYS',
-    name: 'Malaysia',
-    currency: 'MYR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'MV',
-    code3: 'MDV',
-    name: 'Maldives',
-    currency: 'MVR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'ML',
-    code3: 'MLI',
-    name: 'Mali',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MT',
-    code3: 'MLT',
-    name: 'Malta',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MH',
-    code3: 'MHL',
-    name: 'Marshall Islands',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'MQ',
-    code3: 'MTQ',
-    name: 'Martinique',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'MR',
-    code3: 'MRT',
-    name: 'Mauritania',
-    currency: 'MRU',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MU',
-    code3: 'MUS',
-    name: 'Mauritius',
-    currency: 'MUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'YT',
-    code3: 'MYT',
-    name: 'Mayotte',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MX',
-    code3: 'MEX',
-    name: 'Mexico',
-    currency: 'MXN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'FM',
-    code3: 'FSM',
-    name: 'Micronesia',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'MD',
-    code3: 'MDA',
-    name: 'Moldova',
-    currency: 'MDL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MC',
-    code3: 'MCO',
-    name: 'Monaco',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MN',
-    code3: 'MNG',
-    name: 'Mongolia',
-    currency: 'MNT',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'ME',
-    code3: 'MNE',
-    name: 'Montenegro',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MS',
-    code3: 'MSR',
-    name: 'Montserrat',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'MA',
-    code3: 'MAR',
-    name: 'Morocco',
-    currency: 'MAD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MZ',
-    code3: 'MOZ',
-    name: 'Mozambique',
-    currency: 'MZN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'MM',
-    code3: 'MMR',
-    name: 'Myanmar',
-    currency: 'MMK',
-    units: 'imperial',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'NA',
-    code3: 'NAM',
-    name: 'Namibia',
-    currency: 'NAD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'NR',
-    code3: 'NRU',
-    name: 'Nauru',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'NP',
-    code3: 'NPL',
-    name: 'Nepal',
-    currency: 'NPR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'NL',
-    code3: 'NLD',
-    name: 'Netherlands',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'NC',
-    code3: 'NCL',
-    name: 'New Caledonia',
-    currency: 'XPF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'NZ',
-    code3: 'NZL',
-    name: 'New Zealand',
-    currency: 'NZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'NI',
-    code3: 'NIC',
-    name: 'Nicaragua',
-    currency: 'NIO',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'NE',
-    code3: 'NER',
-    name: 'Niger',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'NG',
-    code3: 'NGA',
-    name: 'Nigeria',
-    currency: 'NGN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'NU',
-    code3: 'NIU',
-    name: 'Niue',
-    currency: 'NZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'NF',
-    code3: 'NFK',
-    name: 'Norfolk Island',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'KP',
-    code3: 'PRK',
-    name: 'North Korea',
-    currency: 'KPW',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'MK',
-    code3: 'MKD',
-    name: 'North Macedonia',
-    currency: 'MKD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'MP',
-    code3: 'MNP',
-    name: 'Northern Mariana Islands',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'NO',
-    code3: 'NOR',
-    name: 'Norway',
-    currency: 'NOK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'OM',
-    code3: 'OMN',
-    name: 'Oman',
-    currency: 'OMR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'PK',
-    code3: 'PAK',
-    name: 'Pakistan',
-    currency: 'PKR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'PW',
-    code3: 'PLW',
-    name: 'Palau',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'PS',
-    code3: 'PSE',
-    name: 'Palestinian Territory',
-    currency: 'ILS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'PA',
-    code3: 'PAN',
-    name: 'Panama',
-    currency: 'PAB',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'PG',
-    code3: 'PNG',
-    name: 'Papua New Guinea',
-    currency: 'PGK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'PY',
-    code3: 'PRY',
-    name: 'Paraguay',
-    currency: 'PYG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'PE',
-    code3: 'PER',
-    name: 'Peru',
-    currency: 'PEN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'PH',
-    code3: 'PHL',
-    name: 'Philippines',
-    currency: 'PHP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'PN',
-    code3: 'PCN',
-    name: 'Pitcairn',
-    currency: 'NZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'PL',
-    code3: 'POL',
-    name: 'Poland',
-    currency: 'PLN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'PT',
-    code3: 'PRT',
-    name: 'Portugal',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'PR',
-    code3: 'PRI',
-    name: 'Puerto Rico',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'QA',
-    code3: 'QAT',
-    name: 'Qatar',
-    currency: 'QAR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'CG',
-    code3: 'COG',
-    name: 'Republic of the Congo',
-    currency: 'XAF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'RE',
-    code3: 'REU',
-    name: 'Reunion',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'RO',
-    code3: 'ROU',
-    name: 'Romania',
-    currency: 'RON',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'RU',
-    code3: 'RUS',
-    name: 'Russia',
-    currency: 'RUB',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'RW',
-    code3: 'RWA',
-    name: 'Rwanda',
-    currency: 'RWF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'BL',
-    code3: 'BLM',
-    name: 'Saint Barthelemy',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'SH',
-    code3: 'SHN',
-    name: 'Saint Helena',
-    currency: 'SHP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'KN',
-    code3: 'KNA',
-    name: 'Saint Kitts and Nevis',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'LC',
-    code3: 'LCA',
-    name: 'Saint Lucia',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'MF',
-    code3: 'MAF',
-    name: 'Saint Martin',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'PM',
-    code3: 'SPM',
-    name: 'Saint Pierre and Miquelon',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'VC',
-    code3: 'VCT',
-    name: 'Saint Vincent and the Grenadines',
-    currency: 'XCD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'WS',
-    code3: 'WSM',
-    name: 'Samoa',
-    currency: 'WST',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'SM',
-    code3: 'SMR',
-    name: 'San Marino',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'ST',
-    code3: 'STP',
-    name: 'Sao Tome and Principe',
-    currency: 'STN',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'SA',
-    code3: 'SAU',
-    name: 'Saudi Arabia',
-    currency: 'SAR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'SN',
-    code3: 'SEN',
-    name: 'Senegal',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'RS',
-    code3: 'SRB',
-    name: 'Serbia',
-    currency: 'RSD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SC',
-    code3: 'SYC',
-    name: 'Seychelles',
-    currency: 'SCR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'SL',
-    code3: 'SLE',
-    name: 'Sierra Leone',
-    currency: 'SLL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'SG',
-    code3: 'SGP',
-    name: 'Singapore',
-    currency: 'SGD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'SX',
-    code3: 'SXM',
-    name: 'Sint Maarten',
-    currency: 'ANG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'SK',
-    code3: 'SVK',
-    name: 'Slovakia',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SI',
-    code3: 'SVN',
-    name: 'Slovenia',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SB',
-    code3: 'SLB',
-    name: 'Solomon Islands',
-    currency: 'SBD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'SO',
-    code3: 'SOM',
-    name: 'Somalia',
-    currency: 'SOS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'ZA',
-    code3: 'ZAF',
-    name: 'South Africa',
-    currency: 'ZAR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'GS',
-    code3: 'SGS',
-    name: 'South Georgia and the South Sandwich Islands',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AN',
-    group: 'All countries'
-  }, {
-    code: 'KR',
-    code3: 'KOR',
-    name: 'South Korea',
-    currency: 'KRW',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'SS',
-    code3: 'SSD',
-    name: 'South Sudan',
-    currency: 'SSP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'ES',
-    code3: 'ESP',
-    name: 'Spain',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'LK',
-    code3: 'LKA',
-    name: 'Sri Lanka',
-    currency: 'LKR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'SD',
-    code3: 'SDN',
-    name: 'Sudan',
-    currency: 'SDG',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'SR',
-    code3: 'SUR',
-    name: 'Suriname',
-    currency: 'SRD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'SJ',
-    code3: 'SJM',
-    name: 'Svalbard and Jan Mayen',
-    currency: 'NOK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SE',
-    code3: 'SWE',
-    name: 'Sweden',
-    currency: 'SEK',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'CH',
-    code3: 'CHE',
-    name: 'Switzerland',
-    currency: 'CHF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'SY',
-    code3: 'SYR',
-    name: 'Syria',
-    currency: 'SYP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TW',
-    code3: 'TWN',
-    name: 'Taiwan',
-    currency: 'TWD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TJ',
-    code3: 'TJK',
-    name: 'Tajikistan',
-    currency: 'TJS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TZ',
-    code3: 'TZA',
-    name: 'Tanzania',
-    currency: 'TZS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'TH',
-    code3: 'THA',
-    name: 'Thailand',
-    currency: 'THB',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TL',
-    code3: 'TLS',
-    name: 'Timor Leste',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'TG',
-    code3: 'TGO',
-    name: 'Togo',
-    currency: 'XOF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'TK',
-    code3: 'TKL',
-    name: 'Tokelau',
-    currency: 'NZD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'TO',
-    code3: 'TON',
-    name: 'Tonga',
-    currency: 'TOP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'TT',
-    code3: 'TTO',
-    name: 'Trinidad and Tobago',
-    currency: 'TTD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'TN',
-    code3: 'TUN',
-    name: 'Tunisia',
-    currency: 'TND',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'TR',
-    code3: 'TUR',
-    name: 'Turkey',
-    currency: 'TRY',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TM',
-    code3: 'TKM',
-    name: 'Turkmenistan',
-    currency: 'TMT',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'TC',
-    code3: 'TCA',
-    name: 'Turks and Caicos Islands',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'TV',
-    code3: 'TUV',
-    name: 'Tuvalu',
-    currency: 'AUD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'VI',
-    code3: 'VIR',
-    name: 'U.S. Virgin Islands',
-    currency: 'USD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'UG',
-    code3: 'UGA',
-    name: 'Uganda',
-    currency: 'UGX',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'UA',
-    code3: 'UKR',
-    name: 'Ukraine',
-    currency: 'UAH',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'AE',
-    code3: 'ARE',
-    name: 'United Arab Emirates',
-    currency: 'AED',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'GB',
-    code3: 'GBR',
-    name: 'United Kingdom',
-    currency: 'GBP',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'US',
-    code3: 'USA',
-    name: 'United States',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'NA',
-    group: 'All countries'
-  }, {
-    code: 'UM',
-    code3: 'UMI',
-    name: 'United States Minor Outlying Islands',
-    currency: 'USD',
-    units: 'imperial',
-    priceIncludesTax: false,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'UY',
-    code3: 'URY',
-    name: 'Uruguay',
-    currency: 'UYU',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'UZ',
-    code3: 'UZB',
-    name: 'Uzbekistan',
-    currency: 'UZS',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'VU',
-    code3: 'VUT',
-    name: 'Vanuatu',
-    currency: 'VUV',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'VA',
-    code3: 'VAT',
-    name: 'Vatican',
-    currency: 'EUR',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'EU',
-    group: 'All countries'
-  }, {
-    code: 'VE',
-    code3: 'VEN',
-    name: 'Venezuela',
-    currency: 'VES',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'SA',
-    group: 'All countries'
-  }, {
-    code: 'VN',
-    code3: 'VNM',
-    name: 'Vietnam',
-    currency: 'VND',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'WF',
-    code3: 'WLF',
-    name: 'Wallis and Futuna',
-    currency: 'XPF',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'OC',
-    group: 'All countries'
-  }, {
-    code: 'EH',
-    code3: 'ESH',
-    name: 'Western Sahara',
-    currency: 'MAD',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'YE',
-    code3: 'YEM',
-    name: 'Yemen',
-    currency: 'YER',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AS',
-    group: 'All countries'
-  }, {
-    code: 'ZM',
-    code3: 'ZMB',
-    name: 'Zambia',
-    currency: 'ZMW',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }, {
-    code: 'ZW',
-    code3: 'ZWE',
-    name: 'Zimbabwe',
-    currency: 'ZWL',
-    units: 'metric',
-    priceIncludesTax: true,
-    continent: 'AF',
-    group: 'All countries'
-  }]; // selects country data from commerceCountryList based on COMMERCE_SUPPORTED_COUNTRY_LIST
-
-  api.commerceSupportedCountryList = []; // used to determine if a country is supported by at least one availble payment provider
-
-  api.commerceSupportedCountryCodes = {};
-
-  for (index = 0; index < COMMERCE_SUPPORTED_COUNTRY_LIST.length; index++) {
-    api.commerceSupportedCountryCodes[COMMERCE_SUPPORTED_COUNTRY_LIST[index]] = true;
-
-    for (innerIndex = 0; innerIndex < api.commerceCountryList.length; innerIndex++) {
-      if (api.commerceCountryList[innerIndex].code === COMMERCE_SUPPORTED_COUNTRY_LIST[index]) {
-        api.commerceSupportedCountryList.push(api.commerceCountryList[innerIndex]);
-        break;
-      }
-    }
-  } // used to determine Stripe support for a country
-
-
-  api.stripeCountryCodes = {};
-
-  for (index = 0; index < STRIPE_COUNTRY_LIST.length; index++) {
-    api.stripeCountryCodes[STRIPE_COUNTRY_LIST[index]] = true;
-  } // used to determine PayPal support for a country
-
-
-  api.paypalCountryCodes = {};
-
-  for (index = 0; index < PAYPAL_COUNTRY_LIST.length; index++) {
-    api.paypalCountryCodes[PAYPAL_COUNTRY_LIST[index]] = true;
-  } // list of all the locales for the list of countries provided in commerceCountryList
-
-
-  api.commerceCurrencyLocales = [{
-    name: 'Afar',
-    location: 'Djibouti',
-    tag: 'aa-DJ'
-  }, {
-    name: 'Afar',
-    location: 'Eritrea',
-    tag: 'aa-ER'
-  }, {
-    name: 'Afar',
-    location: 'Ethiopia',
-    tag: 'aa-ET'
-  }, {
-    name: 'Afrikaans',
-    location: 'Namibia',
-    tag: 'af-NA'
-  }, {
-    name: 'Afrikaans',
-    location: 'South Africa',
-    tag: 'af-ZA'
-  }, {
-    name: 'Aghem',
-    location: 'Cameroon',
-    tag: 'agq-CM'
-  }, {
-    name: 'Akan',
-    location: 'Ghana',
-    tag: 'ak-GH'
-  }, {
-    name: 'Albanian',
-    location: 'Albania',
-    tag: 'sq-AL'
-  }, {
-    name: 'Alsatian',
-    location: 'France',
-    tag: 'gsw-FR'
-  }, {
-    name: 'Alsatian',
-    location: 'Liechtenstein',
-    tag: 'gsw-LI'
-  }, {
-    name: 'Alsatian',
-    location: 'Switzerland',
-    tag: 'gsw-CH'
-  }, {
-    name: 'Amharic',
-    location: 'Ethiopia',
-    tag: 'am-ET'
-  }, {
-    name: 'Arabic',
-    location: 'Algeria',
-    tag: 'ar-DZ'
-  }, {
-    name: 'Arabic',
-    location: 'Bahrain',
-    tag: 'ar-BH'
-  }, {
-    name: 'Arabic',
-    location: 'Chad',
-    tag: 'ar-TD'
-  }, {
-    name: 'Arabic',
-    location: 'Comoros',
-    tag: 'ar-KM'
-  }, {
-    name: 'Arabic',
-    location: 'Djibouti',
-    tag: 'ar-DJ'
-  }, {
-    name: 'Arabic',
-    location: 'Egypt',
-    tag: 'ar-EG'
-  }, {
-    name: 'Arabic',
-    location: 'Eritrea',
-    tag: 'ar-ER'
-  }, {
-    name: 'Arabic',
-    location: 'Iraq',
-    tag: 'ar-IQ'
-  }, {
-    name: 'Arabic',
-    location: 'Israel',
-    tag: 'ar-IL'
-  }, {
-    name: 'Arabic',
-    location: 'Jordan',
-    tag: 'ar-JO'
-  }, {
-    name: 'Arabic',
-    location: 'Kuwait',
-    tag: 'ar-KW'
-  }, {
-    name: 'Arabic',
-    location: 'Lebanon',
-    tag: 'ar-LB'
-  }, {
-    name: 'Arabic',
-    location: 'Libya',
-    tag: 'ar-LY'
-  }, {
-    name: 'Arabic',
-    location: 'Mauritania',
-    tag: 'ar-MR'
-  }, {
-    name: 'Arabic',
-    location: 'Morocco',
-    tag: 'ar-MA'
-  }, {
-    name: 'Arabic',
-    location: 'Oman',
-    tag: 'ar-OM'
-  }, {
-    name: 'Arabic',
-    location: 'Qatar',
-    tag: 'ar-QA'
-  }, {
-    name: 'Arabic',
-    location: 'Saudi Arabia',
-    tag: 'ar-SA'
-  }, {
-    name: 'Arabic',
-    location: 'Somalia',
-    tag: 'ar-SO'
-  }, {
-    name: 'Arabic',
-    location: 'South Sudan',
-    tag: 'ar-SS'
-  }, {
-    name: 'Arabic',
-    location: 'Sudan',
-    tag: 'ar-SD'
-  }, {
-    name: 'Arabic',
-    location: 'Syria',
-    tag: 'ar-SY'
-  }, {
-    name: 'Arabic',
-    location: 'Tunisia',
-    tag: 'ar-TN'
-  }, {
-    name: 'Arabic',
-    location: 'Yemen',
-    tag: 'ar-YE'
-  }, {
-    name: 'Armenian',
-    location: 'Armenia',
-    tag: 'hy-AM'
-  }, {
-    name: 'Assamese',
-    location: 'India',
-    tag: 'as-IN'
-  }, {
-    name: 'Asturian',
-    location: 'Spain',
-    tag: 'ast-ES'
-  }, {
-    name: 'Asu',
-    location: 'Tanzania',
-    tag: 'asa-TZ'
-  }, {
-    name: 'Azerbaijani (Cyrillic)',
-    location: 'Azerbaijan',
-    tag: 'az-Cyrl-AZ'
-  }, {
-    name: 'Azerbaijani (Latin)',
-    location: 'Azerbaijan',
-    tag: 'az-Latn-AZ'
-  }, {
-    name: 'Bafia',
-    location: 'Cameroon',
-    tag: 'ksf-CM'
-  }, {
-    name: 'Bamanankan (Latin)',
-    location: 'Mali',
-    tag: 'bm-Latn-ML'
-  }, {
-    name: 'Bangla',
-    location: 'Bangladesh',
-    tag: 'bn-BD'
-  }, {
-    name: 'Bangla',
-    location: 'India',
-    tag: 'bn-IN'
-  }, {
-    name: 'Basaa',
-    location: 'Cameroon',
-    tag: 'bas-CM'
-  }, {
-    name: 'Bashkir',
-    location: 'Russia',
-    tag: 'ba-RU'
-  }, {
-    name: 'Basque',
-    location: 'Spain',
-    tag: 'eu-ES'
-  }, {
-    name: 'Belarusian',
-    location: 'Belarus',
-    tag: 'be-BY'
-  }, {
-    name: 'Bemba',
-    location: 'Zambia',
-    tag: 'bem-ZM'
-  }, {
-    name: 'Bena',
-    location: 'Tanzania',
-    tag: 'bez-TZ'
-  }, {
-    name: 'Blin',
-    location: 'Eritrea',
-    tag: 'byn-ER'
-  }, {
-    name: 'Bodo',
-    location: 'India',
-    tag: 'brx-IN'
-  }, {
-    name: 'Bosnian (Cyrillic)',
-    location: 'Bosnia and Herzegovina',
-    tag: 'bs-Cyrl-BA'
-  }, {
-    name: 'Bosnian (Latin)',
-    location: 'Bosnia and Herzegovina',
-    tag: 'bs-Latn-BA'
-  }, {
-    name: 'Breton',
-    location: 'France',
-    tag: 'br-FR'
-  }, {
-    name: 'Bulgarian',
-    location: 'Bulgaria',
-    tag: 'bg-BG'
-  }, {
-    name: 'Burmese',
-    location: 'Myanmar',
-    tag: 'my-MM'
-  }, {
-    name: 'Catalan',
-    location: 'Andorra',
-    tag: 'ca-AD'
-  }, {
-    name: 'Catalan',
-    location: 'France',
-    tag: 'ca-FR'
-  }, {
-    name: 'Catalan',
-    location: 'Italy',
-    tag: 'ca-IT'
-  }, {
-    name: 'Catalan',
-    location: 'Spain',
-    tag: 'ca-ES'
-  }, {
-    name: 'Central Atlas Tamazight ',
-    location: 'Morocco',
-    tag: 'tzm-Latn'
-  }, {
-    name: 'Central Kurdish',
-    location: 'Iraq',
-    tag: 'ku-Arab-IQ'
-  }, {
-    name: 'Chechen',
-    location: 'Russia',
-    tag: 'cd-RU'
-  }, {
-    name: 'Cherokee',
-    location: 'United States',
-    tag: 'chr-Cher-US'
-  }, {
-    name: 'Chiga',
-    location: 'Uganda',
-    tag: 'cgg-UG'
-  }, {
-    name: 'Chinese (Simplified)',
-    location: 'Singapore',
-    tag: 'zh-SG'
-  }, {
-    name: 'Chinese (Traditional)',
-    location: 'Taiwan',
-    tag: 'zh-TW'
-  }, {
-    name: 'Church Slavic',
-    location: 'Russia',
-    tag: 'cu-RU'
-  }, {
-    name: 'Cornish',
-    location: 'United Kingdom',
-    tag: 'kw-GB'
-  }, {
-    name: 'Corsican',
-    location: 'France',
-    tag: 'co-FR'
-  }, {
-    name: 'Croatian',
-    location: 'Croatia',
-    tag: 'hr-HR'
-  }, {
-    name: 'Croatian (Latin)',
-    location: 'Bosnia and Herzegovina',
-    tag: 'hr-BA'
-  }, {
-    name: 'Czech',
-    location: 'Czechia',
-    tag: 'cs-CZ'
-  }, {
-    name: 'Danish',
-    location: 'Denmark',
-    tag: 'da-DK'
-  }, {
-    name: 'Danish',
-    location: 'Greenland',
-    tag: 'da-GL'
-  }, {
-    name: 'Dari',
-    location: 'Afghanistan',
-    tag: 'prs-AF'
-  }, {
-    name: 'Divehi',
-    location: 'Maldives',
-    tag: 'dv-MV'
-  }, {
-    name: 'Duala',
-    location: 'Cameroon',
-    tag: 'dua-CM'
-  }, {
-    name: 'Dutch',
-    location: 'Aruba',
-    tag: 'nl-AW'
-  }, {
-    name: 'Dutch',
-    location: 'Belgium',
-    tag: 'nl-BE'
-  }, {
-    name: 'Dutch',
-    location: 'Netherlands',
-    tag: 'nl-NL'
-  }, {
-    name: 'Dutch',
-    location: 'Sint Maarten',
-    tag: 'nl-SX'
-  }, {
-    name: 'Dutch',
-    location: 'Suriname',
-    tag: 'nl-SR'
-  }, {
-    name: 'Dzongkha',
-    location: 'Bhutan',
-    tag: 'dz-BT'
-  }, {
-    name: 'Embu',
-    location: 'Kenya',
-    tag: 'ebu-KE'
-  }, {
-    name: 'English',
-    location: 'American Samoa',
-    tag: 'en-AS'
-  }, {
-    name: 'English',
-    location: 'Anguilla',
-    tag: 'en-AI'
-  }, {
-    name: 'English',
-    location: 'Antigua and Barbuda',
-    tag: 'en-AG'
-  }, {
-    name: 'English',
-    location: 'Australia',
-    tag: 'en-AU'
-  }, {
-    name: 'English',
-    location: 'Austria',
-    tag: 'en-AT'
-  }, {
-    name: 'English',
-    location: 'Bahamas',
-    tag: 'en-BS'
-  }, {
-    name: 'English',
-    location: 'Barbados',
-    tag: 'en-BB'
-  }, {
-    name: 'English',
-    location: 'Belgium',
-    tag: 'en-BE'
-  }, {
-    name: 'English',
-    location: 'Belize',
-    tag: 'en-BZ'
-  }, {
-    name: 'English',
-    location: 'Bermuda',
-    tag: 'en-BM'
-  }, {
-    name: 'English',
-    location: 'Botswana',
-    tag: 'en-BW'
-  }, {
-    name: 'English',
-    location: 'British Indian Ocean Territory',
-    tag: 'en-IO'
-  }, {
-    name: 'English',
-    location: 'British Virgin Islands',
-    tag: 'en-VG'
-  }, {
-    name: 'English',
-    location: 'Burundi',
-    tag: 'en-BI'
-  }, {
-    name: 'English',
-    location: 'Cameroon',
-    tag: 'en-CM'
-  }, {
-    name: 'English',
-    location: 'Canada',
-    tag: 'en-CA'
-  }, {
-    name: 'English',
-    location: 'Cayman Islands',
-    tag: 'en-KY'
-  }, {
-    name: 'English',
-    location: 'Christmas Island',
-    tag: 'en-CX'
-  }, {
-    name: 'English',
-    location: 'Cook Islands',
-    tag: 'en-CK'
-  }, {
-    name: 'English',
-    location: 'Cyprus',
-    tag: 'en-CY'
-  }, {
-    name: 'English',
-    location: 'Denmark',
-    tag: 'en-DK'
-  }, {
-    name: 'English',
-    location: 'Dominica',
-    tag: 'en-DM'
-  }, {
-    name: 'English',
-    location: 'Eritrea',
-    tag: 'en-ER'
-  }, {
-    name: 'English',
-    location: 'Falkland Islands',
-    tag: 'en-FK'
-  }, {
-    name: 'English',
-    location: 'Finland',
-    tag: 'en-FI'
-  }, {
-    name: 'English',
-    location: 'Fiji',
-    tag: 'en-FJ'
-  }, {
-    name: 'English',
-    location: 'Gambia',
-    tag: 'en-GM'
-  }, {
-    name: 'English',
-    location: 'Germany',
-    tag: 'en-DE'
-  }, {
-    name: 'English',
-    location: 'Ghana',
-    tag: 'en-GH'
-  }, {
-    name: 'English',
-    location: 'Gibraltar',
-    tag: 'en-GI'
-  }, {
-    name: 'English',
-    location: 'Grenada',
-    tag: 'en-GD'
-  }, {
-    name: 'English',
-    location: 'Guam',
-    tag: 'en-GU'
-  }, {
-    name: 'English',
-    location: 'Guernsey',
-    tag: 'en-GG'
-  }, {
-    name: 'English',
-    location: 'Guyana',
-    tag: 'en-GY'
-  }, {
-    name: 'English',
-    location: 'Hong Kong',
-    tag: 'en-HK'
-  }, {
-    name: 'English',
-    location: 'India',
-    tag: 'en-IN'
-  }, {
-    name: 'English',
-    location: 'Ireland',
-    tag: 'en-IE'
-  }, {
-    name: 'English',
-    location: 'Isle of Man',
-    tag: 'en-IM'
-  }, {
-    name: 'English',
-    location: 'Israel',
-    tag: 'en-IL'
-  }, {
-    name: 'English',
-    location: 'Jamaica',
-    tag: 'en-JM'
-  }, {
-    name: 'English',
-    location: 'Jersey',
-    tag: 'en-JE'
-  }, {
-    name: 'English',
-    location: 'Kenya',
-    tag: 'en-KE'
-  }, {
-    name: 'English',
-    location: 'Kiribati',
-    tag: 'en-KI'
-  }, {
-    name: 'English',
-    location: 'Lesotho',
-    tag: 'en-LS'
-  }, {
-    name: 'English',
-    location: 'Liberia',
-    tag: 'en-LR'
-  }, {
-    name: 'English',
-    location: 'Madagascar',
-    tag: 'en-MG'
-  }, {
-    name: 'English',
-    location: 'Malawi',
-    tag: 'en-MW'
-  }, {
-    name: 'English',
-    location: 'Malaysia',
-    tag: 'en-MY'
-  }, {
-    name: 'English',
-    location: 'Malta',
-    tag: 'en-MT'
-  }, {
-    name: 'English',
-    location: 'Marshall Islands',
-    tag: 'en-MH'
-  }, {
-    name: 'English',
-    location: 'Mauritius',
-    tag: 'en-MU'
-  }, {
-    name: 'English',
-    location: 'Micronesia',
-    tag: 'en-FM'
-  }, {
-    name: 'English',
-    location: 'Montserrat',
-    tag: 'en-MS'
-  }, {
-    name: 'English',
-    location: 'Namibia',
-    tag: 'en-NA'
-  }, {
-    name: 'English',
-    location: 'Nauru',
-    tag: 'en-NR'
-  }, {
-    name: 'English',
-    location: 'Netherlands',
-    tag: 'en-NL'
-  }, {
-    name: 'English',
-    location: 'New Zealand',
-    tag: 'en-NZ'
-  }, {
-    name: 'English',
-    location: 'Nigeria',
-    tag: 'en-NG'
-  }, {
-    name: 'English',
-    location: 'Niue',
-    tag: 'en-NU'
-  }, {
-    name: 'English',
-    location: 'Norfolk Island',
-    tag: 'en-NF'
-  }, {
-    name: 'English',
-    location: 'Northern Mariana Islands',
-    tag: 'en-MP'
-  }, {
-    name: 'English',
-    location: 'Pakistan',
-    tag: 'en-PK'
-  }, {
-    name: 'English',
-    location: 'Palau',
-    tag: 'en-PW'
-  }, {
-    name: 'English',
-    location: 'Papua New Guinea',
-    tag: 'en-PG'
-  }, {
-    name: 'English',
-    location: 'Puerto Rico',
-    tag: 'en-PR'
-  }, {
-    name: 'English',
-    location: 'Rwanda',
-    tag: 'en-RW'
-  }, {
-    name: 'English',
-    location: 'Saint Kitts and Nevis',
-    tag: 'en-KN'
-  }, {
-    name: 'English',
-    location: 'Saint Lucia',
-    tag: 'en-LC'
-  }, {
-    name: 'English',
-    location: 'Saint Vincent and the Grenadines',
-    tag: 'en-VC'
-  }, {
-    name: 'English',
-    location: 'Samoa',
-    tag: 'en-WS'
-  }, {
-    name: 'English',
-    location: 'Seychelles',
-    tag: 'en-SC'
-  }, {
-    name: 'English',
-    location: 'Sierra Leone',
-    tag: 'en-SL'
-  }, {
-    name: 'English',
-    location: 'Singapore',
-    tag: 'en-SG'
-  }, {
-    name: 'English',
-    location: 'Sint Maarten',
-    tag: 'en-SX'
-  }, {
-    name: 'English',
-    location: 'Slovenia',
-    tag: 'en-SI'
-  }, {
-    name: 'English',
-    location: 'Solomon Islands',
-    tag: 'en-SB'
-  }, {
-    name: 'English',
-    location: 'South Africa',
-    tag: 'en-ZA'
-  }, {
-    name: 'English',
-    location: 'South Sudan',
-    tag: 'en-SS'
-  }, {
-    name: 'English',
-    location: 'Sudan',
-    tag: 'en-SD'
-  }, {
-    name: 'English',
-    location: 'Swaziland',
-    tag: 'en-SZ'
-  }, {
-    name: 'English',
-    location: 'Sweden',
-    tag: 'en-SE'
-  }, {
-    name: 'English',
-    location: 'Switzerland',
-    tag: 'en-CH'
-  }, {
-    name: 'English',
-    location: 'Tanzania',
-    tag: 'en-TZ'
-  }, {
-    name: 'English',
-    location: 'Tokelau',
-    tag: 'en-TK'
-  }, {
-    name: 'English',
-    location: 'Tonga',
-    tag: 'en-TO'
-  }, {
-    name: 'English',
-    location: 'Trinidad and Tobago',
-    tag: 'en-TT'
-  }, {
-    name: 'English',
-    location: 'Turks and Caicos Islands',
-    tag: 'en-TC'
-  }, {
-    name: 'English',
-    location: 'Tuvalu',
-    tag: 'en-TV'
-  }, {
-    name: 'English',
-    location: 'Uganda',
-    tag: 'en-UG'
-  }, {
-    name: 'English',
-    location: 'United Kingdom',
-    tag: 'en-GB'
-  }, {
-    name: 'English',
-    location: 'United States',
-    tag: 'en-US'
-  }, {
-    name: 'English',
-    location: 'Vanuatu',
-    tag: 'en-VU'
-  }, {
-    name: 'English',
-    location: 'Zambia',
-    tag: 'en-ZM'
-  }, {
-    name: 'English',
-    location: 'Zimbabwe',
-    tag: 'en-ZW'
-  }, {
-    name: 'Estonian',
-    location: 'Estonia',
-    tag: 'et-EE'
-  }, {
-    name: 'Ewe',
-    location: 'Ghana',
-    tag: 'ee-GH'
-  }, {
-    name: 'Ewe',
-    location: 'Togo',
-    tag: 'ee-TG'
-  }, {
-    name: 'Ewondo',
-    location: 'Cameroon',
-    tag: 'ewo-CM'
-  }, {
-    name: 'Faroese',
-    location: 'Denmark',
-    tag: 'fo-DK'
-  }, {
-    name: 'Faroese',
-    location: 'Faroe Islands',
-    tag: 'fo-FO'
-  }, {
-    name: 'Filipino',
-    location: 'Philippines',
-    tag: 'fil-PH'
-  }, {
-    name: 'Finnish',
-    location: 'Finland',
-    tag: 'fi-FI'
-  }, {
-    name: 'French',
-    location: 'Algeria',
-    tag: 'fr-DZ'
-  }, {
-    name: 'French',
-    location: 'Belgium',
-    tag: 'fr-BE'
-  }, {
-    name: 'French',
-    location: 'Benin',
-    tag: 'fr-BJ'
-  }, {
-    name: 'French',
-    location: 'Burkina Faso',
-    tag: 'fr-BF'
-  }, {
-    name: 'French',
-    location: 'Burundi',
-    tag: 'fr-BI'
-  }, {
-    name: 'French',
-    location: 'Cameroon',
-    tag: 'fr-CM'
-  }, {
-    name: 'French',
-    location: 'Canada',
-    tag: 'fr-CA'
-  }, {
-    name: 'French',
-    location: 'Central African Republic',
-    tag: 'fr-CF'
-  }, {
-    name: 'French',
-    location: 'Chad',
-    tag: 'fr-TD'
-  }, {
-    name: 'French',
-    location: 'Comoros',
-    tag: 'fr-KM'
-  }, {
-    name: 'French',
-    location: 'Djibouti',
-    tag: 'fr-DJ'
-  }, {
-    name: 'French',
-    location: 'Equatorial Guinea',
-    tag: 'fr-GQ'
-  }, {
-    name: 'French',
-    location: 'France',
-    tag: 'fr-FR'
-  }, {
-    name: 'French',
-    location: 'French Guiana',
-    tag: 'fr-GF'
-  }, {
-    name: 'French',
-    location: 'French Polynesia',
-    tag: 'fr-PF'
-  }, {
-    name: 'French',
-    location: 'Gabon',
-    tag: 'fr-GA'
-  }, {
-    name: 'French',
-    location: 'Guadeloupe',
-    tag: 'fr-GP'
-  }, {
-    name: 'French',
-    location: 'Guinea',
-    tag: 'fr-GN'
-  }, {
-    name: 'French',
-    location: 'Haiti',
-    tag: 'fr-HT'
-  }, {
-    name: 'French',
-    location: 'Luxembourg',
-    tag: 'fr-LU'
-  }, {
-    name: 'French',
-    location: 'Madagascar',
-    tag: 'fr-MG'
-  }, {
-    name: 'French',
-    location: 'Mali',
-    tag: 'fr-ML'
-  }, {
-    name: 'French',
-    location: 'Martinique',
-    tag: 'fr-MQ'
-  }, {
-    name: 'French',
-    location: 'Mauritania',
-    tag: 'fr-MR'
-  }, {
-    name: 'French',
-    location: 'Mauritius',
-    tag: 'fr-MU'
-  }, {
-    name: 'French',
-    location: 'Mayotte',
-    tag: 'fr-YT'
-  }, {
-    name: 'French',
-    location: 'Morocco',
-    tag: 'fr-MA'
-  }, {
-    name: 'French',
-    location: 'New Caledonia',
-    tag: 'fr-NC'
-  }, {
-    name: 'French',
-    location: 'Niger',
-    tag: 'fr-NE'
-  }, {
-    name: 'French',
-    location: 'Reunion',
-    tag: 'fr-RE'
-  }, {
-    name: 'French',
-    location: 'Rwanda',
-    tag: 'fr-RW'
-  }, {
-    name: 'French',
-    location: 'Saint Martin',
-    tag: 'fr-MF'
-  }, {
-    name: 'French',
-    location: 'Saint Pierre and Miquelon',
-    tag: 'fr-PM'
-  }, {
-    name: 'French',
-    location: 'Senegal',
-    tag: 'fr-SN'
-  }, {
-    name: 'French',
-    location: 'Seychelles',
-    tag: 'fr-SC'
-  }, {
-    name: 'French',
-    location: 'Switzerland',
-    tag: 'fr-CH'
-  }, {
-    name: 'French',
-    location: 'Syria',
-    tag: 'fr-SY'
-  }, {
-    name: 'French',
-    location: 'Togo',
-    tag: 'fr-TG'
-  }, {
-    name: 'French',
-    location: 'Tunisia',
-    tag: 'fr-TN'
-  }, {
-    name: 'French',
-    location: 'Vanuatu',
-    tag: 'fr-VU'
-  }, {
-    name: 'French',
-    location: 'Wallis and Futuna',
-    tag: 'fr-WF'
-  }, {
-    name: 'Frisian',
-    location: 'Netherlands',
-    tag: 'fy-NL'
-  }, {
-    name: 'Friulian',
-    location: 'Italy',
-    tag: 'fur-IT'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Burkina Faso',
-    tag: 'ff-Latn-BF'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Cameroon',
-    tag: 'ff-Latn-CM'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Gambia',
-    tag: 'ff-Latn-GM'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Ghana',
-    tag: 'ff-Latn-GH'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Guinea',
-    tag: 'ff-Latn-GN'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Guinea-Bissau',
-    tag: 'ff-Latn-GW'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Liberia',
-    tag: 'ff-Latn-LR'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Mauritania',
-    tag: 'ff-Latn-MR'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Niger',
-    tag: 'ff-Latn-NE'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Nigeria',
-    tag: 'ff-Latn-NG'
-  }, {
-    name: 'Fulah (Latin)',
-    location: 'Sierra Leone',
-    tag: 'ff-Latn-SL'
-  }, {
-    name: 'Fulah',
-    location: 'Cameroon',
-    tag: 'ff-CM'
-  }, {
-    name: 'Fulah',
-    location: 'Guinea',
-    tag: 'ff-GN'
-  }, {
-    name: 'Fulah',
-    location: 'Mauritania',
-    tag: 'ff-MR'
-  }, {
-    name: 'Fulah',
-    location: 'Nigeria',
-    tag: 'ff-NG'
-  }, {
-    name: 'Fulah',
-    location: 'Senegal',
-    tag: 'ff-Latn-SN'
-  }, {
-    name: 'Galician',
-    location: 'Spain',
-    tag: 'gl-ES'
-  }, {
-    name: 'Ganda',
-    location: 'Uganda',
-    tag: 'lg-UG'
-  }, {
-    name: 'Georgian',
-    location: 'Georgia',
-    tag: 'ka-GE'
-  }, {
-    name: 'German',
-    location: 'Austria',
-    tag: 'de-AT'
-  }, {
-    name: 'German',
-    location: 'Belgium',
-    tag: 'de-BE'
-  }, {
-    name: 'German',
-    location: 'Germany',
-    tag: 'de-DE'
-  }, {
-    name: 'German',
-    location: 'Italy',
-    tag: 'de-IT'
-  }, {
-    name: 'German',
-    location: 'Liechtenstein',
-    tag: 'de-LI'
-  }, {
-    name: 'German',
-    location: 'Luxembourg',
-    tag: 'de-LU'
-  }, {
-    name: 'German',
-    location: 'Switzerland',
-    tag: 'de-CH'
-  }, {
-    name: 'Greek',
-    location: 'Cyprus',
-    tag: 'el-CY'
-  }, {
-    name: 'Greek',
-    location: 'Greece',
-    tag: 'el-GR'
-  }, {
-    name: 'Greenlandic',
-    location: 'Greenland',
-    tag: 'kl-GL'
-  }, {
-    name: 'Guarani',
-    location: 'Paraguay',
-    tag: 'gn-PY'
-  }, {
-    name: 'Gujarati',
-    location: 'India',
-    tag: 'gu-IN'
-  }, {
-    name: 'Gusii',
-    location: 'Kenya',
-    tag: 'guz-KE'
-  }, {
-    name: 'Hausa (Latin)',
-    location: 'Ghana',
-    tag: 'ha-Latn-GH'
-  }, {
-    name: 'Hausa (Latin)',
-    location: 'Niger',
-    tag: 'ha-Latn-NE'
-  }, {
-    name: 'Hausa (Latin)',
-    location: 'Nigeria',
-    tag: 'ha-Latn-NG'
-  }, {
-    name: 'Hawaiian',
-    location: 'United States',
-    tag: 'haw-US'
-  }, {
-    name: 'Hebrew',
-    location: 'Israel',
-    tag: 'he-IL'
-  }, {
-    name: 'Hindi',
-    location: 'India',
-    tag: 'hi-IN'
-  }, {
-    name: 'Hungarian',
-    location: 'Hungary',
-    tag: 'hu-HU'
-  }, {
-    name: 'Icelandic',
-    location: 'Iceland',
-    tag: 'is-IS'
-  }, {
-    name: 'Igbo',
-    location: 'Nigeria',
-    tag: 'ig-NG'
-  }, {
-    name: 'Indonesian',
-    location: 'Indonesia',
-    tag: 'id-ID'
-  }, {
-    name: 'Interlingua',
-    location: 'France',
-    tag: 'ia-FR'
-  }, {
-    name: 'Inuktitut (Latin)',
-    location: 'Canada',
-    tag: 'iu-Latn-CA'
-  }, {
-    name: 'Inuktitut (Syllabics)',
-    location: 'Canada',
-    tag: 'iu-Cans-CA'
-  }, {
-    name: 'Irish',
-    location: 'Ireland',
-    tag: 'ga-IE'
-  }, {
-    name: 'Italian',
-    location: 'Italy',
-    tag: 'it-IT'
-  }, {
-    name: 'Italian',
-    location: 'San Marino',
-    tag: 'it-SM'
-  }, {
-    name: 'Italian',
-    location: 'Switzerland',
-    tag: 'it-CH'
-  }, {
-    name: 'Japanese',
-    location: 'Japan',
-    tag: 'ja-JP'
-  }, {
-    name: 'Jola-Fonyi',
-    location: 'Senegal',
-    tag: 'dyo-SN'
-  }, {
-    name: 'Kabyle',
-    location: 'Algeria',
-    tag: 'kab-DZ'
-  }, {
-    name: 'Kako',
-    location: 'Cameroon',
-    tag: 'kkj-CM'
-  }, {
-    name: 'Kalenjin',
-    location: 'Kenya',
-    tag: 'kln-KE'
-  }, {
-    name: 'Kamba',
-    location: 'Kenya',
-    tag: 'kam-KE'
-  }, {
-    name: 'Kannada',
-    location: 'India',
-    tag: 'kn-IN'
-  }, {
-    name: 'Kazakh',
-    location: 'Kazakhstan',
-    tag: 'kk-KZ'
-  }, {
-    name: 'Khmer',
-    location: 'Cambodia',
-    tag: 'km-KH'
-  }, {
-    name: "K'iche",
-    location: 'Guatemala',
-    tag: 'quc-Latn-GT'
-  }, {
-    name: 'Kikuyu',
-    location: 'Kenya',
-    tag: 'ki-KE'
-  }, {
-    name: 'Kinyarwanda',
-    location: 'Rwanda',
-    tag: 'rw-RW'
-  }, {
-    name: 'Kiswahili',
-    location: 'Kenya',
-    tag: 'sw-KE'
-  }, {
-    name: 'Kiswahili',
-    location: 'Tanzania',
-    tag: 'sw-TZ'
-  }, {
-    name: 'Kiswahili',
-    location: 'Uganda',
-    tag: 'sw-UG'
-  }, {
-    name: 'Konkani',
-    location: 'India',
-    tag: 'kok-IN'
-  }, {
-    name: 'Korean',
-    location: 'North Korea',
-    tag: 'ko-KP'
-  }, {
-    name: 'Koyra Chiini',
-    location: 'Mali',
-    tag: 'khq-ML'
-  }, {
-    name: 'Koyraboro Senni',
-    location: 'Mali',
-    tag: 'ses-ML'
-  }, {
-    name: 'Kwasio',
-    location: 'Cameroon',
-    tag: 'nmg-CM'
-  }, {
-    name: 'Kyrgyz',
-    location: 'Kyrgyzstan',
-    tag: 'ky-KG'
-  }, {
-    name: 'Lakota',
-    location: 'United States',
-    tag: 'lkt-US'
-  }, {
-    name: 'Langi',
-    location: 'Tanzania',
-    tag: 'lag-TZ'
-  }, {
-    name: 'Latvian',
-    location: 'Latvia',
-    tag: 'lv-LV'
-  }, {
-    name: 'Lingala',
-    location: 'Angola',
-    tag: 'ln-AO'
-  }, {
-    name: 'Lingala',
-    location: 'Central African Republic',
-    tag: 'ln-CF'
-  }, {
-    name: 'Lithuanian',
-    location: 'Lithuania',
-    tag: 'lt-LT'
-  }, {
-    name: 'Low German ',
-    location: 'Germany',
-    tag: 'nds-DE'
-  }, {
-    name: 'Low German',
-    location: 'Netherlands',
-    tag: 'nds-NL'
-  }, {
-    name: 'Lower Sorbian',
-    location: 'Germany',
-    tag: 'dsb-DE'
-  }, {
-    name: 'Luo',
-    location: 'Kenya',
-    tag: 'luo-KE'
-  }, {
-    name: 'Luxembourgish',
-    location: 'Luxembourg',
-    tag: 'lb-LU'
-  }, {
-    name: 'Luyia',
-    location: 'Kenya',
-    tag: 'luy-KE'
-  }, {
-    name: 'Machame',
-    location: 'Tanzania',
-    tag: 'jmc-TZ'
-  }, {
-    name: 'Makhuwa-Meetto',
-    location: 'Mozambique',
-    tag: 'mgh-MZ'
-  }, {
-    name: 'Makonde',
-    location: 'Tanzania',
-    tag: 'kde-TZ'
-  }, {
-    name: 'Malagasy',
-    location: 'Madagascar',
-    tag: 'mg-MG'
-  }, {
-    name: 'Malay',
-    location: 'Malaysia',
-    tag: 'ms-MY'
-  }, {
-    name: 'Malayalam',
-    location: 'India',
-    tag: 'ml-IN'
-  }, {
-    name: 'Maltese',
-    location: 'Malta',
-    tag: 'mt-MT'
-  }, {
-    name: 'Manx',
-    location: 'Isle of Man',
-    tag: 'gv-IM'
-  }, {
-    name: 'Maori',
-    location: 'New Zealand',
-    tag: 'mi-NZ'
-  }, {
-    name: 'Mapudungun',
-    location: 'Chile',
-    tag: 'arn-CL'
-  }, {
-    name: 'Marathi',
-    location: 'India',
-    tag: 'mr-IN'
-  }, {
-    name: 'Masai',
-    location: 'Kenya',
-    tag: 'mas-KE'
-  }, {
-    name: 'Masai',
-    location: 'Tanzania',
-    tag: 'mas-TZ'
-  }, {
-    name: 'Mazanderani',
-    location: 'Iran',
-    tag: 'mzn-IR'
-  }, {
-    name: 'Meru',
-    location: 'Kenya',
-    tag: 'mer-KE'
-  }, {
-    name: "Meta'",
-    location: 'Cameroon',
-    tag: 'mgo-CM'
-  }, {
-    name: 'Mohawk',
-    location: 'Canada',
-    tag: 'moh-CA'
-  }, {
-    name: 'Mongolian (Cyrillic)',
-    location: 'Mongolia',
-    tag: 'mn-MN'
-  }, {
-    name: 'Mongolian (Traditional)',
-    location: 'Mongolia',
-    tag: 'mn-Mong'
-  }, {
-    name: 'Morisyen',
-    location: 'Mauritius',
-    tag: 'mfe-MU'
-  }, {
-    name: 'Mundang',
-    location: 'Cameroon',
-    tag: 'mua-CM'
-  }, {
-    name: "N'ko",
-    location: 'Guinea',
-    tag: 'nqo-GN'
-  }, {
-    name: 'Nama',
-    location: 'Namibia',
-    tag: 'naq-NA'
-  }, {
-    name: 'Nepali',
-    location: 'India',
-    tag: 'ne-IN'
-  }, {
-    name: 'Nepali',
-    location: 'Nepal',
-    tag: 'ne-NP'
-  }, {
-    name: 'Ngiemboon',
-    location: 'Cameroon',
-    tag: 'nnh-CM'
-  }, {
-    name: 'Ngomba',
-    location: 'Cameroon',
-    tag: 'jgo-CM'
-  }, {
-    name: 'Northern Luri',
-    location: 'Iraq',
-    tag: 'lrc-IQ'
-  }, {
-    name: 'Northern Luri',
-    location: 'Iran',
-    tag: 'lrc-IR'
-  }, {
-    name: 'North Ndebele',
-    location: 'Zimbabwe',
-    tag: 'nd-ZW'
-  }, {
-    name: 'Norwegian (Bokmal)',
-    location: 'Norway',
-    tag: 'nb-NO'
-  }, {
-    name: 'Norwegian (Nynorsk)',
-    location: 'Norway',
-    tag: 'nn-NO'
-  }, {
-    name: 'Norwegian Bokmål',
-    location: 'Svalbard and Jan Mayen',
-    tag: 'nb-SJ'
-  }, {
-    name: 'Nuer',
-    location: 'Sudan',
-    tag: 'nus-SD'
-  }, {
-    name: 'Nuer',
-    location: 'South Sudan',
-    tag: 'nus-SS'
-  }, {
-    name: 'Nyankole',
-    location: 'Uganda',
-    tag: 'nyn-UG'
-  }, {
-    name: 'Occitan',
-    location: 'France',
-    tag: 'oc-FR'
-  }, {
-    name: 'Odia',
-    location: 'India',
-    tag: 'or-IN'
-  }, {
-    name: 'Oromo',
-    location: 'Ethiopia',
-    tag: 'om-ET'
-  }, {
-    name: 'Oromo',
-    location: 'Kenya',
-    tag: 'om-KE'
-  }, {
-    name: 'Pashto',
-    location: 'Afghanistan',
-    tag: 'ps-AF'
-  }, {
-    name: 'Persian',
-    location: 'Afghanistan',
-    tag: 'fa-AF'
-  }, {
-    name: 'Persian',
-    location: 'Iran',
-    tag: 'fa-IR'
-  }, {
-    name: 'Polish',
-    location: 'Poland',
-    tag: 'pl-PL'
-  }, {
-    name: 'Portuguese',
-    location: 'Angola',
-    tag: 'pt-AO'
-  }, {
-    name: 'Portuguese',
-    location: 'Brazil',
-    tag: 'pt-BR'
-  }, {
-    name: 'Portuguese',
-    location: 'Equatorial Guinea',
-    tag: 'pt-GQ'
-  }, {
-    name: 'Portuguese',
-    location: 'Guinea-Bissau',
-    tag: 'pt-GW'
-  }, {
-    name: 'Portuguese',
-    location: 'Luxembourg',
-    tag: 'pt-LU'
-  }, {
-    name: 'Portuguese',
-    location: 'Mozambique',
-    tag: 'pt-MZ'
-  }, {
-    name: 'Portuguese',
-    location: 'Portugal',
-    tag: 'pt-PT'
-  }, {
-    name: 'Portuguese',
-    location: 'Switzerland',
-    tag: 'pt-CH'
-  }, {
-    name: 'Punjabi',
-    location: 'India',
-    tag: 'pa-IN'
-  }, {
-    name: 'Quechua',
-    location: 'Bolivia',
-    tag: 'quz-BO'
-  }, {
-    name: 'Quechua',
-    location: 'Ecuador',
-    tag: 'quz-EC'
-  }, {
-    name: 'Quechua',
-    location: 'Peru',
-    tag: 'quz-PE'
-  }, {
-    name: 'Ripuarian',
-    location: 'Germany',
-    tag: 'ksh-DE'
-  }, {
-    name: 'Romanian',
-    location: 'Moldova',
-    tag: 'ro-MD'
-  }, {
-    name: 'Romanian',
-    location: 'Romania',
-    tag: 'ro-RO'
-  }, {
-    name: 'Romansh',
-    location: 'Switzerland',
-    tag: 'rm-CH'
-  }, {
-    name: 'Rombo',
-    location: 'Tanzania',
-    tag: 'rof-TZ'
-  }, {
-    name: 'Rundi',
-    location: 'Burundi',
-    tag: 'rn-BI'
-  }, {
-    name: 'Russian',
-    location: 'Belarus',
-    tag: 'ru-BY'
-  }, {
-    name: 'Russian',
-    location: 'Kazakhstan',
-    tag: 'ru-KZ'
-  }, {
-    name: 'Russian',
-    location: 'Kyrgyzstan',
-    tag: 'ru-KG'
-  }, {
-    name: 'Russian',
-    location: 'Moldova',
-    tag: 'ru-MD'
-  }, {
-    name: 'Russian',
-    location: 'Russia',
-    tag: 'ru-RU'
-  }, {
-    name: 'Russian',
-    location: 'Ukraine',
-    tag: 'ru-UA'
-  }, {
-    name: 'Rwa',
-    location: 'Tanzania',
-    tag: 'rwk-TZ'
-  }, {
-    name: 'Saho',
-    location: 'Eritrea',
-    tag: 'ssy-ER'
-  }, {
-    name: 'Sakha',
-    location: 'Russia',
-    tag: 'sah-RU'
-  }, {
-    name: 'Samburu',
-    location: 'Kenya',
-    tag: 'saq-KE'
-  }, {
-    name: 'Sami (Inari)',
-    location: 'Finland',
-    tag: 'smn-FI'
-  }, {
-    name: 'Sami (Lule)',
-    location: 'Norway',
-    tag: 'smj-NO'
-  }, {
-    name: 'Sami (Lule)',
-    location: 'Sweden',
-    tag: 'smj-SE'
-  }, {
-    name: 'Sami (Northern)',
-    location: 'Finland',
-    tag: 'se-FI'
-  }, {
-    name: 'Sami (Northern)',
-    location: 'Norway',
-    tag: 'se-NO'
-  }, {
-    name: 'Sami (Northern)',
-    location: 'Sweden',
-    tag: 'se-SE'
-  }, {
-    name: 'Sami (Skolt)',
-    location: 'Finland',
-    tag: 'sms-FI'
-  }, {
-    name: 'Sami (Southern)',
-    location: 'Norway',
-    tag: 'sma-NO'
-  }, {
-    name: 'Sami (Southern)',
-    location: 'Sweden',
-    tag: 'sma-SE'
-  }, {
-    name: 'Sango',
-    location: 'Central African Republic',
-    tag: 'sg-CF'
-  }, {
-    name: 'Sangu',
-    location: 'Tanzania',
-    tag: 'sbp-TZ'
-  }, {
-    name: 'Sanskrit',
-    location: 'India',
-    tag: 'sa-IN'
-  }, {
-    name: 'Scottish Gaelic',
-    location: 'United Kingdom',
-    tag: 'gd-GB'
-  }, {
-    name: 'Sena',
-    location: 'Mozambique',
-    tag: 'seh-MZ'
-  }, {
-    name: 'Serbian (Cyrillic)',
-    location: 'Bosnia and Herzegovina',
-    tag: 'sr-Cyrl-BA'
-  }, {
-    name: 'Serbian (Cyrillic)',
-    location: 'Montenegro',
-    tag: 'sr-Cyrl-ME'
-  }, {
-    name: 'Serbian (Cyrillic)',
-    location: 'Serbia',
-    tag: 'sr-Cyrl-RS'
-  }, {
-    name: 'Serbian (Latin)',
-    location: 'Bosnia and Herzegovina',
-    tag: 'sr-Latn-BA'
-  }, {
-    name: 'Serbian (Latin)',
-    location: 'Montenegro',
-    tag: 'sr-Latn-ME'
-  }, {
-    name: 'Serbian (Latin)',
-    location: 'Serbia',
-    tag: 'sr-Latn-RS'
-  }, {
-    name: 'Sesotho sa Leboa',
-    location: 'South Africa',
-    tag: 'nso-ZA'
-  }, {
-    name: 'Setswana',
-    location: 'Botswana',
-    tag: 'tn-BW'
-  }, {
-    name: 'Setswana',
-    location: 'South Africa',
-    tag: 'tn-ZA'
-  }, {
-    name: 'Shambala',
-    location: 'Tanzania',
-    tag: 'ksb-TZ'
-  }, {
-    name: 'Shona',
-    location: 'Zimbabwe',
-    tag: 'sn-Latn-ZW'
-  }, {
-    name: 'Sinhala',
-    location: 'Sri Lanka',
-    tag: 'si-LK'
-  }, {
-    name: 'Slovak',
-    location: 'Slovakia',
-    tag: 'sk-SK'
-  }, {
-    name: 'Slovenian',
-    location: 'Slovenia',
-    tag: 'sl-SI'
-  }, {
-    name: 'Soga',
-    location: 'Uganda',
-    tag: 'xog-UG'
-  }, {
-    name: 'Somali',
-    location: 'Djibouti',
-    tag: 'so-DJ'
-  }, {
-    name: 'Somali',
-    location: 'Ethiopia',
-    tag: 'so-ET'
-  }, {
-    name: 'Somali',
-    location: 'Kenya',
-    tag: 'so-KE'
-  }, {
-    name: 'Somali',
-    location: 'Somalia',
-    tag: 'so-SO'
-  }, {
-    name: 'Sotho',
-    location: 'South Africa',
-    tag: 'st-ZA'
-  }, {
-    name: 'South Ndebele',
-    location: 'South Africa',
-    tag: 'nr-ZA'
-  }, {
-    name: 'Southern Sotho',
-    location: 'Lesotho',
-    tag: 'st-LS'
-  }, {
-    name: 'Spanish',
-    location: 'Argentina',
-    tag: 'es-AR'
-  }, {
-    name: 'Spanish',
-    location: 'Belize',
-    tag: 'es-BZ'
-  }, {
-    name: 'Spanish',
-    location: 'Bolivia',
-    tag: 'es-BO'
-  }, {
-    name: 'Spanish',
-    location: 'Brazil',
-    tag: 'es-BR'
-  }, {
-    name: 'Spanish',
-    location: 'Chile',
-    tag: 'es-CL'
-  }, {
-    name: 'Spanish',
-    location: 'Colombia',
-    tag: 'es-CO'
-  }, {
-    name: 'Spanish',
-    location: 'Costa Rica',
-    tag: 'es-CR'
-  }, {
-    name: 'Spanish',
-    location: 'Cuba',
-    tag: 'es-CU'
-  }, {
-    name: 'Spanish',
-    location: 'Dominican Republic',
-    tag: 'es-DO'
-  }, {
-    name: 'Spanish',
-    location: 'Ecuador',
-    tag: 'es-EC'
-  }, {
-    name: 'Spanish',
-    location: 'El Salvador',
-    tag: 'es-SV'
-  }, {
-    name: 'Spanish',
-    location: 'Equatorial Guinea',
-    tag: 'es-GQ'
-  }, {
-    name: 'Spanish',
-    location: 'Guatemala',
-    tag: 'es-GT'
-  }, {
-    name: 'Spanish',
-    location: 'Honduras',
-    tag: 'es-HN'
-  }, {
-    name: 'Spanish',
-    location: 'Mexico',
-    tag: 'es-MX'
-  }, {
-    name: 'Spanish',
-    location: 'Nicaragua',
-    tag: 'es-NI'
-  }, {
-    name: 'Spanish',
-    location: 'Panama',
-    tag: 'es-PA'
-  }, {
-    name: 'Spanish',
-    location: 'Paraguay',
-    tag: 'es-PY'
-  }, {
-    name: 'Spanish',
-    location: 'Peru',
-    tag: 'es-PE'
-  }, {
-    name: 'Spanish',
-    location: 'Philippines',
-    tag: 'es-PH'
-  }, {
-    name: 'Spanish',
-    location: 'Puerto Rico',
-    tag: 'es-PR'
-  }, {
-    name: 'Spanish',
-    location: 'Spain',
-    tag: 'es-ES'
-  }, {
-    name: 'Spanish',
-    location: 'United States',
-    tag: 'es-US'
-  }, {
-    name: 'Spanish',
-    location: 'Uruguay',
-    tag: 'es-UY'
-  }, {
-    name: 'Standard Moroccan ',
-    location: 'Morocco',
-    tag: 'zgh-Tfng-MA'
-  }, {
-    name: 'Swati',
-    location: 'South Africa',
-    tag: 'ss-ZA'
-  }, {
-    name: 'Swati',
-    location: 'Swaziland',
-    tag: 'ss-SZ'
-  }, {
-    name: 'Swedish',
-    location: 'Finland',
-    tag: 'sv-FI'
-  }, {
-    name: 'Swedish',
-    location: 'Sweden',
-    tag: 'sv-SE'
-  }, {
-    name: 'Syriac',
-    location: 'Syria',
-    tag: 'syr-SY'
-  }, {
-    name: 'Tachelhit (Latin)',
-    location: 'Morocco',
-    tag: 'shi-Latn-MA'
-  }, {
-    name: 'Taita',
-    location: 'Kenya',
-    tag: 'dav-KE'
-  }, {
-    name: 'Tajik (Cyrillic)',
-    location: 'Tajikistan',
-    tag: 'tg-Cyrl-TJ'
-  }, {
-    name: 'Tamazight (Latin)',
-    location: 'Algeria',
-    tag: 'tzm-Latn-DZ'
-  }, {
-    name: 'Tamil',
-    location: 'India',
-    tag: 'ta-IN'
-  }, {
-    name: 'Tamil',
-    location: 'Malaysia',
-    tag: 'ta-MY'
-  }, {
-    name: 'Tamil',
-    location: 'Singapore',
-    tag: 'ta-SG'
-  }, {
-    name: 'Tamil',
-    location: 'Sri Lanka',
-    tag: 'ta-LK'
-  }, {
-    name: 'Tasawaq',
-    location: 'Niger',
-    tag: 'twq-NE'
-  }, {
-    name: 'Tatar',
-    location: 'Russia',
-    tag: 'tt-RU'
-  }, {
-    name: 'Telugu',
-    location: 'India',
-    tag: 'te-IN'
-  }, {
-    name: 'Teso',
-    location: 'Kenya',
-    tag: 'teo-KE'
-  }, {
-    name: 'Teso',
-    location: 'Uganda',
-    tag: 'teo-UG'
-  }, {
-    name: 'Thai',
-    location: 'Thailand',
-    tag: 'th-TH'
-  }, {
-    name: 'Tibetan',
-    location: 'India',
-    tag: 'bo-IN'
-  }, {
-    name: 'Tigre',
-    location: 'Eritrea',
-    tag: 'tig-ER'
-  }, {
-    name: 'Tigrinya',
-    location: 'Eritrea',
-    tag: 'ti-ER'
-  }, {
-    name: 'Tigrinya',
-    location: 'Ethiopia',
-    tag: 'ti-ET'
-  }, {
-    name: 'Tongan',
-    location: 'Tonga',
-    tag: 'to-TO'
-  }, {
-    name: 'Tsonga',
-    location: 'South Africa',
-    tag: 'ts-ZA'
-  }, {
-    name: 'Turkish',
-    location: 'Cyprus',
-    tag: 'tr-CY'
-  }, {
-    name: 'Turkish',
-    location: 'Turkey',
-    tag: 'tr-TR'
-  }, {
-    name: 'Turkmen',
-    location: 'Turkmenistan',
-    tag: 'tk-TM'
-  }, {
-    name: 'Ukrainian',
-    location: 'Ukraine',
-    tag: 'uk-UA'
-  }, {
-    name: 'Upper Sorbian',
-    location: 'Germany',
-    tag: 'hsb-DE'
-  }, {
-    name: 'Urdu',
-    location: 'India',
-    tag: 'ur-IN'
-  }, {
-    name: 'Uzbek (Cyrillic)',
-    location: 'Uzbekistan',
-    tag: 'uz-Cyrl-UZ'
-  }, {
-    name: 'Uzbek (Latin)',
-    location: 'Uzbekistan',
-    tag: 'uz-Latn-UZ'
-  }, {
-    name: 'Vai',
-    location: 'Liberia',
-    tag: 'vai-Vaii-LR'
-  }, {
-    name: 'Vai (Latin)',
-    location: 'Liberia',
-    tag: 'vai-Latn-LR'
-  }, {
-    name: 'Valencian',
-    location: 'Spain',
-    tag: 'ca-ES'
-  }, {
-    name: 'Venda',
-    location: 'South Africa',
-    tag: 've-ZA'
-  }, {
-    name: 'Vietnamese',
-    location: 'Vietnam',
-    tag: 'vi-VN'
-  }, {
-    name: 'Vunjo',
-    location: 'Tanzania',
-    tag: 'vun-TZ'
-  }, {
-    name: 'Walser',
-    location: 'Switzerland',
-    tag: 'wae-CH'
-  }, {
-    name: 'Welsh',
-    location: 'United Kingdom',
-    tag: 'cy-GB'
-  }, {
-    name: 'Wolaytta',
-    location: 'Ethiopia',
-    tag: 'wal-ET'
-  }, {
-    name: 'Wolof',
-    location: 'Senegal',
-    tag: 'wo-SN'
-  }, {
-    name: 'Xhosa',
-    location: 'South Africa',
-    tag: 'xh-ZA'
-  }, {
-    name: 'Yangben',
-    location: 'Cameroon',
-    tag: 'yav-CM'
-  }, {
-    name: 'Yoruba',
-    location: 'Benin',
-    tag: 'yo-BJ'
-  }, {
-    name: 'Yoruba',
-    location: 'Nigeria',
-    tag: 'yo-NG'
-  }, {
-    name: 'Zarma',
-    location: 'Niger',
-    tag: 'dje-NE'
-  }, {
-    name: 'Zulu',
-    location: 'South Africa',
-    tag: 'zu-ZA'
-  }]; // list of all the languages for the list of locales provided in commerceCurrencyLocales
-
-  api.commerceLanguages = [{
-    name: 'Afar',
-    tag: 'aa'
-  }, {
-    name: 'Afrikaans',
-    tag: 'af'
-  }, {
-    name: 'Aghem',
-    tag: 'agq'
-  }, {
-    name: 'Akan',
-    tag: 'ak'
-  }, {
-    name: 'Albanian',
-    tag: 'sq'
-  }, {
-    name: 'Alsatian',
-    tag: 'gsw'
-  }, {
-    name: 'Amharic',
-    tag: 'am'
-  }, {
-    name: 'Arabic',
-    tag: 'ar'
-  }, {
-    name: 'Armenian',
-    tag: 'hy'
-  }, {
-    name: 'Assamese',
-    tag: 'as'
-  }, {
-    name: 'Asturian',
-    tag: 'ast'
-  }, {
-    name: 'Asu',
-    tag: 'asa'
-  }, {
-    name: 'Azerbaijani (Cyrillic)',
-    tag: 'az-Cyrl'
-  }, {
-    name: 'Azerbaijani (Latin)',
-    tag: 'az-Latn'
-  }, {
-    name: 'Bafia',
-    tag: 'ksf'
-  }, {
-    name: 'Bamanankan (Latin)',
-    tag: 'bm-Latn'
-  }, {
-    name: 'Bangla',
-    tag: 'bn'
-  }, {
-    name: 'Basaa',
-    tag: 'bas'
-  }, {
-    name: 'Bashkir',
-    tag: 'ba'
-  }, {
-    name: 'Basque',
-    tag: 'eu'
-  }, {
-    name: 'Belarusian',
-    tag: 'be'
-  }, {
-    name: 'Bemba',
-    tag: 'bem'
-  }, {
-    name: 'Bena',
-    tag: 'bez'
-  }, {
-    name: 'Blin',
-    tag: 'byn'
-  }, {
-    name: 'Bodo',
-    tag: 'brx'
-  }, {
-    name: 'Bosnian (Cyrillic)',
-    tag: 'bs-Cyrl'
-  }, {
-    name: 'Bosnian (Latin)',
-    tag: 'bs-Latn'
-  }, {
-    name: 'Breton',
-    tag: 'br'
-  }, {
-    name: 'Bulgarian',
-    tag: 'bg'
-  }, {
-    name: 'Burmese',
-    tag: 'my'
-  }, {
-    name: 'Catalan',
-    tag: 'ca'
-  }, {
-    name: 'Central Atlas Tamazight ',
-    tag: 'tzm'
-  }, {
-    name: 'Central Kurdish',
-    tag: 'ku-Arab'
-  }, {
-    name: 'Chechen',
-    tag: 'cd'
-  }, {
-    name: 'Cherokee',
-    tag: 'chr-Cher'
-  }, {
-    name: 'Chiga',
-    tag: 'cgg'
-  }, {
-    name: 'Chinese (Simplified)',
-    tag: 'zh'
-  }, {
-    name: 'Chinese (Traditional)',
-    tag: 'zh'
-  }, {
-    name: 'Church Slavic',
-    tag: 'cu'
-  }, {
-    name: 'Cornish',
-    tag: 'kw'
-  }, {
-    name: 'Corsican',
-    tag: 'co'
-  }, {
-    name: 'Croatian',
-    tag: 'hr'
-  }, {
-    name: 'Croatian (Latin)',
-    tag: 'hr'
-  }, {
-    name: 'Czech',
-    tag: 'cs'
-  }, {
-    name: 'Danish',
-    tag: 'da'
-  }, {
-    name: 'Dari',
-    tag: 'prs'
-  }, {
-    name: 'Divehi',
-    tag: 'dv'
-  }, {
-    name: 'Duala',
-    tag: 'dua'
-  }, {
-    name: 'Dutch',
-    tag: 'nl'
-  }, {
-    name: 'Dzongkha',
-    tag: 'dz'
-  }, {
-    name: 'Embu',
-    tag: 'ebu'
-  }, {
-    name: 'English',
-    tag: 'en'
-  }, {
-    name: 'Estonian',
-    tag: 'et'
-  }, {
-    name: 'Ewe',
-    tag: 'ee'
-  }, {
-    name: 'Ewondo',
-    tag: 'ewo'
-  }, {
-    name: 'Faroese',
-    tag: 'fo'
-  }, {
-    name: 'Filipino',
-    tag: 'fil'
-  }, {
-    name: 'Finnish',
-    tag: 'fi'
-  }, {
-    name: 'French',
-    tag: 'fr'
-  }, {
-    name: 'Frisian',
-    tag: 'fy'
-  }, {
-    name: 'Friulian',
-    tag: 'fur'
-  }, {
-    name: 'Fulah (Latin)',
-    tag: 'ff-Latn'
-  }, {
-    name: 'Fulah',
-    tag: 'ff'
-  }, {
-    name: 'Galician',
-    tag: 'gl'
-  }, {
-    name: 'Ganda',
-    tag: 'lg'
-  }, {
-    name: 'Georgian',
-    tag: 'ka'
-  }, {
-    name: 'German',
-    tag: 'de'
-  }, {
-    name: 'Greek',
-    tag: 'el'
-  }, {
-    name: 'Greenlandic',
-    tag: 'kl'
-  }, {
-    name: 'Guarani',
-    tag: 'gn'
-  }, {
-    name: 'Gujarati',
-    tag: 'gu'
-  }, {
-    name: 'Gusii',
-    tag: 'guz'
-  }, {
-    name: 'Hausa (Latin)',
-    tag: 'ha-Latn'
-  }, {
-    name: 'Hawaiian',
-    tag: 'haw'
-  }, {
-    name: 'Hebrew',
-    tag: 'he'
-  }, {
-    name: 'Hindi',
-    tag: 'hi'
-  }, {
-    name: 'Hungarian',
-    tag: 'hu'
-  }, {
-    name: 'Icelandic',
-    tag: 'is'
-  }, {
-    name: 'Igbo',
-    tag: 'ig'
-  }, {
-    name: 'Indonesian',
-    tag: 'id'
-  }, {
-    name: 'Interlingua',
-    tag: 'ia'
-  }, {
-    name: 'Inuktitut (Latin)',
-    tag: 'iu-Latn'
-  }, {
-    name: 'Inuktitut (Syllabics)',
-    tag: 'iu-Cans'
-  }, {
-    name: 'Irish',
-    tag: 'ga'
-  }, {
-    name: 'Italian',
-    tag: 'it'
-  }, {
-    name: 'Japanese',
-    tag: 'ja'
-  }, {
-    name: 'Jola-Fonyi',
-    tag: 'dyo'
-  }, {
-    name: 'Kabyle',
-    tag: 'kab'
-  }, {
-    name: 'Kako',
-    tag: 'kkj'
-  }, {
-    name: 'Kalenjin',
-    tag: 'kln'
-  }, {
-    name: 'Kamba',
-    tag: 'kam'
-  }, {
-    name: 'Kannada',
-    tag: 'kn'
-  }, {
-    name: 'Kazakh',
-    tag: 'kk'
-  }, {
-    name: 'Khmer',
-    tag: 'km'
-  }, {
-    name: "K'iche",
-    tag: 'quc-Latn'
-  }, {
-    name: 'Kikuyu',
-    tag: 'ki'
-  }, {
-    name: 'Kinyarwanda',
-    tag: 'rw'
-  }, {
-    name: 'Kiswahili',
-    tag: 'sw'
-  }, {
-    name: 'Konkani',
-    tag: 'kok'
-  }, {
-    name: 'Korean',
-    tag: 'ko'
-  }, {
-    name: 'Koyra Chiini',
-    tag: 'khq'
-  }, {
-    name: 'Koyraboro Senni',
-    tag: 'ses'
-  }, {
-    name: 'Kwasio',
-    tag: 'nmg'
-  }, {
-    name: 'Kyrgyz',
-    tag: 'ky'
-  }, {
-    name: 'Lakota',
-    tag: 'lkt'
-  }, {
-    name: 'Langi',
-    tag: 'lag'
-  }, {
-    name: 'Latvian',
-    tag: 'lv'
-  }, {
-    name: 'Lingala',
-    tag: 'ln'
-  }, {
-    name: 'Lithuanian',
-    tag: 'lt'
-  }, {
-    name: 'Low German ',
-    tag: 'nds'
-  }, {
-    name: 'Low German',
-    tag: 'nds'
-  }, {
-    name: 'Lower Sorbian',
-    tag: 'dsb'
-  }, {
-    name: 'Luo',
-    tag: 'luo'
-  }, {
-    name: 'Luxembourgish',
-    tag: 'lb'
-  }, {
-    name: 'Luyia',
-    tag: 'luy'
-  }, {
-    name: 'Machame',
-    tag: 'jmc'
-  }, {
-    name: 'Makhuwa-Meetto',
-    tag: 'mgh'
-  }, {
-    name: 'Makonde',
-    tag: 'kde'
-  }, {
-    name: 'Malagasy',
-    tag: 'mg'
-  }, {
-    name: 'Malay',
-    tag: 'ms'
-  }, {
-    name: 'Malayalam',
-    tag: 'ml'
-  }, {
-    name: 'Maltese',
-    tag: 'mt'
-  }, {
-    name: 'Manx',
-    tag: 'gv'
-  }, {
-    name: 'Maori',
-    tag: 'mi'
-  }, {
-    name: 'Mapudungun',
-    tag: 'arn'
-  }, {
-    name: 'Marathi',
-    tag: 'mr'
-  }, {
-    name: 'Masai',
-    tag: 'mas'
-  }, {
-    name: 'Mazanderani',
-    tag: 'mzn'
-  }, {
-    name: 'Meru',
-    tag: 'mer'
-  }, {
-    name: "Meta'",
-    tag: 'mgo'
-  }, {
-    name: 'Mohawk',
-    tag: 'moh'
-  }, {
-    name: 'Mongolian (Cyrillic)',
-    tag: 'mn'
-  }, {
-    name: 'Mongolian (Traditional)',
-    tag: 'mn'
-  }, {
-    name: 'Morisyen',
-    tag: 'mfe'
-  }, {
-    name: 'Mundang',
-    tag: 'mua'
-  }, {
-    name: "N'ko",
-    tag: 'nqo'
-  }, {
-    name: 'Nama',
-    tag: 'naq'
-  }, {
-    name: 'Nepali',
-    tag: 'ne'
-  }, {
-    name: 'Ngiemboon',
-    tag: 'nnh'
-  }, {
-    name: 'Ngomba',
-    tag: 'jgo'
-  }, {
-    name: 'Northern Luri',
-    tag: 'lrc'
-  }, {
-    name: 'North Ndebele',
-    tag: 'nd'
-  }, {
-    name: 'Norwegian (Bokmal)',
-    tag: 'nb'
-  }, {
-    name: 'Norwegian (Nynorsk)',
-    tag: 'nn'
-  }, {
-    name: 'Norwegian Bokmål',
-    tag: 'nb'
-  }, {
-    name: 'Nuer',
-    tag: 'nus'
-  }, {
-    name: 'Nyankole',
-    tag: 'nyn'
-  }, {
-    name: 'Occitan',
-    tag: 'oc'
-  }, {
-    name: 'Odia',
-    tag: 'or'
-  }, {
-    name: 'Oromo',
-    tag: 'om'
-  }, {
-    name: 'Pashto',
-    tag: 'ps'
-  }, {
-    name: 'Persian',
-    tag: 'fa'
-  }, {
-    name: 'Polish',
-    tag: 'pl'
-  }, {
-    name: 'Portuguese',
-    tag: 'pt'
-  }, {
-    name: 'Punjabi',
-    tag: 'pa'
-  }, {
-    name: 'Quechua',
-    tag: 'quz'
-  }, {
-    name: 'Ripuarian',
-    tag: 'ksh'
-  }, {
-    name: 'Romanian',
-    tag: 'ro'
-  }, {
-    name: 'Romansh',
-    tag: 'rm'
-  }, {
-    name: 'Rombo',
-    tag: 'rof'
-  }, {
-    name: 'Rundi',
-    tag: 'rn'
-  }, {
-    name: 'Russian',
-    tag: 'ru'
-  }, {
-    name: 'Rwa',
-    tag: 'rwk'
-  }, {
-    name: 'Saho',
-    tag: 'ssy'
-  }, {
-    name: 'Sakha',
-    tag: 'sah'
-  }, {
-    name: 'Samburu',
-    tag: 'saq'
-  }, {
-    name: 'Sami (Inari)',
-    tag: 'smn'
-  }, {
-    name: 'Sami (Lule)',
-    tag: 'smj'
-  }, {
-    name: 'Sami (Northern)',
-    tag: 'se'
-  }, {
-    name: 'Sami (Skolt)',
-    tag: 'sms'
-  }, {
-    name: 'Sami (Southern)',
-    tag: 'sma'
-  }, {
-    name: 'Sango',
-    tag: 'sg'
-  }, {
-    name: 'Sangu',
-    tag: 'sbp'
-  }, {
-    name: 'Sanskrit',
-    tag: 'sa'
-  }, {
-    name: 'Scottish Gaelic',
-    tag: 'gd'
-  }, {
-    name: 'Sena',
-    tag: 'seh'
-  }, {
-    name: 'Serbian (Cyrillic)',
-    tag: 'sr-Cyrl'
-  }, {
-    name: 'Serbian (Latin)',
-    tag: 'sr-Latn'
-  }, {
-    name: 'Sesotho sa Leboa',
-    tag: 'nso'
-  }, {
-    name: 'Setswana',
-    tag: 'tn'
-  }, {
-    name: 'Shambala',
-    tag: 'ksb'
-  }, {
-    name: 'Shona',
-    tag: 'sn-Latn'
-  }, {
-    name: 'Sinhala',
-    tag: 'si'
-  }, {
-    name: 'Slovak',
-    tag: 'sk'
-  }, {
-    name: 'Slovenian',
-    tag: 'sl'
-  }, {
-    name: 'Soga',
-    tag: 'xog'
-  }, {
-    name: 'Somali',
-    tag: 'so'
-  }, {
-    name: 'Sotho',
-    tag: 'st'
-  }, {
-    name: 'South Ndebele',
-    tag: 'nr'
-  }, {
-    name: 'Southern Sotho',
-    tag: 'st'
-  }, {
-    name: 'Spanish',
-    tag: 'es'
-  }, {
-    name: 'Standard Moroccan ',
-    tag: 'zgh-Tfng'
-  }, {
-    name: 'Swati',
-    tag: 'ss'
-  }, {
-    name: 'Swedish',
-    tag: 'sv'
-  }, {
-    name: 'Syriac',
-    tag: 'syr'
-  }, {
-    name: 'Tachelhit (Latin)',
-    tag: 'shi-Latn'
-  }, {
-    name: 'Taita',
-    tag: 'dav'
-  }, {
-    name: 'Tajik (Cyrillic)',
-    tag: 'tg-Cyrl'
-  }, {
-    name: 'Tamazight (Latin)',
-    tag: 'tzm-Latn'
-  }, {
-    name: 'Tamil',
-    tag: 'ta'
-  }, {
-    name: 'Tasawaq',
-    tag: 'twq'
-  }, {
-    name: 'Tatar',
-    tag: 'tt'
-  }, {
-    name: 'Telugu',
-    tag: 'te'
-  }, {
-    name: 'Teso',
-    tag: 'teo'
-  }, {
-    name: 'Thai',
-    tag: 'th'
-  }, {
-    name: 'Tibetan',
-    tag: 'bo'
-  }, {
-    name: 'Tigre',
-    tag: 'tig'
-  }, {
-    name: 'Tigrinya',
-    tag: 'ti'
-  }, {
-    name: 'Tongan',
-    tag: 'to'
-  }, {
-    name: 'Tsonga',
-    tag: 'ts'
-  }, {
-    name: 'Turkish',
-    tag: 'tr'
-  }, {
-    name: 'Turkmen',
-    tag: 'tk'
-  }, {
-    name: 'Ukrainian',
-    tag: 'uk'
-  }, {
-    name: 'Upper Sorbian',
-    tag: 'hsb'
-  }, {
-    name: 'Urdu',
-    tag: 'ur'
-  }, {
-    name: 'Uzbek (Cyrillic)',
-    tag: 'uz-Cyrl'
-  }, {
-    name: 'Uzbek (Latin)',
-    tag: 'uz-Latn'
-  }, {
-    name: 'Vai',
-    tag: 'vai-Vaii'
-  }, {
-    name: 'Vai (Latin)',
-    tag: 'vai-Latn'
-  }, {
-    name: 'Valencian',
-    tag: 'ca'
-  }, {
-    name: 'Venda',
-    tag: 've'
-  }, {
-    name: 'Vietnamese',
-    tag: 'vi'
-  }, {
-    name: 'Vunjo',
-    tag: 'vun'
-  }, {
-    name: 'Walser',
-    tag: 'wae'
-  }, {
-    name: 'Welsh',
-    tag: 'cy'
-  }, {
-    name: 'Wolaytta',
-    tag: 'wal'
-  }, {
-    name: 'Wolof',
-    tag: 'wo'
-  }, {
-    name: 'Xhosa',
-    tag: 'xh'
-  }, {
-    name: 'Yangben',
-    tag: 'yav'
-  }, {
-    name: 'Yoruba',
-    tag: 'yo'
-  }, {
-    name: 'Zarma',
-    tag: 'dje'
-  }, {
-    name: 'Zulu',
-    tag: 'zu'
-  }]; // List adapted from: https://developers.taxjar.com/api/reference/#countries
-
-  api.commerceTaxJarCountryList = [// North America:
-  'US', 'CA', // Oceania:
-  'AU', // European Union:
-  'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'GB'];
-  api.commerceUnitSystemOptions = [{
-    code: 'imperial',
-    name: 'Imperial system'
-  }, {
-    code: 'metric',
-    name: 'Metric system'
-  }];
-  api.DEFAULT_PROFILE_IMAGE = 'https://daks2k3a4ib2z.cloudfront.net/img/profile-user.png';
-  api.DEFAULT_OAUTH_APP_IMAGE = 'https://daks2k3a4ib2z.cloudfront.net/img/integrations.png'; // getWfBadgeStatus :: ({}, {}, {}, Boolean) -> Boolean
-
-  api.getWfBadgeStatus = function (siteMeta, user, subscription, isOrg) {
-    if (siteMeta && siteMeta.showWebflowBadge !== undefined) {
-      return siteMeta.showWebflowBadge;
-    }
-
-    if (isOrg) {
-      return false;
-    }
-
-    if (subscription) {
-      return false;
-    }
-
-    if (!user || user.plan === 'free' || user.plan === 'lite') {
-      return true;
-    }
-
-    return false;
-  };
-
-  api.PUBLISH_TASK = {};
-  api.PUBLISH_TASK.POLLING_INTERVAL = 1500;
-  api.PUBLISH_TASK.POLLING_TIMEOUT = 5 * 60 * 1000;
-  api.PUBLISH_TASK.MAX_POLL_RETRIES = Math.floor(api.PUBLISH_TASK.POLLING_TIMEOUT / api.PUBLISH_TASK.POLLING_INTERVAL);
-  api.SYBG_HOURS = 2;
-  api.USER_ID_COOKIE = 'wf_user';
-  api.MKTG_CHANNEL_COOKIE = 'wf_mktg_channel';
-  api.FIRST_TOUCH_COOKIE = 'wf_first_touch';
-  api.EXP_UNIQUE_ID_COOKIE = 'wf_exp_uniqueId';
-  api.EXP_ASSIGNMENTS_LOCALSTORAGE_KEY = 'wf_exp_assignments';
-  api.EXP_CACHE_EXPIRATION_MIN = 1;
-  api.SSO_OWNERSHIP_WARNING_LOCALSTORAGE_KEY = 'wf_sso_ownership_warning_seen';
-  api.LOGGED_OUT_COOKIE = 'wf_logout';
-  api.MARKETING_VERTICAL_COOKIE = 'wf_vertical';
-  api.DNSSEC_STATUS = {
-    enabled: 'enabled',
-    disabled: 'disabled',
-    misconfigured: 'misconfigured',
-    unknown: 'unknown'
-  };
-  api.NUX_TEMPLATE_NAME = 'NUX Guided Creation Template';
-  api.NUX_SITE_NAME = 'Create basic layouts';
-  api.TUTORIAL_RESUME_QUERY_PARAM = 't_s'; // t_s = tutorial section
-
-  api.nuxTemplate = {
-    name: api.NUX_TEMPLATE_NAME,
-    type: 'basic',
-    cost: 0,
-    starter: false
-  };
-  api.NUX_FLEXBOX = {
-    ID: 'nux-flexbox'
-  };
-  api.NUX_FLEXBOX_EXTENDED = {
-    ID: 'nux-flexbox-extended'
-  };
-  api.NUX_TUTORIAL = {
-    ID: 'nux',
-    // TODO: wait a few weeks to deprecate NUX_TUTORIAL.QUERY_PARAM_KEY once
-    // we're sure all clients have been updated to use TUTORIAL_RESUME_QUERY_PARAM
-    QUERY_PARAM_KEY: 't_nux_s'
-  };
-  api.ANALYTICS_CONSTANTS = {
-    ELEMENT_ADDED: 'Element Added',
-    CLASS_CREATED: 'Class Created',
-    NODE_CLICKED: 'Node Clicked'
-  };
-  api.blankTemplate = {
-    name: 'Blank Site',
-    description: 'Start from a blank canvas — and build exactly what you’re envisioning.',
-    starter: true
-  }; // Should appear like a blank site
-
-  api.quickAddTemplate = {
-    name: 'Quick Add Template',
-    description: 'Start from a blank canvas — and build exactly what you’re envisioning.',
-    starter: true
-  }; // We sanitize data from our customer to help them submit a valid VAT.
-
-  api.vatSanitizers = {
-    // Prefix with zero if the customer provides a 9 digit VAT number
-    BE: function BE(vat) {
-      var digits = vat.replace(/\D/g, '');
-      return digits.length === 9 ? 'BE0' + digits : vat;
-    },
-    // Allow optional dash in the VAT ID
-    DK: function DK(vat) {
-      return vat.replace('DK-', 'DK');
-    },
-    // If more than 10 characters are provided delete the first 3
-    CZ: function CZ(vat) {
-      var digits = vat.replace(/\D/g, '');
-      return digits.length > 10 ? 'CZ' + digits.substring(3) : vat;
-    }
-  }; // This could be extended to include a math checksum validation step.
-  // Most EU countries have a checksum digit that we could check against.
-  //
-  // @link https://github.com/se-panfilov/jsvat for an implementation.
-
-  api.vatVerifiers = {
-    AT: /^(AT)U(\d{8})$/,
-    BE: /^(BE)(0?\d{9})$/,
-    BG: /^(BG)(\d{9,10})$/,
-    CY: /^(CY)([0-59]\d{7}[A-Z])$/,
-    CZ: /^(CZ)\d{8,10}$/,
-    DE: /^(DE)([1-9]\d{8})$/,
-    DK: /^(DK)(\d{8})$/,
-    EE: /^(EE)(10\d{7})$/,
-    EL: /^(EL)(\d{9})$/,
-    ES: /^(ES)([A-Z\d]\d{7}[A-Z\d])$/,
-    FI: /^(FI)(\d{8})$/,
-    FR: /^(FR)(?![IO])[A-Z\d]{2}[- ]*\d{9}$/,
-    HR: /^(HR)(\d{11})$/,
-    HU: /^(HU)(\d{8})$/,
-    IE: /^(IE)(?:\d[A-Z\d+*]\d{5}[A-Z]|\d{7}WI)$/,
-    IT: /^(IT)(\d{11})$/,
-    LT: /^(LT)(\d{9}|\d{12})$/,
-    LU: /^(LU)(\d{8})$/,
-    LV: /^(LV)(\d{11})$/,
-    MT: /^(MT)([1-9]\d{7})$/,
-    NL: /^(NL)([0-9]{9}[B][O0-9]{2})$/,
-    PL: /^(PL)(\d{10})$/,
-    PT: /^(PT)(\d{9})$/,
-    RO: /^(RO)([1-9]\d{1,9})$/,
-    SE: /^(SE)(\d{12})$/,
-    SI: /^(SI)([1-9]\d{7})$/,
-    SK: /^(SK)([1-9]\d[2346-9]\d{7})$/,
-    // This is the Great Britain regex, with XI switched for GB
-    XI: /^(XI)(?:\d{3}[- ]*\d{4}[- ]*\d{2}(?:[- ]*\d{3})?|(?:GD|HA)\d{3})$/
-  };
-
-  api.sanitizeVat = function (params) {
-    var sanitizer = api.vatSanitizers[params.countryCode];
-    return sanitizer ? sanitizer(params.vat) : params.vat;
-  };
-  /**
-   * Verify if the matching country and VAT value passes
-   * a light regex format validation.
-   *
-   * @param {string} countryCode 2 value country code
-   * @param {string} vat tax vat value to validate
-   * @returns Boolean
-   */
-
-
-  api.verifyVat = function (params) {
-    var regex = api.vatVerifiers[params.countryCode];
-
-    if (!regex) {
-      return true;
-    }
-
-    return new RegExp(regex, 'i').test(params.vat);
-  };
-  /**
-   * Verify if the VAT value passes a light regex format validation for any
-   * country.
-   *
-   * @param {string} vat tax vat value to validate
-   * @returns Boolean
-   */
-
-
-  api.verifyVatAnyCountry = function (params) {
-    return api.euVatSupportedCountries.some(function (item) {
-      return api.verifyVat({
-        countryCode: item.code,
-        vat: params.vat
-      });
-    });
-  };
-
-  api.euVatSupportedCountries = [{
-    code: 'AT',
-    country: 'Austria'
-  }, {
-    code: 'BE',
-    country: 'Belgium'
-  }, {
-    code: 'BG',
-    country: 'Bulgaria'
-  }, {
-    code: 'CY',
-    country: 'Cyprus'
-  }, {
-    code: 'CZ',
-    country: 'Czech Republic'
-  }, {
-    code: 'DE',
-    country: 'Germany'
-  }, {
-    code: 'DK',
-    country: 'Denmark'
-  }, {
-    code: 'EE',
-    country: 'Estonia'
-  }, {
-    code: 'EL',
-    country: 'Greece'
-  }, {
-    code: 'ES',
-    country: 'Spain'
-  }, {
-    code: 'FI',
-    country: 'Finland'
-  }, {
-    code: 'FR',
-    country: 'France'
-  }, {
-    code: 'HR',
-    country: 'Croatia'
-  }, {
-    code: 'HU',
-    country: 'Hungary'
-  }, {
-    code: 'IE',
-    country: 'Ireland'
-  }, {
-    code: 'IT',
-    country: 'Italy'
-  }, {
-    code: 'LT',
-    country: 'Lithuania'
-  }, {
-    code: 'LU',
-    country: 'Luxembourg'
-  }, {
-    code: 'LV',
-    country: 'Latvia'
-  }, {
-    code: 'MT',
-    country: 'Malta'
-  }, {
-    code: 'NL',
-    country: 'The Netherlands'
-  }, {
-    code: 'PL',
-    country: 'Poland'
-  }, {
-    code: 'PT',
-    country: 'Portugal'
-  }, {
-    code: 'RO',
-    country: 'Romania'
-  }, {
-    code: 'SE',
-    country: 'Sweden'
-  }, {
-    code: 'SI',
-    country: 'Slovenia'
-  }, {
-    code: 'SK',
-    country: 'Slovakia'
-  }, {
-    code: 'XI',
-    country: 'Northern Ireland'
-  }];
-
-  api.isInEuVatCountry = function (countryCode) {
-    return api.euVatSupportedCountries.some(function (country) {
-      return country.code === countryCode;
-    });
-  };
-
-  api.showcaseConfig = {
-    numberOfProjectsPerPage: 12
-  };
-  api.showcaseCollectionsConfig = {
-    fallbackSeoMetadata: {
-      pageTitle: 'Best Webflow websites for web design inspiration',
-      pageDescription: "Discover beautiful examples of Webflow websites and templates that are sure to give you the unique web design inspiration you're looking for.",
-      mainHeadingText: 'Discover the best Webflow websites',
-      introParagraphText: 'Browse through unique examples of Webflow websites, templates, and cloneables — designed by the Webflow Community.'
-    }
-  };
-  api.showcaseTagConfig = {
-    seoTemplates: {
-      pageTitle: 'The best %tag_label% websites',
-      pageDescription: 'Discover the best %tag_label% websites created by professional designers. Get inspired and start planning your perfect %tag_label% web design today!',
-      mainHeadingText: 'Discover %tag_label% websites from the Webflow community',
-      introParagraphText: 'The Webflow Showcase is the place to find, clone, follow, like, and comment on the latest community sites.'
-    },
-    // List of tags for which we don't want their pages to be indexed by search engines.
-    // Please, keep this list ordered alphabetically.
-    noindexTags: ['anus', 'arse', 'arsehole', 'ass', 'assbag', 'assbandit', 'assbanger', 'assbite', 'assclown', 'asscock', 'asscracker', 'asses', 'assface', 'assfuck', 'assfucker', 'assgoblin', 'asshat', 'asshead', 'asshole', 'asshopper', 'assjacker', 'asslick', 'asslicker', 'assmonkey', 'assmunch', 'assmuncher', 'assnigger', 'asspirate', 'assshit', 'assshole', 'asssucker', 'asswad', 'asswipe', 'axwound', 'bampot', 'bastard', 'beaner', 'binance', 'binancecustomercarenumber', 'binancenumber', 'binancephonenumber', 'binancesupport', 'binancesupportnumber', 'binancesupportphonenumber', 'bitch', 'bitchass', 'bitches', 'bitchtits', 'bitchy', 'blow job', 'blowjob', 'bollocks', 'bollox', 'boner', 'brotherfucker', 'bullshit', 'bumblefuck', 'butt', 'butt plug', 'buttfucka', 'buttfucker', 'camel toe', 'cashappcancel', 'cashappcontactinfonumber', 'cashappcontactnumber', 'cashappcustomercare', 'cashappcustomercarenumber', 'cashappcustomerservfice', 'cashappcustomerservice', 'cashappcustomersupport', 'cashapphelplinenumber', 'cashapphelpnumber', 'cashapplogin', 'cashappnuber', 'cashappnumber', 'cashappnumbr', 'cashappphone', 'cashappphonenumber', 'cashapprefund', 'cashapprefundnumber', 'cashappsuportnumber', 'cashappsupport', 'cashappsupportnumber', 'cashappsupportnumer', 'cashappsupportphone', 'cashappsupportphonenumber', 'cashapptech', 'fascism', 'fascist', 'fuck', 'instagramphonenumber', 'instagramsupportnumber', 'kike', 'kooch', 'kootch', 'krakensupportnumber', 'kraut', 'kunt', 'kyke', 'lameass', 'lardass', 'lesbian', 'lesbo', 'lezzie', 'masturbate', 'mcfagget', 'mick', 'minge', 'mothafucka', "mothafuckin'", 'motherfucker', 'motherfucking', 'muff', 'muffdiver', 'munging', 'murder', 'nazi', 'negro', 'nigaboo', 'nigga', 'nigger', 'niggerish', 'niggers', 'niglet', 'nignog', 'nut sack', 'nutsack', 'paki', 'paypalcreditphonenumber', 'paypalsupportnumber', 'porn', 'qualitybacklinks', 'racism', 'racist', 'rape', 'sex', 'sexy', 'shit', 'sucks', 'tinderhelp'],
-    // Map in form of:
-    //   tag -> label
-    // - Labels are meant to be used in H1s, page titles, etc.
-    // - Please be not surprised by some labels defined same as their tags – it might be to prevent hyphens being
-    //   replaced by spaces which happens by default when generating a label out of a tag.
-    tagLabels: {
-      austin: 'Austin',
-      australia: 'Australia',
-      'covid-19': 'covid-19',
-      dallas: 'Dallas',
-      'front-end': 'front-end',
-      houston: 'Houston',
-      japanese: 'Japanese',
-      'los-angeles': 'Los Angeles',
-      'multi-language': 'multi-language',
-      'multi-step-form': 'multi-step form',
-      'new-york': 'New York',
-      'new-york-city': 'New York City',
-      'new-zealand': 'New Zealand',
-      'no-code': 'no-code',
-      'pop-ups': 'pop-ups',
-      russian: 'Russian',
-      'san-francisco': 'San Francisco',
-      'ux-ui': 'UX/UI'
-    },
-    // Map in form of:
-    //   tag -> tag to use instead
-    preferredSynonyms: {
-      // Groups added to prevent URL clash of Tag Page URL "/websites/:tag" with other pages like "/websites/popular"
-      popular: 'general',
-      following: 'follow',
-      recent: 'latest',
-      likes: 'liked',
-      cloneable: 'clone',
-      collections: 'collection',
-      // Other synonyms.
-      // Some of them are here only to prevent adding tags with space encoded as "%20" to a sitemap.
-      // Please, keep it ordered alphabetically by *values*, not by keys.
-      '3d animation': '3d',
-      '3d effect': '3d',
-      '3d modelling': '3d',
-      '3dart': '3d',
-      '3dcards': '3d',
-      '3deffect': '3d',
-      '3dmodel': '3d',
-      '3drendering': '3d',
-      '3dscroll': '3d',
-      '3dtransforms': '3d',
-      '3dweb': '3d',
-      'accordion tab': 'accordion',
-      'accounting services': 'accounting',
-      ads: 'advertising',
-      'affordable website design': 'affordable-website-design',
-      'after effects': 'after-effects',
-      agencies: 'agency',
-      agencywebsite: 'agency',
-      animate: 'animation',
-      animated: 'animation',
-      animations: 'animation',
-      animaton: 'animation',
-      webflowanimation: 'animation',
-      'app design': 'app',
-      appdesign: 'app',
-      application: 'app',
-      apps: 'app',
-      'mobile apps': 'app',
-      'web apps': 'app',
-      webapp: 'app',
-      architect: 'architecture',
-      architects: 'architecture',
-      arts: 'art',
-      'art & illustration': 'art-and-illustration',
-      'art direction': 'art-and-illustration',
-      'art gallery': 'art-and-illustration',
-      'art director': 'art-director',
-      articles: 'article',
-      artificialintelligence: 'artificial-intelligence',
-      artist: 'artistic',
-      artists: 'artistic',
-      artistwebsite: 'artistic',
-      artwork: 'artistic',
-      'audio visual': 'audio-visual',
-      augmentedreaity: 'augmented-reality',
-      augmentedreality: 'augmented-reality',
-      austinwebflow: 'austin',
-      webflowaustin: 'austin',
-      webflowaustralia: 'australia',
-      'video background': 'backgorund-video',
-      'background image': 'background-image',
-      backgroundvideo: 'background-video',
-      videobackground: 'background-video',
-      barber: 'barber-shop',
-      barbershop: 'barber-shop',
-      'beauty studio': 'beauty',
-      beautysalon: 'beauty',
-      bigdata: 'big-data',
-      'black & white': 'black-and-white',
-      'black and white': 'black-and-white',
-      'blog template': 'blog',
-      blogger: 'blog',
-      blogging: 'blog',
-      blogsite: 'blog',
-      bookings: 'booking',
-      books: 'booking',
-      'brand strategy': 'brand-strategy',
-      'branding expert': 'branding',
-      brandingstudio: 'branding',
-      rebrand: 'branding',
-      rebranding: 'branding',
-      brandingagency: 'branding-agency',
-      'branding consultant': 'branding-consultant',
-      'branding identity design': 'branding-identity-design',
-      webbuild: 'build',
-      burgers: 'burger',
-      busines: 'business',
-      businesssite: 'business',
-      businesswebsite: 'business',
-      'business card': 'business-card',
-      'business landing page': 'business-landing-page',
-      buttons: 'button',
-      buttonanimation: 'button-animation',
-      buttonhover: 'button-animation',
-      'cannabis industry': 'cannabis',
-      cars: 'car',
-      card: 'cards',
-      'cars dealer': 'cars-dealer',
-      'case study': 'case-study',
-      casestudies: 'case-study',
-      casestudy: 'case-study',
-      'church online': 'church',
-      churchtemplate: 'church',
-      churchwebsite: 'church',
-      'clean design': 'clean',
-      cleandesign: 'clean',
-      'house cleaning': 'cleaning',
-      onclick: 'click-interactions',
-      clientwork: 'client-work',
-      climatechange: 'climate-change-related',
-      "men's clothing": 'clothing',
-      "women's clothing": 'clothing',
-      wbflowcms: 'cms',
-      cmsgallery: 'cms-gallery',
-      'business coaching': 'coaching',
-      'life coach': 'coaching',
-      codepen: 'code-pen',
-      'coffee shop': 'coffee-shop',
-      coffeeshop: 'coffee-shop',
-      colors: 'colorful',
-      colour: 'colorful',
-      colourful: 'colorful',
-      'coming soon': 'coming-soon',
-      'coming soon page': 'coming-soon',
-      comingsoon: 'coming-soon',
-      'company site': 'company',
-      companypage: 'company',
-      'complex navigation': 'complex-navigation',
-      components: 'component',
-      'concept design': 'concept-design',
-      'construction website': 'construction',
-      'business consulting': 'consulting',
-      consultancy: 'consulting',
-      consultant: 'consulting',
-      'management consulting': 'consulting',
-      'technology consulting': 'consulting',
-      webconsulting: 'consulting',
-      'contact form': 'contact-form',
-      'content marketing': 'content',
-      contentcreator: 'content',
-      'cool effects': 'cool-effects',
-      copywriter: 'copywriting',
-      copywriting: 'copywriting',
-      'corporate events': 'corporate',
-      corporatewebsite: 'corporate',
-      'corporate identity': 'corporate-identity',
-      course: 'courses',
-      covid: 'covid-19',
-      covid19: 'covid-19',
-      covid19helper: 'covid-19',
-      'craft beer': 'craft-beer',
-      creatives: 'creative',
-      creativeagency: 'creative-agency',
-      'creative designs': 'creative-designs',
-      creativedirector: 'creative-director',
-      'css animation': 'css-animations',
-      cssanimation: 'css-animations',
-      cssgrid: 'css-grid',
-      grid: 'css-grid',
-      'grid design': 'css-grid',
-      'grid layout': 'css-grid',
-      grids: 'css-grid',
-      'custom buttons': 'custom-buttons',
-      'custom code': 'custom-code',
-      customcode: 'custom-code',
-      customcursor: 'custom-cursor',
-      'custom modal': 'custom-modal',
-      dailyinteraction: 'daily-interaction',
-      dailyinteractions: 'daily-interaction',
-      dallaswebflow: 'dallas',
-      webflowdallas: 'dallas',
-      darkmode: 'dark-mode',
-      darktheme: 'dark-mode',
-      dashboards: 'dashboard',
-      dentalclinic: 'dental',
-      dentistry: 'dentist',
-      desgin: 'design',
-      designer: 'design',
-      designers: 'design',
-      designs: 'design',
-      designstudio: 'design',
-      'design agency': 'design-agency',
-      'design studio': 'design-agency',
-      designagency: 'design-agency',
-      'design blog': 'design-blog',
-      'design portfolio': 'design-portfolio',
-      designerportfolio: 'design-portfolio',
-      designportfolio: 'design-portfolio',
-      designsystem: 'design-system',
-      'design thinking': 'design-thinking',
-      designthinking: 'design-thinking',
-      webflowdesigner: 'designer',
-      webflowdeveloper: 'developer',
-      develoment: 'development',
-      digitalagency: 'digital-agency',
-      digitalbutlers: 'digital-agency',
-      'digital creative': 'digital-creative',
-      'digital design': 'digital-design',
-      digitaldesign: 'digital-design',
-      digitaldesigner: 'digital-design',
-      digital: 'digital-marketing',
-      'digital marketing': 'digital-marketing',
-      'marketing digital': 'digital-marketing',
-      digitalproducts: 'digital-products',
-      'digital strategy': 'digital-strategy',
-      'discover startups': 'discover-startups',
-      doctors: 'doctor',
-      donate: 'donation',
-      'e-commerce': 'ecommerce',
-      eccomerce: 'ecommerce',
-      webflowecommerce: 'ecommerce',
-      educational: 'education',
-      effect: 'effects',
-      'email capture': 'email-capture',
-      'email marketing': 'email-marketing',
-      'energy industry': 'energy-industry',
-      events: 'event',
-      'local events': 'event',
-      'event planning': 'event-planning',
-      'experience design': 'experience-design',
-      faqs: 'faq',
-      'fashion website': 'fashion',
-      figma2webflow: 'figma',
-      figmatowebflow: 'figma',
-      filmmaker: 'filmmaking',
-      filtering: 'filter',
-      filters: 'filter',
-      financial: 'finance',
-      invest: 'financial',
-      investing: 'financial',
-      investment: 'financial',
-      investor: 'financial',
-      'financial services': 'financial-services',
-      'fixed menu': 'fixed-menu',
-      'flat design': 'flat',
-      fonts: 'font',
-      'food & drink': 'food',
-      foodblog: 'food',
-      foodie: 'food',
-      'healthy food': 'food',
-      'for hire': 'for-hire',
-      form: 'forms',
-      foxycart: 'foxy-cart',
-      'free template': 'free-template',
-      freebies: 'freebie',
-      freelace: 'freelance',
-      freelancer: 'freelance',
-      freelancers: 'freelance',
-      freelancing: 'freelance',
-      freelancedesigner: 'freelance-designer',
-      'freelance web designer': 'freelance-web-designer',
-      frontenddevelopment: 'front-end',
-      fullpage: 'full-page',
-      fullpagejs: 'full-page-js',
-      'full screen': 'full-screen',
-      fullscreen: 'full-screen',
-      'full site': 'full-site',
-      'full width': 'full-width',
-      'fullscreen menu': 'fulll-screen-menu',
-      future: 'futuristic',
-      game: 'gaming',
-      games: 'gaming',
-      videogame: 'gaming',
-      googleads: 'google-ads',
-      googlemaps: 'google-maps',
-      gradients: 'gradient',
-      graphics: 'graphic',
-      'graphic design': 'graphic-design',
-      graphicdesign: 'graphic-design',
-      'graphic designer': 'graphic-designer',
-      graphicdesigner: 'graphic-designer',
-      'graphic studio': 'graphic-studio',
-      'growth hacking': 'growth-hacking',
-      hairdresser: 'hair-dresser',
-      'hair salon': 'hair-salon',
-      'hair stylist': 'hair-stylist',
-      hamburgermenu: 'hamburger-menu',
-      hiphop: 'hip-hop',
-      'hire me': 'hire-me',
-      horizontal: 'horizontal-scroll',
-      horizontalscroll: 'horizontal-scroll',
-      hotels: 'hotel',
-      home: 'housing',
-      homes: 'housing',
-      house: 'housing',
-      houstonwebflow: 'houston',
-      hover: 'hover-animations',
-      'hover effects': 'hover-animations',
-      hoveranimation: 'hover-animations',
-      hovereffect: 'hover-animations',
-      'human resources': 'human-resources',
-      icons: 'icon',
-      illustrations: 'illustration',
-      imagehover: 'imagine-hover',
-      madeinindia: 'Indian',
-      industry: 'industrial ',
-      'industrial design': 'industrial-design',
-      information: 'information-technology',
-      'information technology': 'information-technology',
-      innovation: 'innovative',
-      instagam: 'instagram',
-      'instagram feed': 'instagram-feed',
-      'interaction design': 'interaction-design',
-      interactiondesign: 'interaction-design',
-      interaction: 'interactions',
-      webflowinteractions: 'interactions',
-      webflowix2: 'interactions',
-      interative: 'interactive',
-      interfacedesign: 'interface-design',
-      interior: 'interior-design',
-      'interior design': 'interior-design',
-      interiordesign: 'interior-design',
-      interiors: 'interior-design',
-      iosapp: 'ios',
-      japan: 'japanese',
-      jewellery: 'jewelry',
-      job: 'job-seeking',
-      'job seeker': 'job-seeking',
-      jobboard: 'job-seeking',
-      jobs: 'job-seeking',
-      landing: 'landing-page',
-      'landing page': 'landing-page',
-      landingpage: 'landing-page',
-      webflowlandingpage: 'landing-page',
-      'landscape design': 'landscape-design',
-      'large images': 'large-images',
-      law: 'law-firm',
-      'law firm': 'law-firm',
-      lawyer: 'law-firm',
-      lawyers: 'law-firm',
-      'lead generation': 'lead-generation',
-      leads: 'lead-generation',
-      'leadership development': 'leadership-development',
-      learn: 'learning-and-development',
-      learning: 'learning-and-development',
-      live: 'livestream',
-      livestream: 'livestream',
-      logo: 'logo-design',
-      'logo design': 'logo-design',
-      logos: 'logo-design',
-      loop: 'loop-animation',
-      'los angeles': 'los-angeles',
-      lottie: 'lottie-file',
-      lottiefiles: 'lottie-file',
-      lottiejs: 'lottie-file',
-      lotties: 'lottie-file',
-      madeinwebflow: 'made-in-webflow',
-      madewithwebflow: 'made-in-webflow',
-      nativewebflow: 'made-in-webflow',
-      webflowsites: 'made-in-webflow',
-      webflowwebsite: 'made-in-webflow',
-      maps: 'map',
-      'best marketing agency': 'marketing-agency',
-      'marketing agency': 'marketing-agency',
-      marketingdesign: 'marketing-design',
-      'material design': 'material-design',
-      'media agency': 'media-agency',
-      'medical professional': 'medical-professional',
-      meetup: 'meet-up',
-      megamenu: 'mega-menu',
-      member: 'membership',
-      memberships: 'membership',
-      mentalhealth: 'mental-health',
-      'mentes millonarias': 'mentes-millonarias',
-      menuconcept: 'menu',
-      menus: 'menu',
-      microinteraction: 'microinteractions',
-      microinteractions: 'microinteractions',
-      minimal: 'minimalist',
-      minimalism: 'minimalist',
-      minimalistwebsite: 'minimalist',
-      mobile: 'mobile-design',
-      'mobile design': 'mobile-design',
-      mobilefirst: 'mobile-design',
-      'mobile friendly': 'mobile-friendly',
-      'mobile landing': 'mobile-landing',
-      'mobile menu': 'mobile-menu',
-      mockups: 'mockup',
-      modernecommerce: 'modern',
-      'motion design': 'motion-design',
-      motiondesign: 'motion-design',
-      'motion graphics': 'motion-graphics',
-      mousehover: 'mouse-hover-interaction',
-      mousemovement: 'mouse-movement',
-      mouseover: 'mouseover-interaction',
-      movies: 'movie',
-      multilanguage: 'multi-language',
-      multilingual: 'multi-language',
-      'multilingual website': 'multi-language',
-      'multi-step form': 'multi-step-form',
-      'website for music': 'music',
-      'music & sound': 'music-and-sound',
-      'music producer': 'music-producer',
-      musicians: 'musician',
-      nav: 'navbar',
-      navigation: 'navbar',
-      navbarinteractions: 'navbar-interactions',
-      network: 'networking',
-      newyork: 'new-york',
-      'new york city': 'new-york-city',
-      'new zealand': 'new-zealand',
-      nocode: 'no-code',
-      nocodetribe: 'no-code-tribe',
-      nonprofits: 'nonprofit',
-      'nuvi global': 'nuvi-global',
-      'one page': 'one-page',
-      'one page landing site': 'one-page',
-      'one page website': 'one-page',
-      onepage: 'one-page',
-      onepagelove: 'one-page',
-      onepager: 'one-page',
-      Onepager: 'one-page',
-      onepagesite: 'one-page',
-      onepagewebsite: 'one-page',
-      'single page': 'one-page',
-      singlepage: 'one-page',
-      'online courses': 'online-course',
-      'online education': 'online-education',
-      'online marketing': 'online-marketing',
-      'online shopping': 'online-shopping',
-      onlinestore: 'online-store',
-      orangecattle: 'orange-cattle',
-      'packaging design': 'packaging-design',
-      pageload: 'page-load',
-      'page transition': 'page-transitions',
-      pagetransitions: 'page-transitions',
-      paintings: 'painting',
-      parallax: 'parallax-scroll-animations',
-      parallaxanimation: 'parallax-scroll-animations',
-      parallaxeffect: 'parallax-scroll-animations',
-      parallaxscroll: 'parallax-scroll-animations',
-      payments: 'payment',
-      'personal branding': 'personal-branding',
-      'personal trainer': 'personal-trainer',
-      'personal training': 'personal-trainer',
-      personal: 'personal-website',
-      'personal site': 'personal-website',
-      'personal website': 'personal-website',
-      photos: 'photo-gallery',
-      photographer: 'photography',
-      photographers: 'photography',
-      'photography website': 'photography',
-      'website for photography': 'photography',
-      photographyportfolio: 'photography-portfolio',
-      piterdimitrov: 'Piter-dimitrov',
-      play: 'playground',
-      player: 'playground',
-      playful: 'playground',
-      podcasts: 'podcast',
-      popup: 'pop-ups',
-      porfolio: 'portfolio',
-      portfoilio: 'portfolio',
-      portfoliowebsite: 'portfolio',
-      portoflio: 'portfolio',
-      portfoliocourse: 'portfolio-course',
-      'portrait photographer': 'portrait-photography',
-      preloader: 'pre-load-animation',
-      'pricing table': 'pricing-table',
-      'print design': 'print-design',
-      'product design': 'product-design',
-      productdesign: 'product-design',
-      'product designer': 'product-designer',
-      productdesigner: 'product-designer',
-      productmanagement: 'product-management',
-      productpage: 'product-page',
-      pro: 'professional',
-      progressbar: 'progress-bar',
-      projects: 'project',
-      'project management': 'project-management',
-      promotion: 'promotional',
-      'property management': 'property-management',
-      prototype: 'prototyping',
-      'public relations': 'public-relations',
-      'pure webflow': 'pure-webflow',
-      'real estate': 'real-estate',
-      'real estate agent': 'real-estate',
-      realestate: 'real-estate',
-      recipes: 'recipe',
-      'record label': 'record-label',
-      recruitment: 'recruiting',
-      'recruitment agency': 'recruitment',
-      rentals: 'rental',
-      mobileresponsiveness: 'responsive-design',
-      'responsive design': 'responsive-design',
-      'responsive web': 'responsive-design',
-      'responsive web design': 'responsive-design',
-      'responsive websites': 'responsive-design',
-      responsivedesign: 'responsive-design',
-      responsivewebdesign: 'responsive-design',
-      'restaurant website': 'restaurant',
-      reviews: 'review',
-      russia: 'russian',
-      saasdesigner: 'saas',
-      salespage: 'sales',
-      'san francisco': 'san-francisco',
-      sanfrancisco: 'san-francisco',
-      whilescrolling: 'scroll',
-      scroll: 'scroll-animation',
-      scrollanimation: 'scroll-animation',
-      scrolleffect: 'scroll-animation',
-      scrolleffects: 'scroll-animation',
-      scrollinteraction: 'scroll-animation',
-      scrollbar: 'scroll-bar',
-      scroller: 'scrolling',
-      scrollintoview: 'scrolling',
-      scrollmagic: 'scrolling',
-      'scrolling website': 'scrolling-website',
-      'search engine': 'search',
-      sections: 'section',
-      services: 'service',
-      'shopping cart': 'shopping-cart',
-      'sign up': 'sign-up',
-      cmsslider: 'slider',
-      customslider: 'slider',
-      'fullpage slider': 'slider',
-      'small business': 'small-business',
-      'small business marketing': 'small-business',
-      smallbusiness: 'small-business',
-      social: 'social-media',
-      'social media': 'social-media',
-      'social media management': 'social-media',
-      'social media marketing': 'social-media',
-      socialmedia: 'social-media',
-      'splash page': 'splash-page',
-      'start-up': 'startup',
-      'startup design': 'startup',
-      startups: 'startup',
-      storefront: 'store',
-      story: 'storytelling',
-      storybrand: 'storytelling',
-      'strategic design': 'strategic-design',
-      styleguide: 'style-guide',
-      svganimation: 'svg-animation',
-      templates: 'template',
-      webtemplates: 'template',
-      testimonials: 'testimonial',
-      textanimation: 'text-animation',
-      texteffects: 'text-animation',
-      themes: 'theme',
-      'throughflow labs': 'throughflow-labs',
-      tools: 'tool',
-      tours: 'tour',
-      transition: 'transitions',
-      transitionsanimations: 'transitions',
-      'travel website': 'travel',
-      travelblog: 'travel',
-      traveling: 'travel',
-      trucking: 'truck',
-      'ui design': 'ui-design',
-      uidesign: 'ui-design',
-      uidesigner: 'ui-design',
-      'ui kit': 'ui-kit',
-      uikit: 'ui-kit',
-      uiportfolio: 'ui-portfolio',
-      'united kingdom': 'united-kingdom',
-      'user centered design': 'user-centered-design',
-      'user experience': 'user-experience',
-      userexperience: 'user-experience',
-      userfriendly: 'user-friendly',
-      'user interaction': 'user-interaction',
-      'user interface': 'user-interface',
-      userinterface: 'user-interface',
-      'user testing': 'user-testing',
-      uxagency: 'ux-agency',
-      'user experience design': 'ux-design',
-      'ux design': 'ux-design',
-      uxdesign: 'ux-design',
-      uxdesigner: 'ux-designer',
-      uxportfolio: 'ux-portfolio',
-      uxresearch: 'ux-research',
-      'ui/ux': 'ux-ui',
-      uiux: 'ux-ui',
-      uix: 'ux-ui',
-      'ux/ui': 'ux-ui',
-      uxui: 'ux-ui',
-      'venture capital': 'venture-capital',
-      'vertical nav': 'vertical-nav',
-      videos: 'video',
-      'video editing': 'video-editing',
-      'video games': 'video-games',
-      'video production': 'video-production',
-      videoproduction: 'video-production',
-      'virtual reality': 'virtual-reality',
-      virtualreality: 'virtual-reality',
-      'visual design': 'visual-design',
-      'visual designer': 'visual-designer',
-      'visual identity': 'visual-idenity',
-      'web deisgn': 'web-deisgn',
-      'diseño web': 'web-design',
-      'web design': 'web-design',
-      'web-design': 'web-design',
-      webdesig: 'web-design',
-      webdesign: 'web-design',
-      webagency: 'web-design-agency',
-      webdesignagency: 'web-design-agency',
-      webflowagency: 'web-design-agency',
-      'web designer': 'web-designer',
-      webdesigner: 'web-designer',
-      'web desing': 'web-design',
-      'web developer': 'web-developer',
-      'web development': 'web-development',
-      webdevellopment: 'web-development',
-      webdeveloper: 'web-development',
-      webdevelopment: 'web-development',
-      webdevelpment: 'web-development',
-      webpage: 'web-page',
-      webshop: 'web-shop',
-      webstore: 'web-store',
-      webdevforyou: 'webdev-for-you',
-      webfow: 'webflow',
-      webflowcms: 'webflow-cms',
-      'webflow experiment': 'webflow-experiment',
-      'webflow template': 'webflow-template',
-      'webflow tutorial': 'webflow-tutorial',
-      webflowuniversity: 'webflow-university',
-      'site design': 'website-design',
-      'website design': 'website-design',
-      'website designer': 'website-designer',
-      websitedesigner: 'website-designer',
-      'website maker': 'website-maker',
-      'website template': 'website-template',
-      weddings: 'wedding',
-      wellbeing: 'well-being',
-      wellness: 'wellness',
-      wireframe: 'wireframing',
-      wireframes: 'wireframing',
-      'wordpress themes': 'wordpress-themes',
-      writer: 'writing',
-      'yoga studio': 'yoga-studio'
-    }
-  };
-  api.university = {
-    maxCoursesPerUser: 50
-  };
-
-  function fillApi(target) {
-    target.ADDITIONAL_PRICES = api.ADDITIONAL_PRICES;
-    target.DEFAULT_OAUTH_APP_IMAGE = api.DEFAULT_OAUTH_APP_IMAGE;
-    target.DEFAULT_PROFILE_IMAGE = api.DEFAULT_PROFILE_IMAGE;
-    target.DEPRECATED_WF_GOOGLE_MAPS_KEY = api.DEPRECATED_WF_GOOGLE_MAPS_KEY;
-    target.DNSSEC_STATUS = api.DNSSEC_STATUS;
-    target.DYNAMO_PLANS = api.DYNAMO_PLANS;
-    target.DYN_BOUND_PLACEHOLDER_TEXT = api.DYN_BOUND_PLACEHOLDER_TEXT;
-    target.EXP_ASSIGNMENTS_LOCALSTORAGE_KEY = api.EXP_ASSIGNMENTS_LOCALSTORAGE_KEY;
-    target.EXP_CACHE_EXPIRATION_MIN = api.EXP_CACHE_EXPIRATION_MIN;
-    target.EXP_UNIQUE_ID_COOKIE = api.EXP_UNIQUE_ID_COOKIE;
-    target.FIELD_NAME_DENYLIST = api.FIELD_NAME_DENYLIST;
-    target.FIGURE_ALIGN_MAP = api.FIGURE_ALIGN_MAP;
-    target.FIRST_TOUCH_COOKIE = api.FIRST_TOUCH_COOKIE;
-    target.HREF = api.HREF;
-    target.HREF_DISABLED = api.HREF_DISABLED;
-    target.HREF_DISABLED_DEFAULT_COLOR = api.HREF_DISABLED_DEFAULT_COLOR;
-    target.HREF_DISABLED_UNDERLINE = api.HREF_DISABLED_UNDERLINE;
-    target.LOGGED_OUT_COOKIE = api.LOGGED_OUT_COOKIE;
-    target.MAILTO_EMAIL_REGEX = api.MAILTO_EMAIL_REGEX;
-    target.MAILTO_SUBJECT_REGEX = api.MAILTO_SUBJECT_REGEX;
-    target.MAX_DYNLISTS_PER_PAGE = api.MAX_DYNLISTS_PER_PAGE;
-    target.MAX_MANAGED_PLAN_AMOUNT = api.MAX_MANAGED_PLAN_AMOUNT;
-    target.MAX_NESTED_DYNLISTS_PER_PAGE = api.MAX_NESTED_DYNLISTS_PER_PAGE;
-    target.MIN_VERSION_CONDITIONAL_VISIBILITY = api.MIN_VERSION_CONDITIONAL_VISIBILITY;
-    target.MIN_VERSION_EXPANDED_TEXT_NODES = api.MIN_VERSION_EXPANDED_TEXT_NODES;
-    target.MIN_VERSION_JSON_RENDER = api.MIN_VERSION_JSON_RENDER;
-    target.MKTG_CHANNEL_COOKIE = api.MKTG_CHANNEL_COOKIE;
-    target.NUX_TEMPLATE_NAME = api.NUX_TEMPLATE_NAME;
-    target.NUX_SITE_NAME = api.NUX_SITE_NAME;
-    target.TUTORIAL_RESUME_QUERY_PARAM = api.TUTORIAL_RESUME_QUERY_PARAM;
-    target.NUX_TUTORIAL = api.NUX_TUTORIAL;
-    target.NUX_FLEXBOX = api.NUX_FLEXBOX;
-    target.NUX_FLEXBOX_EXTENDED = api.NUX_FLEXBOX_EXTENDED;
-    target.ANALYTICS_CONSTANTS = api.ANALYTICS_CONSTANTS;
-    target.ORG_DISCOUNT = api.ORG_DISCOUNT;
-    target.ORG_PLANS = api.ORG_PLANS;
-    target.PUBLISH_TASK = api.PUBLISH_TASK;
-    target.RESERVED_CUSTOM_FIELD_SLUG_REGEX_PATTERNS = api.RESERVED_CUSTOM_FIELD_SLUG_REGEX_PATTERNS;
-    target.RTE_FIGURE_ALIGN_ATTR = api.RTE_FIGURE_ALIGN_ATTR;
-    target.RTE_FIGURE_DATA_ATTRS = api.RTE_FIGURE_DATA_ATTRS;
-    target.RTE_FIGURE_DIMENSIONS_ATTR = api.RTE_FIGURE_DIMENSIONS_ATTR;
-    target.RTE_FIGURE_MAX_HEIGHT_ATTR = api.RTE_FIGURE_MAX_HEIGHT_ATTR;
-    target.RTE_FIGURE_MAX_WIDTH_ATTR = api.RTE_FIGURE_MAX_WIDTH_ATTR;
-    target.RTE_FIGURE_PAGE_URL_ATTR = api.RTE_FIGURE_PAGE_URL_ATTR;
-    target.RTE_FIGURE_TYPE_ATTR = api.RTE_FIGURE_TYPE_ATTR;
-    target.RTE_FIGURE_TYPE_CLASS = api.RTE_FIGURE_TYPE_CLASS;
-    target.RTE_FIGURE_TYPE_IMAGE_CLASS = api.RTE_FIGURE_TYPE_IMAGE_CLASS;
-    target.RTE_FIGURE_TYPE_VIDEO_CLASS = api.RTE_FIGURE_TYPE_VIDEO_CLASS;
-    target.RTE_LEGACY_TEMP_ELEM_ATTR = api.RTE_LEGACY_TEMP_ELEM_ATTR;
-    target.RTE_LINK_COLLECTION_ID_ATTR = api.RTE_LINK_COLLECTION_ID_ATTR;
-    target.RTE_LINK_DATA_ATTRS = api.RTE_LINK_DATA_ATTRS;
-    target.RTE_LINK_DOM_ID_ATTR = api.RTE_LINK_DOM_ID_ATTR;
-    target.RTE_LINK_ITEM_ID_ATTR = api.RTE_LINK_ITEM_ID_ATTR;
-    target.RTE_LINK_PAGE_ID_ATTR = api.RTE_LINK_PAGE_ID_ATTR;
-    target.RTE_LINK_TYPE_ATTR = api.RTE_LINK_TYPE_ATTR;
-    target.RTE_NEW_ELEMENT_MARKER_ATTR = api.RTE_NEW_ELEMENT_MARKER_ATTR;
-    target.SITE_PLANS = api.SITE_PLANS;
-    target.SITE_STRIPE_PLANS = api.SITE_STRIPE_PLANS;
-    target.SITE_STRIPE_YEARLY_PLANS = api.SITE_STRIPE_YEARLY_PLANS;
-    target.SYBG_HOURS = api.SYBG_HOURS;
-    target.TEL_NUMBER_REGEX = api.TEL_NUMBER_REGEX;
-    target.TYPOGRAPHIC_TAG_REGEX = api.TYPOGRAPHIC_TAG_REGEX;
-    target.USER_ID_COOKIE = api.USER_ID_COOKIE;
-    target.VALID_CONTENT_NODES = api.VALID_CONTENT_NODES;
-    target.VALID_TYPOGRAPHIC_CONTENT_NODES = api.VALID_TYPOGRAPHIC_CONTENT_NODES;
-    target.VOID_HTML_TAGS = api.VOID_HTML_TAGS;
-    target.WEBFLOW_NODE_ID_ATTR = api.WEBFLOW_NODE_ID_ATTR;
-    target.WEBFLOW_NODE_ID_PATH_ATTR = api.WEBFLOW_NODE_ID_PATH_ATTR;
-    target.allowedTypoContentTags = api.allowedTypoContentTags;
-    target.blankTemplate = api.blankTemplate;
-    target.quickAddTemplate = api.quickAddTemplate;
-    target.nuxTemplate = api.nuxTemplate;
-    target.collectionPresets = api.collectionPresets;
-    target.commerceCountryList = api.commerceCountryList;
-    target.commerceCurrencyLocales = api.commerceCurrencyLocales;
-    target.commerceLanguages = api.commerceLanguages;
-    target.commerceSupportedCountryCodes = api.commerceSupportedCountryCodes;
-    target.commerceSupportedCountryList = api.commerceSupportedCountryList;
-    target.commerceTaxJarCountryList = api.commerceTaxJarCountryList;
-    target.commerceUnitSystemOptions = api.commerceUnitSystemOptions;
-    target.dynamicContextConstant = api.dynamicContextConstant;
-    target.dynamoCollectionDefaultFieldSlugs = api.dynamoCollectionDefaultFieldSlugs;
-    target.dynamoCollectionDefaultFields = api.dynamoCollectionDefaultFields;
-    target.dynamoPageSlugPrefix = api.dynamoPageSlugPrefix;
-    target.ecommExtraFields = api.ecommExtraFields;
-    target.editorPublishDate = api.editorPublishDate;
-    target.enumOptionMapSets = api.enumOptionMapSets;
-    target.enumOptionValueSets = api.enumOptionValueSets;
-    target.expandableFieldTypes = api.expandableFieldTypes;
-    target.frontEndReservedFieldNames = api.frontEndReservedFieldNames;
-    target.frontEndReservedFieldSlugPatterns = api.frontEndReservedFieldSlugPatterns;
-    target.getWfBadgeStatus = api.getWfBadgeStatus;
-    target.heavyExpandableFieldTypes = api.heavyExpandableFieldTypes;
-    target.managedBilling = api.managedBilling;
-    target.microNodeIdLength = api.microNodeIdLength;
-    target.paths = api.paths;
-    target.paypalCountryCodes = api.paypalCountryCodes;
-    target.paypalCurrencyCodes = api.paypalCurrencyCodes;
-    target.paypalCurrencyList = api.paypalCurrencyList;
-    target.popularCommerceCountryList = api.popularCommerceCountryList;
-    target.richTextHrefReplaceRegex = api.richTextHrefReplaceRegex;
-    target.richTextLinkAttrsReplaceRegex = api.richTextLinkAttrsReplaceRegex;
-    target.richTextPageAnchorRegex = api.richTextPageAnchorRegex;
-    target.richTextPageAttrRegex = api.richTextPageAttrRegex;
-    target.richTextSanitizerOptions = api.richTextSanitizerOptions;
-    target.sortableByDirectionFieldTypes = api.sortableByDirectionFieldTypes;
-    target.sortableByExistenceFieldTypes = api.sortableByExistenceFieldTypes;
-    target.listableFieldTypes = api.listableFieldTypes;
-    target.SSO_OWNERSHIP_WARNING_LOCALSTORAGE_KEY = api.SSO_OWNERSHIP_WARNING_LOCALSTORAGE_KEY;
-    target.stripeCountryCodes = api.stripeCountryCodes;
-    target.stripeCurrencyCodes = api.stripeCurrencyCodes;
-    target.stripeCurrencyList = api.stripeCurrencyList;
-    target.sanitizeVat = api.sanitizeVat;
-    target.verifyVat = api.verifyVat;
-    target.verifyVatAnyCountry = api.verifyVatAnyCountry;
-    target.euVatSupportedCountries = api.euVatSupportedCountries;
-    target.isInEuVatCountry = api.isInEuVatCountry;
-    target.webflowNodeInstanceIdAttr = api.webflowNodeInstanceIdAttr;
-    target.showcaseConfig = api.showcaseConfig;
-    target.showcaseCollectionsConfig = api.showcaseCollectionsConfig;
-    target.showcaseTagConfig = api.showcaseTagConfig;
-    target.university = api.university;
-    target.MARKETING_VERTICAL_COOKIE = api.MARKETING_VERTICAL_COOKIE;
-  } // Export commonjs module
-
-
-  if ( true && module.exports) {
-    fillApi(module.exports);
-  } // Add to window object
-
-
-  if (typeof window !== 'undefined') {
-    var globalApi = {};
-    fillApi(globalApi);
-    window.SharedConfig = globalApi;
-  }
-})();
-
-/***/ }),
-/* 358 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _FilterUtils = __webpack_require__(745);
+var _FilterUtils = __webpack_require__(746);
 
 Object.keys(_FilterUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39728,7 +30601,7 @@ Object.keys(_FilterUtils).forEach(function (key) {
 });
 
 /***/ }),
-/* 359 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39738,7 +30611,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _CurrencyUtils = __webpack_require__(360);
+var _CurrencyUtils = __webpack_require__(359);
 
 Object.keys(_CurrencyUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39750,7 +30623,7 @@ Object.keys(_CurrencyUtils).forEach(function (key) {
   });
 });
 
-var _renderPrice = __webpack_require__(770);
+var _renderPrice = __webpack_require__(771);
 
 Object.keys(_renderPrice).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -39763,7 +30636,7 @@ Object.keys(_renderPrice).forEach(function (key) {
 });
 
 /***/ }),
-/* 360 */
+/* 359 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39802,19 +30675,19 @@ exports.intToUnsafeFloat = exports.unsafeFloatToInt = exports.getCurrencySymbol 
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _keyBy = _interopRequireDefault(__webpack_require__(765));
+var _keyBy = _interopRequireDefault(__webpack_require__(766));
 
 var _memoize = _interopRequireDefault(__webpack_require__(258));
 
 var _isString = _interopRequireDefault(__webpack_require__(271));
 
-var _isNumber = _interopRequireDefault(__webpack_require__(769));
+var _isNumber = _interopRequireDefault(__webpack_require__(770));
 
-var _SharedConfig = __webpack_require__(357);
+var _constants = __webpack_require__(21);
 
-var currencyInfoByCode = (0, _keyBy["default"])(_SharedConfig.stripeCurrencyList, 'code');
+var currencyInfoByCode = (0, _keyBy["default"])(_constants.stripeCurrencyList, 'code');
 exports.currencyInfoByCode = currencyInfoByCode;
-var currencyInfoByCodePaypal = (0, _keyBy["default"])(_SharedConfig.paypalCurrencyList, 'code');
+var currencyInfoByCodePaypal = (0, _keyBy["default"])(_constants.paypalCurrencyList, 'code');
 exports.currencyInfoByCodePaypal = currencyInfoByCodePaypal;
 
 function getCurrencyInfo(code) {
@@ -40197,10 +31070,10 @@ function convertPaypalAmountToWFPrice(a) {
 }
 
 /***/ }),
-/* 361 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escapeHtmlChar = __webpack_require__(780),
+var escapeHtmlChar = __webpack_require__(781),
     toString = __webpack_require__(54);
 
 /** Used to match HTML entities and HTML characters. */
@@ -40246,7 +31119,7 @@ module.exports = escape;
 
 
 /***/ }),
-/* 362 */
+/* 361 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40316,7 +31189,7 @@ function formatPhone(phone, property) {
 }
 
 /***/ }),
-/* 363 */
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40504,7 +31377,7 @@ var applyDiscountMutation = _graphqlTag["default"](_templateObject12());
 exports.applyDiscountMutation = applyDiscountMutation;
 
 /***/ }),
-/* 364 */
+/* 363 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40515,7 +31388,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.showErrorMessageForError = exports.isCartOpen = void 0;
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _commerceUtils = __webpack_require__(35);
 /* globals window */
@@ -40587,7 +31460,7 @@ var showErrorMessageForError = function showErrorMessageForError(err, scope) {
 exports.showErrorMessageForError = showErrorMessageForError;
 
 /***/ }),
-/* 365 */
+/* 364 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40620,7 +31493,7 @@ module.exports = util.assign(
 
 
 /***/ }),
-/* 366 */
+/* 365 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40643,7 +31516,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /***/ }),
-/* 367 */
+/* 366 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40707,26 +31580,26 @@ var index = typeof fetch=='function' ? fetch.bind() : function(url, options) {
 
 
 /***/ }),
-/* 368 */
+/* 367 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(369);
+__webpack_require__(368);
+__webpack_require__(370);
 __webpack_require__(371);
 __webpack_require__(372);
-__webpack_require__(373);
 __webpack_require__(148);
-__webpack_require__(375);
+__webpack_require__(374);
+__webpack_require__(513);
 __webpack_require__(514);
 __webpack_require__(515);
 __webpack_require__(516);
-__webpack_require__(517);
-__webpack_require__(812);
 __webpack_require__(813);
-module.exports = __webpack_require__(814);
+__webpack_require__(814);
+module.exports = __webpack_require__(815);
 
 
 /***/ }),
-/* 369 */
+/* 368 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40740,7 +31613,7 @@ module.exports = __webpack_require__(814);
  * Webflow: Brand pages on the subdomain
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 Webflow.define('brand', module.exports = function ($) {
   var api = {};
@@ -40817,7 +31690,7 @@ Webflow.define('brand', module.exports = function ($) {
 });
 
 /***/ }),
-/* 370 */
+/* 369 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41192,7 +32065,7 @@ module.exports = function () {
 /* eslint-enable */
 
 /***/ }),
-/* 371 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41206,7 +32079,7 @@ module.exports = function () {
  * Webflow: focus-visible
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 /*
  * This polyfill comes from https://github.com/WICG/focus-visible
  */
@@ -41479,7 +32352,7 @@ Webflow.define('focus-visible', module.exports = function () {
 });
 
 /***/ }),
-/* 372 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41493,7 +32366,7 @@ Webflow.define('focus-visible', module.exports = function () {
  * Webflow: focus-within
  */
 
-var Webflow = __webpack_require__(21); // polyfill based off of https://github.com/matteobad/focus-within-polyfill
+var Webflow = __webpack_require__(22); // polyfill based off of https://github.com/matteobad/focus-within-polyfill
 
 
 Webflow.define('focus-within', module.exports = function () {
@@ -41587,7 +32460,7 @@ Webflow.define('focus-within', module.exports = function () {
 });
 
 /***/ }),
-/* 373 */
+/* 372 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41601,7 +32474,7 @@ Webflow.define('focus-within', module.exports = function () {
  * Webflow: focus
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 /*
  * Safari has a weird bug where it doesn't support :focus for links with hrefs,
  * buttons, and input[type=button|submit], so we listen for mousedown events
@@ -41695,7 +32568,7 @@ Webflow.define('focus', module.exports = function () {
 });
 
 /***/ }),
-/* 374 */
+/* 373 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41775,7 +32648,7 @@ api.async();
 module.exports = api;
 
 /***/ }),
-/* 375 */
+/* 374 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41787,9 +32660,9 @@ module.exports = api;
  * Webflow: Interactions 2
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
-var ix2 = __webpack_require__(376);
+var ix2 = __webpack_require__(375);
 
 ix2.setEnv(Webflow.env);
 Webflow.define('ix2', module.exports = function () {
@@ -41797,7 +32670,7 @@ Webflow.define('ix2', module.exports = function () {
 });
 
 /***/ }),
-/* 376 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41815,11 +32688,11 @@ exports.init = init;
 exports.destroy = destroy;
 exports.actions = exports.store = void 0;
 
-__webpack_require__(377);
+__webpack_require__(376);
 
 var _redux = __webpack_require__(234);
 
-var _IX2Reducer = _interopRequireDefault(__webpack_require__(394));
+var _IX2Reducer = _interopRequireDefault(__webpack_require__(393));
 
 var _IX2VanillaEngine = __webpack_require__(269);
 
@@ -41850,6 +32723,15 @@ function destroy() {
 }
 
 /***/ }),
+/* 376 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(377);
+
+module.exports = parent;
+
+
+/***/ }),
 /* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41862,15 +32744,6 @@ module.exports = parent;
 /* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(379);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 379 */
-/***/ (function(module, exports, __webpack_require__) {
-
 __webpack_require__(223);
 var entryUnbind = __webpack_require__(233);
 
@@ -41878,11 +32751,11 @@ module.exports = entryUnbind('Array', 'includes');
 
 
 /***/ }),
-/* 380 */
+/* 379 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var isCallable = __webpack_require__(6);
 var isObject = __webpack_require__(13);
 
@@ -41900,7 +32773,7 @@ module.exports = function (input, pref) {
 
 
 /***/ }),
-/* 381 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -41913,10 +32786,10 @@ module.exports = isCallable(WeakMap) && /native code/.test(inspectSource(WeakMap
 
 
 /***/ }),
-/* 382 */
+/* 381 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var uncurryThis = __webpack_require__(3);
 var getOwnPropertyNamesModule = __webpack_require__(84);
 var getOwnPropertySymbolsModule = __webpack_require__(230);
@@ -41933,7 +32806,7 @@ module.exports = getBuiltIn('Reflect', 'ownKeys') || function ownKeys(it) {
 
 
 /***/ }),
-/* 383 */
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toIntegerOrInfinity = __webpack_require__(31);
@@ -41948,14 +32821,14 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 384 */
+/* 383 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Symbol_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(236);
-/* harmony import */ var _getRawTag_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(387);
-/* harmony import */ var _objectToString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(388);
+/* harmony import */ var _getRawTag_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(386);
+/* harmony import */ var _objectToString_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(387);
 
 
 
@@ -41987,12 +32860,12 @@ function baseGetTag(value) {
 
 
 /***/ }),
-/* 385 */
+/* 384 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(386);
+/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(385);
 
 
 /** Detect free variable `self`. */
@@ -42005,7 +32878,7 @@ var root = _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__["default"] || freeSelf ||
 
 
 /***/ }),
-/* 386 */
+/* 385 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42018,7 +32891,7 @@ var freeGlobal = typeof global == 'object' && global && global.Object === Object
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47)))
 
 /***/ }),
-/* 387 */
+/* 386 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42073,7 +32946,7 @@ function getRawTag(value) {
 
 
 /***/ }),
-/* 388 */
+/* 387 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42103,12 +32976,12 @@ function objectToString(value) {
 
 
 /***/ }),
-/* 389 */
+/* 388 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _overArg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(390);
+/* harmony import */ var _overArg_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(389);
 
 
 /** Built-in value references. */
@@ -42118,7 +32991,7 @@ var getPrototype = Object(_overArg_js__WEBPACK_IMPORTED_MODULE_0__["default"])(O
 
 
 /***/ }),
-/* 390 */
+/* 389 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42141,7 +33014,7 @@ function overArg(func, transform) {
 
 
 /***/ }),
-/* 391 */
+/* 390 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42178,7 +33051,7 @@ function isObjectLike(value) {
 
 
 /***/ }),
-/* 392 */
+/* 391 */
 /***/ (function(module, exports) {
 
 module.exports = function(originalModule) {
@@ -42208,7 +33081,7 @@ module.exports = function(originalModule) {
 
 
 /***/ }),
-/* 393 */
+/* 392 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42234,7 +33107,7 @@ function symbolObservablePonyfill(root) {
 
 
 /***/ }),
-/* 394 */
+/* 393 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42247,17 +33120,17 @@ exports["default"] = void 0;
 
 var _redux = __webpack_require__(234);
 
-var _IX2DataReducer = __webpack_require__(395);
+var _IX2DataReducer = __webpack_require__(394);
 
-var _IX2RequestReducer = __webpack_require__(401);
+var _IX2RequestReducer = __webpack_require__(400);
 
-var _IX2SessionReducer = __webpack_require__(402);
+var _IX2SessionReducer = __webpack_require__(401);
 
 var _shared = __webpack_require__(66);
 
-var _IX2InstancesReducer = __webpack_require__(477);
+var _IX2InstancesReducer = __webpack_require__(476);
 
-var _IX2ParametersReducer = __webpack_require__(478);
+var _IX2ParametersReducer = __webpack_require__(477);
 
 var ixElements = _shared.IX2ElementsReducer.ixElements;
 
@@ -42273,7 +33146,7 @@ var _default = (0, _redux.combineReducers)({
 exports["default"] = _default;
 
 /***/ }),
-/* 395 */
+/* 394 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42284,7 +33157,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ixData = void 0;
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var IX2_RAW_DATA_IMPORTED = _constants.IX2EngineActionTypes.IX2_RAW_DATA_IMPORTED;
 
@@ -42308,7 +33181,7 @@ var ixData = function ixData() {
 exports.ixData = ixData;
 
 /***/ }),
-/* 396 */
+/* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42423,7 +33296,7 @@ var QuickEffectDirectionConsts = {
 exports.QuickEffectDirectionConsts = QuickEffectDirectionConsts;
 
 /***/ }),
-/* 397 */
+/* 396 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42452,7 +33325,7 @@ var InteractionTypeConsts = {
 exports.InteractionTypeConsts = InteractionTypeConsts;
 
 /***/ }),
-/* 398 */
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42486,7 +33359,7 @@ var ReducedMotionTypes = (_ReducedMotionTypes = {}, (0, _defineProperty2["defaul
 exports.ReducedMotionTypes = ReducedMotionTypes;
 
 /***/ }),
-/* 399 */
+/* 398 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42538,7 +33411,7 @@ var IX2_TEST_FRAME_RENDERED = 'IX2_TEST_FRAME_RENDERED';
 exports.IX2_TEST_FRAME_RENDERED = IX2_TEST_FRAME_RENDERED;
 
 /***/ }),
-/* 400 */
+/* 399 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42660,7 +33533,7 @@ var RENDER_PLUGIN = 'RENDER_PLUGIN';
 exports.RENDER_PLUGIN = RENDER_PLUGIN;
 
 /***/ }),
-/* 401 */
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42681,7 +33554,7 @@ exports.ixRequest = void 0;
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _timm = __webpack_require__(86);
 
@@ -42721,7 +33594,7 @@ var ixRequest = function ixRequest() {
 exports.ixRequest = ixRequest;
 
 /***/ }),
-/* 402 */
+/* 401 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -42732,7 +33605,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ixSession = void 0;
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _timm = __webpack_require__(86);
 
@@ -42863,11 +33736,11 @@ var ixSession = function ixSession() {
 exports.ixSession = ixSession;
 
 /***/ }),
-/* 403 */
+/* 402 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMatch = __webpack_require__(404),
-    getMatchData = __webpack_require__(451),
+var baseIsMatch = __webpack_require__(403),
+    getMatchData = __webpack_require__(450),
     matchesStrictComparable = __webpack_require__(257);
 
 /**
@@ -42891,7 +33764,7 @@ module.exports = baseMatches;
 
 
 /***/ }),
-/* 404 */
+/* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(114),
@@ -42959,7 +33832,7 @@ module.exports = baseIsMatch;
 
 
 /***/ }),
-/* 405 */
+/* 404 */
 /***/ (function(module, exports) {
 
 /**
@@ -42978,7 +33851,7 @@ module.exports = listCacheClear;
 
 
 /***/ }),
-/* 406 */
+/* 405 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(116);
@@ -43019,7 +33892,7 @@ module.exports = listCacheDelete;
 
 
 /***/ }),
-/* 407 */
+/* 406 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(116);
@@ -43044,7 +33917,7 @@ module.exports = listCacheGet;
 
 
 /***/ }),
-/* 408 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(116);
@@ -43066,7 +33939,7 @@ module.exports = listCacheHas;
 
 
 /***/ }),
-/* 409 */
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assocIndexOf = __webpack_require__(116);
@@ -43098,7 +33971,7 @@ module.exports = listCacheSet;
 
 
 /***/ }),
-/* 410 */
+/* 409 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(115);
@@ -43119,7 +33992,7 @@ module.exports = stackClear;
 
 
 /***/ }),
-/* 411 */
+/* 410 */
 /***/ (function(module, exports) {
 
 /**
@@ -43143,7 +34016,7 @@ module.exports = stackDelete;
 
 
 /***/ }),
-/* 412 */
+/* 411 */
 /***/ (function(module, exports) {
 
 /**
@@ -43163,7 +34036,7 @@ module.exports = stackGet;
 
 
 /***/ }),
-/* 413 */
+/* 412 */
 /***/ (function(module, exports) {
 
 /**
@@ -43183,7 +34056,7 @@ module.exports = stackHas;
 
 
 /***/ }),
-/* 414 */
+/* 413 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ListCache = __webpack_require__(115),
@@ -43223,11 +34096,11 @@ module.exports = stackSet;
 
 
 /***/ }),
-/* 415 */
+/* 414 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(67),
-    isMasked = __webpack_require__(418),
+    isMasked = __webpack_require__(417),
     isObject = __webpack_require__(18),
     toSource = __webpack_require__(245);
 
@@ -43276,7 +34149,7 @@ module.exports = baseIsNative;
 
 
 /***/ }),
-/* 416 */
+/* 415 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68);
@@ -43328,7 +34201,7 @@ module.exports = getRawTag;
 
 
 /***/ }),
-/* 417 */
+/* 416 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -43356,10 +34229,10 @@ module.exports = objectToString;
 
 
 /***/ }),
-/* 418 */
+/* 417 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var coreJsData = __webpack_require__(419);
+var coreJsData = __webpack_require__(418);
 
 /** Used to detect methods masquerading as native. */
 var maskSrcKey = (function() {
@@ -43382,7 +34255,7 @@ module.exports = isMasked;
 
 
 /***/ }),
-/* 419 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(27);
@@ -43394,7 +34267,7 @@ module.exports = coreJsData;
 
 
 /***/ }),
-/* 420 */
+/* 419 */
 /***/ (function(module, exports) {
 
 /**
@@ -43413,10 +34286,10 @@ module.exports = getValue;
 
 
 /***/ }),
-/* 421 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Hash = __webpack_require__(422),
+var Hash = __webpack_require__(421),
     ListCache = __webpack_require__(115),
     Map = __webpack_require__(160);
 
@@ -43440,14 +34313,14 @@ module.exports = mapCacheClear;
 
 
 /***/ }),
-/* 422 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var hashClear = __webpack_require__(423),
-    hashDelete = __webpack_require__(424),
-    hashGet = __webpack_require__(425),
-    hashHas = __webpack_require__(426),
-    hashSet = __webpack_require__(427);
+var hashClear = __webpack_require__(422),
+    hashDelete = __webpack_require__(423),
+    hashGet = __webpack_require__(424),
+    hashHas = __webpack_require__(425),
+    hashSet = __webpack_require__(426);
 
 /**
  * Creates a hash object.
@@ -43478,7 +34351,7 @@ module.exports = Hash;
 
 
 /***/ }),
-/* 423 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(117);
@@ -43499,7 +34372,7 @@ module.exports = hashClear;
 
 
 /***/ }),
-/* 424 */
+/* 423 */
 /***/ (function(module, exports) {
 
 /**
@@ -43522,7 +34395,7 @@ module.exports = hashDelete;
 
 
 /***/ }),
-/* 425 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(117);
@@ -43558,7 +34431,7 @@ module.exports = hashGet;
 
 
 /***/ }),
-/* 426 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(117);
@@ -43587,7 +34460,7 @@ module.exports = hashHas;
 
 
 /***/ }),
-/* 427 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var nativeCreate = __webpack_require__(117);
@@ -43616,7 +34489,7 @@ module.exports = hashSet;
 
 
 /***/ }),
-/* 428 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(118);
@@ -43640,7 +34513,7 @@ module.exports = mapCacheDelete;
 
 
 /***/ }),
-/* 429 */
+/* 428 */
 /***/ (function(module, exports) {
 
 /**
@@ -43661,7 +34534,7 @@ module.exports = isKeyable;
 
 
 /***/ }),
-/* 430 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(118);
@@ -43683,7 +34556,7 @@ module.exports = mapCacheGet;
 
 
 /***/ }),
-/* 431 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(118);
@@ -43705,7 +34578,7 @@ module.exports = mapCacheHas;
 
 
 /***/ }),
-/* 432 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getMapData = __webpack_require__(118);
@@ -43733,13 +34606,13 @@ module.exports = mapCacheSet;
 
 
 /***/ }),
-/* 433 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(114),
     equalArrays = __webpack_require__(247),
-    equalByTag = __webpack_require__(439),
-    equalObjects = __webpack_require__(441),
+    equalByTag = __webpack_require__(438),
+    equalObjects = __webpack_require__(440),
     getTag = __webpack_require__(53),
     isArray = __webpack_require__(10),
     isBuffer = __webpack_require__(69),
@@ -43822,12 +34695,12 @@ module.exports = baseIsEqualDeep;
 
 
 /***/ }),
-/* 434 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var MapCache = __webpack_require__(161),
-    setCacheAdd = __webpack_require__(435),
-    setCacheHas = __webpack_require__(436);
+    setCacheAdd = __webpack_require__(434),
+    setCacheHas = __webpack_require__(435);
 
 /**
  *
@@ -43855,7 +34728,7 @@ module.exports = SetCache;
 
 
 /***/ }),
-/* 435 */
+/* 434 */
 /***/ (function(module, exports) {
 
 /** Used to stand-in for `undefined` hash values. */
@@ -43880,7 +34753,7 @@ module.exports = setCacheAdd;
 
 
 /***/ }),
-/* 436 */
+/* 435 */
 /***/ (function(module, exports) {
 
 /**
@@ -43900,7 +34773,7 @@ module.exports = setCacheHas;
 
 
 /***/ }),
-/* 437 */
+/* 436 */
 /***/ (function(module, exports) {
 
 /**
@@ -43929,7 +34802,7 @@ module.exports = arraySome;
 
 
 /***/ }),
-/* 438 */
+/* 437 */
 /***/ (function(module, exports) {
 
 /**
@@ -43948,7 +34821,7 @@ module.exports = cacheHas;
 
 
 /***/ }),
-/* 439 */
+/* 438 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68),
@@ -43956,7 +34829,7 @@ var Symbol = __webpack_require__(68),
     eq = __webpack_require__(87),
     equalArrays = __webpack_require__(247),
     mapToArray = __webpack_require__(249),
-    setToArray = __webpack_require__(440);
+    setToArray = __webpack_require__(439);
 
 /** Used to compose bitmasks for value comparisons. */
 var COMPARE_PARTIAL_FLAG = 1,
@@ -44066,7 +34939,7 @@ module.exports = equalByTag;
 
 
 /***/ }),
-/* 440 */
+/* 439 */
 /***/ (function(module, exports) {
 
 /**
@@ -44090,7 +34963,7 @@ module.exports = setToArray;
 
 
 /***/ }),
-/* 441 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getAllKeys = __webpack_require__(250);
@@ -44186,7 +35059,7 @@ module.exports = equalObjects;
 
 
 /***/ }),
-/* 442 */
+/* 441 */
 /***/ (function(module, exports) {
 
 /**
@@ -44217,7 +35090,7 @@ module.exports = arrayFilter;
 
 
 /***/ }),
-/* 443 */
+/* 442 */
 /***/ (function(module, exports) {
 
 /**
@@ -44243,7 +35116,7 @@ module.exports = baseTimes;
 
 
 /***/ }),
-/* 444 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -44267,7 +35140,7 @@ module.exports = baseIsArguments;
 
 
 /***/ }),
-/* 445 */
+/* 444 */
 /***/ (function(module, exports) {
 
 /**
@@ -44291,7 +35164,7 @@ module.exports = stubFalse;
 
 
 /***/ }),
-/* 446 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -44357,7 +35230,7 @@ module.exports = baseIsTypedArray;
 
 
 /***/ }),
-/* 447 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var overArg = __webpack_require__(254);
@@ -44369,7 +35242,7 @@ module.exports = nativeKeys;
 
 
 /***/ }),
-/* 448 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(51),
@@ -44382,7 +35255,7 @@ module.exports = DataView;
 
 
 /***/ }),
-/* 449 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(51),
@@ -44395,7 +35268,7 @@ module.exports = Promise;
 
 
 /***/ }),
-/* 450 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getNative = __webpack_require__(51),
@@ -44408,7 +35281,7 @@ module.exports = Set;
 
 
 /***/ }),
-/* 451 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isStrictComparable = __webpack_require__(256),
@@ -44438,12 +35311,12 @@ module.exports = getMatchData;
 
 
 /***/ }),
-/* 452 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIsEqual = __webpack_require__(246),
     get = __webpack_require__(70),
-    hasIn = __webpack_require__(456),
+    hasIn = __webpack_require__(455),
     isKey = __webpack_require__(167),
     isStrictComparable = __webpack_require__(256),
     matchesStrictComparable = __webpack_require__(257),
@@ -44477,10 +35350,10 @@ module.exports = baseMatchesProperty;
 
 
 /***/ }),
-/* 453 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var memoizeCapped = __webpack_require__(454);
+var memoizeCapped = __webpack_require__(453);
 
 /** Used to match property names within property paths. */
 var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(?:\.|\[\])(?:\.|\[\]|$))/g;
@@ -44510,7 +35383,7 @@ module.exports = stringToPath;
 
 
 /***/ }),
-/* 454 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var memoize = __webpack_require__(258);
@@ -44542,7 +35415,7 @@ module.exports = memoizeCapped;
 
 
 /***/ }),
-/* 455 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68),
@@ -44585,11 +35458,11 @@ module.exports = baseToString;
 
 
 /***/ }),
-/* 456 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHasIn = __webpack_require__(457),
-    hasPath = __webpack_require__(458);
+var baseHasIn = __webpack_require__(456),
+    hasPath = __webpack_require__(457);
 
 /**
  * Checks if `path` is a direct or inherited property of `object`.
@@ -44625,7 +35498,7 @@ module.exports = hasIn;
 
 
 /***/ }),
-/* 457 */
+/* 456 */
 /***/ (function(module, exports) {
 
 /**
@@ -44644,7 +35517,7 @@ module.exports = baseHasIn;
 
 
 /***/ }),
-/* 458 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var castPath = __webpack_require__(123),
@@ -44689,11 +35562,11 @@ module.exports = hasPath;
 
 
 /***/ }),
-/* 459 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseProperty = __webpack_require__(259),
-    basePropertyDeep = __webpack_require__(460),
+    basePropertyDeep = __webpack_require__(459),
     isKey = __webpack_require__(167),
     toKey = __webpack_require__(91);
 
@@ -44727,7 +35600,7 @@ module.exports = property;
 
 
 /***/ }),
-/* 460 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(166);
@@ -44749,7 +35622,7 @@ module.exports = basePropertyDeep;
 
 
 /***/ }),
-/* 461 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFindIndex = __webpack_require__(260),
@@ -44810,7 +35683,7 @@ module.exports = findIndex;
 
 
 /***/ }),
-/* 462 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toNumber = __webpack_require__(170);
@@ -44858,10 +35731,10 @@ module.exports = toFinite;
 
 
 /***/ }),
-/* 463 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trimmedEndIndex = __webpack_require__(464);
+var trimmedEndIndex = __webpack_require__(463);
 
 /** Used to match leading whitespace. */
 var reTrimStart = /^\s+/;
@@ -44883,7 +35756,7 @@ module.exports = baseTrim;
 
 
 /***/ }),
-/* 464 */
+/* 463 */
 /***/ (function(module, exports) {
 
 /** Used to match a single whitespace character. */
@@ -44908,7 +35781,7 @@ module.exports = trimmedEndIndex;
 
 
 /***/ }),
-/* 465 */
+/* 464 */
 /***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
@@ -44924,7 +35797,7 @@ function _arrayWithoutHoles(arr) {
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 466 */
+/* 465 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -44934,7 +35807,7 @@ function _nonIterableSpread() {
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 467 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44949,7 +35822,7 @@ exports.ixElements = void 0;
 
 var _timm = __webpack_require__(86);
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _constants$IX2EngineC = _constants.IX2EngineConstants,
     HTML_ELEMENT = _constants$IX2EngineC.HTML_ELEMENT,
@@ -45055,7 +35928,7 @@ function pickUnits(actionItem) {
 }
 
 /***/ }),
-/* 468 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45142,7 +36015,7 @@ var clearPlugin = function clearPlugin(element) {
 exports.clearPlugin = clearPlugin;
 
 /***/ }),
-/* 469 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45192,15 +36065,15 @@ exports.getItemConfigByKey = void 0;
 
 var _defaultTo = _interopRequireDefault(__webpack_require__(266));
 
-var _reduce = _interopRequireDefault(__webpack_require__(470));
+var _reduce = _interopRequireDefault(__webpack_require__(469));
 
-var _findLast = _interopRequireDefault(__webpack_require__(474));
+var _findLast = _interopRequireDefault(__webpack_require__(473));
 
 var _timm = __webpack_require__(86);
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
-var _shallowEqual = _interopRequireDefault(__webpack_require__(476));
+var _shallowEqual = _interopRequireDefault(__webpack_require__(475));
 
 var _IX2EasingUtils = __webpack_require__(263);
 
@@ -46401,13 +37274,13 @@ function stringifyTarget(target) {
 }
 
 /***/ }),
-/* 470 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayReduce = __webpack_require__(267),
     baseEach = __webpack_require__(171),
     baseIteratee = __webpack_require__(36),
-    baseReduce = __webpack_require__(473),
+    baseReduce = __webpack_require__(472),
     isArray = __webpack_require__(10);
 
 /**
@@ -46458,7 +37331,7 @@ module.exports = reduce;
 
 
 /***/ }),
-/* 471 */
+/* 470 */
 /***/ (function(module, exports) {
 
 /**
@@ -46489,7 +37362,7 @@ module.exports = createBaseFor;
 
 
 /***/ }),
-/* 472 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLike = __webpack_require__(42);
@@ -46527,7 +37400,7 @@ module.exports = createBaseEach;
 
 
 /***/ }),
-/* 473 */
+/* 472 */
 /***/ (function(module, exports) {
 
 /**
@@ -46556,11 +37429,11 @@ module.exports = baseReduce;
 
 
 /***/ }),
-/* 474 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var createFind = __webpack_require__(243),
-    findLastIndex = __webpack_require__(475);
+    findLastIndex = __webpack_require__(474);
 
 /**
  * This method is like `_.find` except that it iterates over elements of
@@ -46587,7 +37460,7 @@ module.exports = findLast;
 
 
 /***/ }),
-/* 475 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseFindIndex = __webpack_require__(260),
@@ -46652,7 +37525,7 @@ module.exports = findLastIndex;
 
 
 /***/ }),
-/* 476 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46734,7 +37607,7 @@ var _default = shallowEqual;
 exports["default"] = _default;
 
 /***/ }),
-/* 477 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -46745,7 +37618,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ixInstances = void 0;
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _shared = __webpack_require__(66);
 
@@ -47081,7 +37954,7 @@ var ixInstances = function ixInstances() {
 exports.ixInstances = ixInstances;
 
 /***/ }),
-/* 478 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47092,7 +37965,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ixParameters = void 0;
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _constants$IX2EngineA = _constants.IX2EngineActionTypes,
     IX2_RAW_DATA_IMPORTED = _constants$IX2EngineA.IX2_RAW_DATA_IMPORTED,
@@ -47139,14 +38012,14 @@ var ixParameters = function ixParameters() {
 exports.ixParameters = ixParameters;
 
 /***/ }),
-/* 479 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseKeys = __webpack_require__(165),
     getTag = __webpack_require__(53),
     isArrayLike = __webpack_require__(42),
     isString = __webpack_require__(271),
-    stringSize = __webpack_require__(480);
+    stringSize = __webpack_require__(479);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -47191,12 +38064,12 @@ module.exports = size;
 
 
 /***/ }),
-/* 480 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var asciiSize = __webpack_require__(481),
+var asciiSize = __webpack_require__(480),
     hasUnicode = __webpack_require__(172),
-    unicodeSize = __webpack_require__(482);
+    unicodeSize = __webpack_require__(481);
 
 /**
  * Gets the number of symbols in `string`.
@@ -47215,7 +38088,7 @@ module.exports = stringSize;
 
 
 /***/ }),
-/* 481 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseProperty = __webpack_require__(259);
@@ -47233,7 +38106,7 @@ module.exports = asciiSize;
 
 
 /***/ }),
-/* 482 */
+/* 481 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -47283,12 +38156,12 @@ module.exports = unicodeSize;
 
 
 /***/ }),
-/* 483 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseIteratee = __webpack_require__(36),
-    negate = __webpack_require__(484),
-    pickBy = __webpack_require__(485);
+    negate = __webpack_require__(483),
+    pickBy = __webpack_require__(484);
 
 /**
  * The opposite of `_.pickBy`; this method creates an object composed of
@@ -47318,7 +38191,7 @@ module.exports = omitBy;
 
 
 /***/ }),
-/* 484 */
+/* 483 */
 /***/ (function(module, exports) {
 
 /** Error message constants. */
@@ -47364,12 +38237,12 @@ module.exports = negate;
 
 
 /***/ }),
-/* 485 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(168),
     baseIteratee = __webpack_require__(36),
-    basePickBy = __webpack_require__(486),
+    basePickBy = __webpack_require__(485),
     getAllKeysIn = __webpack_require__(273);
 
 /**
@@ -47407,11 +38280,11 @@ module.exports = pickBy;
 
 
 /***/ }),
-/* 486 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGet = __webpack_require__(166),
-    baseSet = __webpack_require__(487),
+    baseSet = __webpack_require__(486),
     castPath = __webpack_require__(123);
 
 /**
@@ -47443,7 +38316,7 @@ module.exports = basePickBy;
 
 
 /***/ }),
-/* 487 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignValue = __webpack_require__(173),
@@ -47500,12 +38373,12 @@ module.exports = baseSet;
 
 
 /***/ }),
-/* 488 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isObject = __webpack_require__(18),
     isPrototype = __webpack_require__(122),
-    nativeKeysIn = __webpack_require__(489);
+    nativeKeysIn = __webpack_require__(488);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -47539,7 +38412,7 @@ module.exports = baseKeysIn;
 
 
 /***/ }),
-/* 489 */
+/* 488 */
 /***/ (function(module, exports) {
 
 /**
@@ -47565,7 +38438,7 @@ module.exports = nativeKeysIn;
 
 
 /***/ }),
-/* 490 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseKeys = __webpack_require__(165),
@@ -47648,7 +38521,7 @@ module.exports = isEmpty;
 
 
 /***/ }),
-/* 491 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseAssignValue = __webpack_require__(93),
@@ -47697,7 +38570,7 @@ module.exports = mapValues;
 
 
 /***/ }),
-/* 492 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var identity = __webpack_require__(92);
@@ -47717,7 +38590,7 @@ module.exports = castFunction;
 
 
 /***/ }),
-/* 493 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var debounce = __webpack_require__(275),
@@ -47792,7 +38665,7 @@ module.exports = throttle;
 
 
 /***/ }),
-/* 494 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var root = __webpack_require__(27);
@@ -47821,7 +38694,7 @@ module.exports = now;
 
 
 /***/ }),
-/* 495 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47850,7 +38723,7 @@ exports.getClosestElement = void 0;
 
 var _shared = __webpack_require__(66);
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 /* eslint-env browser */
 
 
@@ -48016,7 +38889,7 @@ function getRefType(ref) {
 }
 
 /***/ }),
-/* 496 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48039,13 +38912,13 @@ exports["default"] = void 0;
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _flow = _interopRequireDefault(__webpack_require__(497));
+var _flow = _interopRequireDefault(__webpack_require__(496));
 
 var _get = _interopRequireDefault(__webpack_require__(70));
 
-var _clamp = _interopRequireDefault(__webpack_require__(512));
+var _clamp = _interopRequireDefault(__webpack_require__(511));
 
-var _constants = __webpack_require__(24);
+var _constants = __webpack_require__(25);
 
 var _IX2VanillaEngine = __webpack_require__(269);
 
@@ -48727,10 +39600,10 @@ var _default = (_default2 = {}, (0, _defineProperty2["default"])(_default2, SLID
 exports["default"] = _default;
 
 /***/ }),
-/* 497 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createFlow = __webpack_require__(498);
+var createFlow = __webpack_require__(497);
 
 /**
  * Creates a function that returns the result of invoking the given functions
@@ -48760,15 +39633,15 @@ module.exports = flow;
 
 
 /***/ }),
-/* 498 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var LodashWrapper = __webpack_require__(177),
-    flatRest = __webpack_require__(499),
+    flatRest = __webpack_require__(498),
     getData = __webpack_require__(279),
     getFuncName = __webpack_require__(280),
     isArray = __webpack_require__(10),
-    isLaziable = __webpack_require__(509);
+    isLaziable = __webpack_require__(508);
 
 /** Error message constants. */
 var FUNC_ERROR_TEXT = 'Expected a function';
@@ -48844,10 +39717,10 @@ module.exports = createFlow;
 
 
 /***/ }),
-/* 499 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var flatten = __webpack_require__(500),
+var flatten = __webpack_require__(499),
     overRest = __webpack_require__(276),
     setToString = __webpack_require__(277);
 
@@ -48866,10 +39739,10 @@ module.exports = flatRest;
 
 
 /***/ }),
-/* 500 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseFlatten = __webpack_require__(501);
+var baseFlatten = __webpack_require__(500);
 
 /**
  * Flattens `array` a single level deep.
@@ -48894,11 +39767,11 @@ module.exports = flatten;
 
 
 /***/ }),
-/* 501 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayPush = __webpack_require__(162),
-    isFlattenable = __webpack_require__(502);
+    isFlattenable = __webpack_require__(501);
 
 /**
  * The base implementation of `_.flatten` with support for restricting flattening.
@@ -48938,7 +39811,7 @@ module.exports = baseFlatten;
 
 
 /***/ }),
-/* 502 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68),
@@ -48964,7 +39837,7 @@ module.exports = isFlattenable;
 
 
 /***/ }),
-/* 503 */
+/* 502 */
 /***/ (function(module, exports) {
 
 /**
@@ -48991,7 +39864,7 @@ module.exports = apply;
 
 
 /***/ }),
-/* 504 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var constant = __webpack_require__(278),
@@ -49019,7 +39892,7 @@ module.exports = baseSetToString;
 
 
 /***/ }),
-/* 505 */
+/* 504 */
 /***/ (function(module, exports) {
 
 /** Used to detect hot functions by number of calls within a span of milliseconds. */
@@ -49062,7 +39935,7 @@ module.exports = shortOut;
 
 
 /***/ }),
-/* 506 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var WeakMap = __webpack_require__(255);
@@ -49074,7 +39947,7 @@ module.exports = metaMap;
 
 
 /***/ }),
-/* 507 */
+/* 506 */
 /***/ (function(module, exports) {
 
 /**
@@ -49097,7 +39970,7 @@ module.exports = noop;
 
 
 /***/ }),
-/* 508 */
+/* 507 */
 /***/ (function(module, exports) {
 
 /** Used to lookup unminified function names. */
@@ -49107,13 +39980,13 @@ module.exports = realNames;
 
 
 /***/ }),
-/* 509 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var LazyWrapper = __webpack_require__(179),
     getData = __webpack_require__(279),
     getFuncName = __webpack_require__(280),
-    lodash = __webpack_require__(510);
+    lodash = __webpack_require__(509);
 
 /**
  * Checks if `func` has a lazy counterpart.
@@ -49141,7 +40014,7 @@ module.exports = isLaziable;
 
 
 /***/ }),
-/* 510 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var LazyWrapper = __webpack_require__(179),
@@ -49149,7 +40022,7 @@ var LazyWrapper = __webpack_require__(179),
     baseLodash = __webpack_require__(178),
     isArray = __webpack_require__(10),
     isObjectLike = __webpack_require__(19),
-    wrapperClone = __webpack_require__(511);
+    wrapperClone = __webpack_require__(510);
 
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
@@ -49294,7 +40167,7 @@ module.exports = lodash;
 
 
 /***/ }),
-/* 511 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var LazyWrapper = __webpack_require__(179),
@@ -49323,10 +40196,10 @@ module.exports = wrapperClone;
 
 
 /***/ }),
-/* 512 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseClamp = __webpack_require__(513),
+var baseClamp = __webpack_require__(512),
     toNumber = __webpack_require__(170);
 
 /**
@@ -49368,7 +40241,7 @@ module.exports = clamp;
 
 
 /***/ }),
-/* 513 */
+/* 512 */
 /***/ (function(module, exports) {
 
 /**
@@ -49396,7 +40269,7 @@ module.exports = baseClamp;
 
 
 /***/ }),
-/* 514 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49410,7 +40283,7 @@ module.exports = baseClamp;
  * Webflow: Auto-select links to current page or section
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 Webflow.define('links', module.exports = function ($, _) {
   var api = {};
@@ -49526,7 +40399,7 @@ Webflow.define('links', module.exports = function ($, _) {
 });
 
 /***/ }),
-/* 515 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49540,7 +40413,7 @@ Webflow.define('links', module.exports = function ($, _) {
  * Webflow: Smooth scroll
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 Webflow.define('scroll', module.exports = function ($) {
   /**
@@ -49781,7 +40654,7 @@ Webflow.define('scroll', module.exports = function ($) {
 });
 
 /***/ }),
-/* 516 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49797,7 +40670,7 @@ Webflow.define('scroll', module.exports = function ($) {
  * Adds a 'swipe' event to desktop and mobile
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 Webflow.define('touch', module.exports = function ($) {
   var api = {};
@@ -49922,7 +40795,7 @@ Webflow.define('touch', module.exports = function ($) {
 });
 
 /***/ }),
-/* 517 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49931,16 +40804,16 @@ Webflow.define('touch', module.exports = function ($) {
  * Webflow: E-commerce
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
-var commerce = __webpack_require__(518);
+var commerce = __webpack_require__(517);
 
 Webflow.define('commerce', module.exports = function () {
   return commerce;
 });
 
 /***/ }),
-/* 518 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -49958,31 +40831,31 @@ exports.destroy = destroy;
 exports.init = init;
 exports.preview = preview;
 
+__webpack_require__(518);
+
 __webpack_require__(519);
 
-__webpack_require__(520);
+__webpack_require__(551);
 
-__webpack_require__(552);
+__webpack_require__(625);
 
-__webpack_require__(626);
+__webpack_require__(629);
 
-__webpack_require__(630);
+__webpack_require__(634);
 
-__webpack_require__(635);
+__webpack_require__(637);
 
-__webpack_require__(638);
-
-var _apolloClient = __webpack_require__(658);
+var _apolloClient = __webpack_require__(657);
 
 var _eventHandlerProxyWithApolloClient = _interopRequireDefault(__webpack_require__(58));
 
-var _addToCartEvents = _interopRequireDefault(__webpack_require__(714));
+var _addToCartEvents = _interopRequireDefault(__webpack_require__(715));
 
-var _cartEvents = _interopRequireDefault(__webpack_require__(799));
+var _cartEvents = _interopRequireDefault(__webpack_require__(800));
 
-var _checkoutEvents = _interopRequireDefault(__webpack_require__(801));
+var _checkoutEvents = _interopRequireDefault(__webpack_require__(802));
 
-var _orderConfirmationEvents = _interopRequireDefault(__webpack_require__(802));
+var _orderConfirmationEvents = _interopRequireDefault(__webpack_require__(803));
 
 var _webPaymentsEvents = _interopRequireDefault(__webpack_require__(220));
 
@@ -49990,13 +40863,13 @@ var _stripeStore = __webpack_require__(104);
 
 var _commerceUtils = __webpack_require__(35);
 
-__webpack_require__(806);
+__webpack_require__(807);
 
-__webpack_require__(810);
+__webpack_require__(811);
 
 var _checkoutUtils = __webpack_require__(147);
 
-var _paypalEvents = _interopRequireWildcard(__webpack_require__(811));
+var _paypalEvents = _interopRequireWildcard(__webpack_require__(812));
 /* globals window, document */
 // Symbol is used in various caching/memoization implementations
 // At a minimum, we need `Array.from` and `Array.find` support in IE11
@@ -50078,7 +40951,7 @@ function destroy() {
 }
 
 /***/ }),
-/* 519 */
+/* 518 */
 /***/ (function(module, exports) {
 
 // Polyfill for creating CustomEvents on IE9/10/11
@@ -50137,19 +41010,29 @@ function destroy() {
 
 
 /***/ }),
-/* 520 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(521);
+var parent = __webpack_require__(520);
+__webpack_require__(544);
 __webpack_require__(545);
 __webpack_require__(546);
 __webpack_require__(547);
 __webpack_require__(548);
+// TODO: Remove from `core-js@4`
 __webpack_require__(549);
 // TODO: Remove from `core-js@4`
 __webpack_require__(550);
-// TODO: Remove from `core-js@4`
-__webpack_require__(551);
+
+module.exports = parent;
+
+
+/***/ }),
+/* 520 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(521);
+__webpack_require__(541);
 
 module.exports = parent;
 
@@ -50158,18 +41041,9 @@ module.exports = parent;
 /* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(522);
-__webpack_require__(542);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 522 */
-/***/ (function(module, exports, __webpack_require__) {
-
 __webpack_require__(281);
 __webpack_require__(182);
+__webpack_require__(523);
 __webpack_require__(524);
 __webpack_require__(525);
 __webpack_require__(526);
@@ -50187,14 +41061,13 @@ __webpack_require__(537);
 __webpack_require__(538);
 __webpack_require__(539);
 __webpack_require__(540);
-__webpack_require__(541);
 var path = __webpack_require__(98);
 
 module.exports = path.Symbol;
 
 
 /***/ }),
-/* 523 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50210,16 +41083,16 @@ module.exports = TO_STRING_TAG_SUPPORT ? {}.toString : function toString() {
 
 
 /***/ }),
-/* 524 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $ = __webpack_require__(2);
 var global = __webpack_require__(1);
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var apply = __webpack_require__(129);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var uncurryThis = __webpack_require__(3);
 var IS_PURE = __webpack_require__(64);
 var DESCRIPTORS = __webpack_require__(14);
@@ -50540,7 +41413,7 @@ hiddenKeys[HIDDEN] = true;
 
 
 /***/ }),
-/* 525 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50551,7 +41424,7 @@ defineWellKnownSymbol('asyncIterator');
 
 
 /***/ }),
-/* 526 */
+/* 525 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50617,7 +41490,7 @@ if (DESCRIPTORS && isCallable(NativeSymbol) && (!('description' in SymbolPrototy
 
 
 /***/ }),
-/* 527 */
+/* 526 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50628,7 +41501,7 @@ defineWellKnownSymbol('hasInstance');
 
 
 /***/ }),
-/* 528 */
+/* 527 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50639,7 +41512,7 @@ defineWellKnownSymbol('isConcatSpreadable');
 
 
 /***/ }),
-/* 529 */
+/* 528 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50650,7 +41523,7 @@ defineWellKnownSymbol('iterator');
 
 
 /***/ }),
-/* 530 */
+/* 529 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50661,7 +41534,7 @@ defineWellKnownSymbol('match');
 
 
 /***/ }),
-/* 531 */
+/* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50672,7 +41545,7 @@ defineWellKnownSymbol('matchAll');
 
 
 /***/ }),
-/* 532 */
+/* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50683,7 +41556,7 @@ defineWellKnownSymbol('replace');
 
 
 /***/ }),
-/* 533 */
+/* 532 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50694,7 +41567,7 @@ defineWellKnownSymbol('search');
 
 
 /***/ }),
-/* 534 */
+/* 533 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50705,7 +41578,7 @@ defineWellKnownSymbol('species');
 
 
 /***/ }),
-/* 535 */
+/* 534 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50716,7 +41589,7 @@ defineWellKnownSymbol('split');
 
 
 /***/ }),
-/* 536 */
+/* 535 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50727,7 +41600,7 @@ defineWellKnownSymbol('toPrimitive');
 
 
 /***/ }),
-/* 537 */
+/* 536 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50738,7 +41611,7 @@ defineWellKnownSymbol('toStringTag');
 
 
 /***/ }),
-/* 538 */
+/* 537 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50749,7 +41622,7 @@ defineWellKnownSymbol('unscopables');
 
 
 /***/ }),
-/* 539 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -50761,7 +41634,7 @@ setToStringTag(global.JSON, 'JSON', true);
 
 
 /***/ }),
-/* 540 */
+/* 539 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var setToStringTag = __webpack_require__(44);
@@ -50772,7 +41645,7 @@ setToStringTag(Math, 'Math', true);
 
 
 /***/ }),
-/* 541 */
+/* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -50787,7 +41660,7 @@ setToStringTag(global.Reflect, 'Reflect', true);
 
 
 /***/ }),
-/* 542 */
+/* 541 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -50831,7 +41704,7 @@ handlePrototype(DOMTokenListPrototype, 'DOMTokenList');
 
 
 /***/ }),
-/* 543 */
+/* 542 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var fails = __webpack_require__(5);
@@ -50845,7 +41718,7 @@ module.exports = !fails(function () {
 
 
 /***/ }),
-/* 544 */
+/* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -50861,7 +41734,7 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 545 */
+/* 544 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50872,7 +41745,7 @@ defineWellKnownSymbol('asyncDispose');
 
 
 /***/ }),
-/* 546 */
+/* 545 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50883,7 +41756,7 @@ defineWellKnownSymbol('dispose');
 
 
 /***/ }),
-/* 547 */
+/* 546 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50894,7 +41767,7 @@ defineWellKnownSymbol('matcher');
 
 
 /***/ }),
-/* 548 */
+/* 547 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50905,7 +41778,7 @@ defineWellKnownSymbol('metadata');
 
 
 /***/ }),
-/* 549 */
+/* 548 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var defineWellKnownSymbol = __webpack_require__(8);
@@ -50916,7 +41789,7 @@ defineWellKnownSymbol('observable');
 
 
 /***/ }),
-/* 550 */
+/* 549 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // TODO: remove from `core-js@4`
@@ -50928,7 +41801,7 @@ defineWellKnownSymbol('patternMatch');
 
 
 /***/ }),
-/* 551 */
+/* 550 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // TODO: remove from `core-js@4`
@@ -50938,25 +41811,34 @@ defineWellKnownSymbol('replaceAll');
 
 
 /***/ }),
-/* 552 */
+/* 551 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(553);
-__webpack_require__(592);
-__webpack_require__(596);
-__webpack_require__(607);
+var parent = __webpack_require__(552);
+__webpack_require__(591);
+__webpack_require__(595);
+__webpack_require__(606);
+// TODO: Remove from `core-js@4`
+__webpack_require__(612);
 // TODO: Remove from `core-js@4`
 __webpack_require__(613);
-// TODO: Remove from `core-js@4`
 __webpack_require__(614);
 __webpack_require__(615);
 __webpack_require__(616);
 __webpack_require__(617);
-__webpack_require__(618);
+__webpack_require__(620);
 __webpack_require__(621);
 __webpack_require__(622);
 __webpack_require__(623);
-__webpack_require__(624);
+
+module.exports = parent;
+
+
+/***/ }),
+/* 552 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(553);
 
 module.exports = parent;
 
@@ -50965,58 +41847,49 @@ module.exports = parent;
 /* 553 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(554);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 554 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(555);
+__webpack_require__(554);
+__webpack_require__(557);
 __webpack_require__(558);
-__webpack_require__(559);
 __webpack_require__(292);
 __webpack_require__(281);
-__webpack_require__(560);
+__webpack_require__(559);
+__webpack_require__(561);
 __webpack_require__(562);
-__webpack_require__(563);
+__webpack_require__(564);
 __webpack_require__(565);
 __webpack_require__(566);
 __webpack_require__(567);
 __webpack_require__(568);
 __webpack_require__(569);
-__webpack_require__(570);
 __webpack_require__(223);
-__webpack_require__(571);
+__webpack_require__(570);
 __webpack_require__(287);
+__webpack_require__(571);
 __webpack_require__(572);
-__webpack_require__(573);
+__webpack_require__(574);
 __webpack_require__(575);
 __webpack_require__(576);
 __webpack_require__(577);
 __webpack_require__(578);
 __webpack_require__(579);
 __webpack_require__(580);
-__webpack_require__(581);
+__webpack_require__(585);
 __webpack_require__(586);
 __webpack_require__(587);
 __webpack_require__(588);
-__webpack_require__(589);
 __webpack_require__(182);
-__webpack_require__(590);
+__webpack_require__(589);
 var path = __webpack_require__(98);
 
 module.exports = path.Array;
 
 
 /***/ }),
-/* 555 */
+/* 554 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var from = __webpack_require__(556);
+var from = __webpack_require__(555);
 var checkCorrectnessOfIteration = __webpack_require__(186);
 
 var INCORRECT_ITERATION = !checkCorrectnessOfIteration(function (iterable) {
@@ -51032,16 +41905,16 @@ $({ target: 'Array', stat: true, forced: INCORRECT_ITERATION }, {
 
 
 /***/ }),
-/* 556 */
+/* 555 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var global = __webpack_require__(1);
 var bind = __webpack_require__(34);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var toObject = __webpack_require__(9);
-var callWithSafeIterationClosing = __webpack_require__(557);
+var callWithSafeIterationClosing = __webpack_require__(556);
 var isArrayIteratorMethod = __webpack_require__(291);
 var isConstructor = __webpack_require__(73);
 var lengthOfArrayLike = __webpack_require__(7);
@@ -51086,7 +41959,7 @@ module.exports = function from(arrayLike /* , mapfn = undefined, thisArg = undef
 
 
 /***/ }),
-/* 557 */
+/* 556 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(17);
@@ -51103,7 +41976,7 @@ module.exports = function (iterator, fn, value, ENTRIES) {
 
 
 /***/ }),
-/* 558 */
+/* 557 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -51117,7 +41990,7 @@ $({ target: 'Array', stat: true }, {
 
 
 /***/ }),
-/* 559 */
+/* 558 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51151,11 +42024,11 @@ $({ target: 'Array', stat: true, forced: ISNT_GENERIC }, {
 
 
 /***/ }),
-/* 560 */
+/* 559 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var copyWithin = __webpack_require__(561);
+var copyWithin = __webpack_require__(560);
 var addToUnscopables = __webpack_require__(11);
 
 // `Array.prototype.copyWithin` method
@@ -51169,7 +42042,7 @@ addToUnscopables('copyWithin');
 
 
 /***/ }),
-/* 561 */
+/* 560 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51206,7 +42079,7 @@ module.exports = [].copyWithin || function copyWithin(target /* = 0 */, start /*
 
 
 /***/ }),
-/* 562 */
+/* 561 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51227,11 +42100,11 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD }, {
 
 
 /***/ }),
-/* 563 */
+/* 562 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var fill = __webpack_require__(564);
+var fill = __webpack_require__(563);
 var addToUnscopables = __webpack_require__(11);
 
 // `Array.prototype.fill` method
@@ -51245,7 +42118,7 @@ addToUnscopables('fill');
 
 
 /***/ }),
-/* 564 */
+/* 563 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51269,7 +42142,7 @@ module.exports = function fill(value /* , start = 0, end = @length */) {
 
 
 /***/ }),
-/* 565 */
+/* 564 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51291,7 +42164,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 
 
 /***/ }),
-/* 566 */
+/* 565 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51319,7 +42192,7 @@ addToUnscopables(FIND);
 
 
 /***/ }),
-/* 567 */
+/* 566 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51347,7 +42220,7 @@ addToUnscopables(FIND_INDEX);
 
 
 /***/ }),
-/* 568 */
+/* 567 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51374,7 +42247,7 @@ $({ target: 'Array', proto: true }, {
 
 
 /***/ }),
-/* 569 */
+/* 568 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51402,7 +42275,7 @@ $({ target: 'Array', proto: true }, {
 
 
 /***/ }),
-/* 570 */
+/* 569 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51419,7 +42292,7 @@ $({ target: 'Array', proto: true, forced: [].forEach != forEach }, {
 
 
 /***/ }),
-/* 571 */
+/* 570 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51449,7 +42322,7 @@ $({ target: 'Array', proto: true, forced: NEGATIVE_ZERO || !STRICT_METHOD }, {
 
 
 /***/ }),
-/* 572 */
+/* 571 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51475,11 +42348,11 @@ $({ target: 'Array', proto: true, forced: ES3_STRINGS || !STRICT_METHOD }, {
 
 
 /***/ }),
-/* 573 */
+/* 572 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var lastIndexOf = __webpack_require__(574);
+var lastIndexOf = __webpack_require__(573);
 
 // `Array.prototype.lastIndexOf` method
 // https://tc39.es/ecma262/#sec-array.prototype.lastindexof
@@ -51490,7 +42363,7 @@ $({ target: 'Array', proto: true, forced: lastIndexOf !== [].lastIndexOf }, {
 
 
 /***/ }),
-/* 574 */
+/* 573 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51524,7 +42397,7 @@ module.exports = FORCED ? function lastIndexOf(searchElement /* , fromIndex = @[
 
 
 /***/ }),
-/* 575 */
+/* 574 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51546,7 +42419,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 
 
 /***/ }),
-/* 576 */
+/* 575 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51573,7 +42446,7 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || CHROME_BUG }, {
 
 
 /***/ }),
-/* 577 */
+/* 576 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51599,7 +42472,7 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD || CHROME_BUG }, {
 
 
 /***/ }),
-/* 578 */
+/* 577 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51625,7 +42498,7 @@ $({ target: 'Array', proto: true, forced: String(test) === String(test.reverse()
 
 
 /***/ }),
-/* 579 */
+/* 578 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51682,7 +42555,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 
 
 /***/ }),
-/* 580 */
+/* 579 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51703,7 +42576,7 @@ $({ target: 'Array', proto: true, forced: !STRICT_METHOD }, {
 
 
 /***/ }),
-/* 581 */
+/* 580 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51715,12 +42588,12 @@ var toObject = __webpack_require__(9);
 var lengthOfArrayLike = __webpack_require__(7);
 var toString = __webpack_require__(37);
 var fails = __webpack_require__(5);
-var internalSort = __webpack_require__(582);
+var internalSort = __webpack_require__(581);
 var arrayMethodIsStrict = __webpack_require__(38);
-var FF = __webpack_require__(583);
-var IE_OR_EDGE = __webpack_require__(584);
+var FF = __webpack_require__(582);
+var IE_OR_EDGE = __webpack_require__(583);
 var V8 = __webpack_require__(48);
-var WEBKIT = __webpack_require__(585);
+var WEBKIT = __webpack_require__(584);
 
 var test = [];
 var un$Sort = uncurryThis(test.sort);
@@ -51815,7 +42688,7 @@ $({ target: 'Array', proto: true, forced: FORCED }, {
 
 
 /***/ }),
-/* 582 */
+/* 581 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arraySlice = __webpack_require__(97);
@@ -51865,7 +42738,7 @@ module.exports = mergeSort;
 
 
 /***/ }),
-/* 583 */
+/* 582 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var userAgent = __webpack_require__(49);
@@ -51876,7 +42749,7 @@ module.exports = !!firefox && +firefox[1];
 
 
 /***/ }),
-/* 584 */
+/* 583 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var UA = __webpack_require__(49);
@@ -51885,7 +42758,7 @@ module.exports = /MSIE|Trident/.test(UA);
 
 
 /***/ }),
-/* 585 */
+/* 584 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var userAgent = __webpack_require__(49);
@@ -51896,7 +42769,7 @@ module.exports = !!webkit && +webkit[1];
 
 
 /***/ }),
-/* 586 */
+/* 585 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var setSpecies = __webpack_require__(188);
@@ -51907,7 +42780,7 @@ setSpecies('Array');
 
 
 /***/ }),
-/* 587 */
+/* 586 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -51984,7 +42857,7 @@ $({ target: 'Array', proto: true, forced: !HAS_SPECIES_SUPPORT }, {
 
 
 /***/ }),
-/* 588 */
+/* 587 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // this method was added to unscopables after implementation
@@ -51996,7 +42869,7 @@ addToUnscopables('flat');
 
 
 /***/ }),
-/* 589 */
+/* 588 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // this method was added to unscopables after implementation
@@ -52008,12 +42881,12 @@ addToUnscopables('flatMap');
 
 
 /***/ }),
-/* 590 */
+/* 589 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var charAt = __webpack_require__(591).charAt;
+var charAt = __webpack_require__(590).charAt;
 var toString = __webpack_require__(37);
 var InternalStateModule = __webpack_require__(40);
 var defineIterator = __webpack_require__(183);
@@ -52045,7 +42918,7 @@ defineIterator(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 591 */
+/* 590 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var uncurryThis = __webpack_require__(3);
@@ -52087,13 +42960,13 @@ module.exports = {
 
 
 /***/ }),
-/* 592 */
+/* 591 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var collection = __webpack_require__(593);
-var collectionStrong = __webpack_require__(595);
+var collection = __webpack_require__(592);
+var collectionStrong = __webpack_require__(594);
 
 // `Map` constructor
 // https://tc39.es/ecma262/#sec-map-objects
@@ -52103,7 +42976,7 @@ collection('Map', function (init) {
 
 
 /***/ }),
-/* 593 */
+/* 592 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52215,7 +43088,7 @@ module.exports = function (CONSTRUCTOR_NAME, wrapper, common) {
 
 
 /***/ }),
-/* 594 */
+/* 593 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var fails = __webpack_require__(5);
@@ -52227,7 +43100,7 @@ module.exports = !fails(function () {
 
 
 /***/ }),
-/* 595 */
+/* 594 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52438,7 +43311,7 @@ module.exports = {
 
 
 /***/ }),
-/* 596 */
+/* 595 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -52446,9 +43319,9 @@ module.exports = {
 var $ = __webpack_require__(2);
 var IS_PURE = __webpack_require__(64);
 var global = __webpack_require__(1);
-var getBuiltIn = __webpack_require__(23);
-var call = __webpack_require__(22);
-var NativePromise = __webpack_require__(597);
+var getBuiltIn = __webpack_require__(24);
+var call = __webpack_require__(23);
+var NativePromise = __webpack_require__(596);
 var redefine = __webpack_require__(30);
 var redefineAll = __webpack_require__(191);
 var setPrototypeOf = __webpack_require__(185);
@@ -52461,17 +43334,17 @@ var anInstance = __webpack_require__(190);
 var inspectSource = __webpack_require__(111);
 var iterate = __webpack_require__(189);
 var checkCorrectnessOfIteration = __webpack_require__(186);
-var speciesConstructor = __webpack_require__(598);
+var speciesConstructor = __webpack_require__(597);
 var task = __webpack_require__(297).set;
-var microtask = __webpack_require__(600);
-var promiseResolve = __webpack_require__(603);
-var hostReportErrors = __webpack_require__(604);
+var microtask = __webpack_require__(599);
+var promiseResolve = __webpack_require__(602);
+var hostReportErrors = __webpack_require__(603);
 var newPromiseCapabilityModule = __webpack_require__(299);
-var perform = __webpack_require__(605);
+var perform = __webpack_require__(604);
 var InternalStateModule = __webpack_require__(40);
 var isForced = __webpack_require__(113);
 var wellKnownSymbol = __webpack_require__(4);
-var IS_BROWSER = __webpack_require__(606);
+var IS_BROWSER = __webpack_require__(605);
 var IS_NODE = __webpack_require__(100);
 var V8_VERSION = __webpack_require__(48);
 
@@ -52843,7 +43716,7 @@ $({ target: PROMISE, stat: true, forced: INCORRECT_ITERATION }, {
 
 
 /***/ }),
-/* 597 */
+/* 596 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -52852,11 +43725,11 @@ module.exports = global.Promise;
 
 
 /***/ }),
-/* 598 */
+/* 597 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(17);
-var aConstructor = __webpack_require__(599);
+var aConstructor = __webpack_require__(598);
 var wellKnownSymbol = __webpack_require__(4);
 
 var SPECIES = wellKnownSymbol('species');
@@ -52871,7 +43744,7 @@ module.exports = function (O, defaultConstructor) {
 
 
 /***/ }),
-/* 599 */
+/* 598 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -52888,7 +43761,7 @@ module.exports = function (argument) {
 
 
 /***/ }),
-/* 600 */
+/* 599 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -52896,8 +43769,8 @@ var bind = __webpack_require__(34);
 var getOwnPropertyDescriptor = __webpack_require__(78).f;
 var macrotask = __webpack_require__(297).set;
 var IS_IOS = __webpack_require__(298);
-var IS_IOS_PEBBLE = __webpack_require__(601);
-var IS_WEBOS_WEBKIT = __webpack_require__(602);
+var IS_IOS_PEBBLE = __webpack_require__(600);
+var IS_WEBOS_WEBKIT = __webpack_require__(601);
 var IS_NODE = __webpack_require__(100);
 
 var MutationObserver = global.MutationObserver || global.WebKitMutationObserver;
@@ -52979,7 +43852,7 @@ module.exports = queueMicrotask || function (fn) {
 
 
 /***/ }),
-/* 601 */
+/* 600 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var userAgent = __webpack_require__(49);
@@ -52989,7 +43862,7 @@ module.exports = /ipad|iphone|ipod/i.test(userAgent) && global.Pebble !== undefi
 
 
 /***/ }),
-/* 602 */
+/* 601 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var userAgent = __webpack_require__(49);
@@ -52998,7 +43871,7 @@ module.exports = /web0s(?!.*chrome)/i.test(userAgent);
 
 
 /***/ }),
-/* 603 */
+/* 602 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(17);
@@ -53016,7 +43889,7 @@ module.exports = function (C, x) {
 
 
 /***/ }),
-/* 604 */
+/* 603 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53030,7 +43903,7 @@ module.exports = function (a, b) {
 
 
 /***/ }),
-/* 605 */
+/* 604 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -53043,18 +43916,18 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 606 */
+/* 605 */
 /***/ (function(module, exports) {
 
 module.exports = typeof window == 'object';
 
 
 /***/ }),
-/* 607 */
+/* 606 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var fromAsync = __webpack_require__(608);
+var fromAsync = __webpack_require__(607);
 
 // `Array.fromAsync` method
 // https://github.com/tc39/proposal-array-from-async
@@ -53064,7 +43937,7 @@ $({ target: 'Array', stat: true }, {
 
 
 /***/ }),
-/* 608 */
+/* 607 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53072,15 +43945,15 @@ $({ target: 'Array', stat: true }, {
 var bind = __webpack_require__(34);
 var toObject = __webpack_require__(9);
 var isConstructor = __webpack_require__(73);
-var getAsyncIterator = __webpack_require__(609);
+var getAsyncIterator = __webpack_require__(608);
 var getIterator = __webpack_require__(130);
 var getIteratorMethod = __webpack_require__(131);
 var getMethod = __webpack_require__(50);
-var getVirtual = __webpack_require__(611);
-var getBuiltIn = __webpack_require__(23);
+var getVirtual = __webpack_require__(610);
+var getBuiltIn = __webpack_require__(24);
 var wellKnownSymbol = __webpack_require__(4);
 var AsyncFromSyncIterator = __webpack_require__(300);
-var toArray = __webpack_require__(612).toArray;
+var toArray = __webpack_require__(611).toArray;
 
 var ASYNC_ITERATOR = wellKnownSymbol('asyncIterator');
 var arrayIterator = getVirtual('Array').values;
@@ -53107,10 +43980,10 @@ module.exports = function fromAsync(asyncItems /* , mapfn = undefined, thisArg =
 
 
 /***/ }),
-/* 609 */
+/* 608 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var AsyncFromSyncIterator = __webpack_require__(300);
 var anObject = __webpack_require__(17);
 var getIterator = __webpack_require__(130);
@@ -53126,7 +43999,7 @@ module.exports = function (it, usingIterator) {
 
 
 /***/ }),
-/* 610 */
+/* 609 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53169,7 +44042,7 @@ module.exports = AsyncIteratorPrototype;
 
 
 /***/ }),
-/* 611 */
+/* 610 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53180,7 +44053,7 @@ module.exports = function (CONSTRUCTOR) {
 
 
 /***/ }),
-/* 612 */
+/* 611 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53188,10 +44061,10 @@ module.exports = function (CONSTRUCTOR) {
 // https://github.com/tc39/proposal-iterator-helpers
 // https://github.com/tc39/proposal-array-from-async
 var global = __webpack_require__(1);
-var call = __webpack_require__(22);
+var call = __webpack_require__(23);
 var aCallable = __webpack_require__(29);
 var anObject = __webpack_require__(17);
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var getMethod = __webpack_require__(50);
 
 var MAX_SAFE_INTEGER = 0x1FFFFFFFFFFFFF;
@@ -53282,7 +44155,7 @@ module.exports = {
 
 
 /***/ }),
-/* 613 */
+/* 612 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // TODO: Remove from `core-js@4`
@@ -53290,7 +44163,7 @@ __webpack_require__(292);
 
 
 /***/ }),
-/* 614 */
+/* 613 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53312,7 +44185,7 @@ addToUnscopables('filterOut');
 
 
 /***/ }),
-/* 615 */
+/* 614 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53333,7 +44206,7 @@ addToUnscopables('filterReject');
 
 
 /***/ }),
-/* 616 */
+/* 615 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53354,7 +44227,7 @@ addToUnscopables('findLast');
 
 
 /***/ }),
-/* 617 */
+/* 616 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53375,13 +44248,13 @@ addToUnscopables('findLastIndex');
 
 
 /***/ }),
-/* 618 */
+/* 617 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $ = __webpack_require__(2);
-var $groupBy = __webpack_require__(619);
+var $groupBy = __webpack_require__(618);
 var arraySpeciesConstructor = __webpack_require__(282);
 var addToUnscopables = __webpack_require__(11);
 
@@ -53398,7 +44271,7 @@ addToUnscopables('groupBy');
 
 
 /***/ }),
-/* 619 */
+/* 618 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53409,7 +44282,7 @@ var toObject = __webpack_require__(9);
 var toPropertyKey = __webpack_require__(82);
 var lengthOfArrayLike = __webpack_require__(7);
 var objectCreate = __webpack_require__(41);
-var arrayFromConstructorAndList = __webpack_require__(620);
+var arrayFromConstructorAndList = __webpack_require__(619);
 
 var Array = global.Array;
 var push = uncurryThis([].push);
@@ -53440,7 +44313,7 @@ module.exports = function ($this, callbackfn, that, specificConstructor) {
 
 
 /***/ }),
-/* 620 */
+/* 619 */
 /***/ (function(module, exports) {
 
 module.exports = function (Constructor, list) {
@@ -53453,7 +44326,7 @@ module.exports = function (Constructor, list) {
 
 
 /***/ }),
-/* 621 */
+/* 620 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -53488,7 +44361,7 @@ $({ target: 'Array', stat: true }, {
 
 
 /***/ }),
-/* 622 */
+/* 621 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53521,7 +44394,7 @@ if (DESCRIPTORS && !('lastItem' in [])) {
 
 
 /***/ }),
-/* 623 */
+/* 622 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53549,14 +44422,14 @@ if (DESCRIPTORS && !('lastIndex' in [])) {
 
 
 /***/ }),
-/* 624 */
+/* 623 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $ = __webpack_require__(2);
 var addToUnscopables = __webpack_require__(11);
-var uniqueBy = __webpack_require__(625);
+var uniqueBy = __webpack_require__(624);
 
 // `Array.prototype.uniqueBy` method
 // https://github.com/tc39/proposal-array-unique
@@ -53568,12 +44441,12 @@ addToUnscopables('uniqueBy');
 
 
 /***/ }),
-/* 625 */
+/* 624 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var getBuiltIn = __webpack_require__(23);
+var getBuiltIn = __webpack_require__(24);
 var uncurryThis = __webpack_require__(3);
 var aCallable = __webpack_require__(29);
 var lengthOfArrayLike = __webpack_require__(7);
@@ -53611,6 +44484,15 @@ module.exports = function uniqueBy(resolver) {
 
 
 /***/ }),
+/* 625 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(626);
+
+module.exports = parent;
+
+
+/***/ }),
 /* 626 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53623,23 +44505,14 @@ module.exports = parent;
 /* 627 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(628);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 628 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(629);
+__webpack_require__(628);
 var entryUnbind = __webpack_require__(233);
 
 module.exports = entryUnbind('String', 'repeat');
 
 
 /***/ }),
-/* 629 */
+/* 628 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -53650,6 +44523,15 @@ var repeat = __webpack_require__(302);
 $({ target: 'String', proto: true }, {
   repeat: repeat
 });
+
+
+/***/ }),
+/* 629 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(630);
+
+module.exports = parent;
 
 
 /***/ }),
@@ -53665,27 +44547,18 @@ module.exports = parent;
 /* 631 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(632);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 632 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(633);
+__webpack_require__(632);
 var path = __webpack_require__(98);
 
 module.exports = path.Object.entries;
 
 
 /***/ }),
-/* 633 */
+/* 632 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var $entries = __webpack_require__(634).entries;
+var $entries = __webpack_require__(633).entries;
 
 // `Object.entries` method
 // https://tc39.es/ecma262/#sec-object.entries
@@ -53697,7 +44570,7 @@ $({ target: 'Object', stat: true }, {
 
 
 /***/ }),
-/* 634 */
+/* 633 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var DESCRIPTORS = __webpack_require__(14);
@@ -53739,19 +44612,19 @@ module.exports = {
 
 
 /***/ }),
-/* 635 */
+/* 634 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(636);
+var parent = __webpack_require__(635);
 
 module.exports = parent;
 
 
 /***/ }),
-/* 636 */
+/* 635 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(637);
+__webpack_require__(636);
 
 var parent = __webpack_require__(187);
 
@@ -53759,7 +44632,7 @@ module.exports = parent;
 
 
 /***/ }),
-/* 637 */
+/* 636 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53787,6 +44660,19 @@ handlePrototype(DOMTokenListPrototype);
 
 
 /***/ }),
+/* 637 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var parent = __webpack_require__(638);
+
+module.exports = parent;
+
+__webpack_require__(182);
+__webpack_require__(654);
+__webpack_require__(655);
+
+
+/***/ }),
 /* 638 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53794,43 +44680,30 @@ var parent = __webpack_require__(639);
 
 module.exports = parent;
 
-__webpack_require__(182);
-__webpack_require__(655);
-__webpack_require__(656);
-
 
 /***/ }),
 /* 639 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var parent = __webpack_require__(640);
-
-module.exports = parent;
-
-
-/***/ }),
-/* 640 */
-/***/ (function(module, exports, __webpack_require__) {
-
+__webpack_require__(640);
 __webpack_require__(641);
 __webpack_require__(642);
-__webpack_require__(643);
+__webpack_require__(644);
 __webpack_require__(645);
 __webpack_require__(646);
 __webpack_require__(647);
 __webpack_require__(648);
 __webpack_require__(649);
-__webpack_require__(650);
+__webpack_require__(651);
 __webpack_require__(652);
 __webpack_require__(653);
-__webpack_require__(654);
 var path = __webpack_require__(98);
 
 module.exports = path.Number;
 
 
 /***/ }),
-/* 641 */
+/* 640 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -53925,7 +44798,7 @@ if (isForced(NUMBER, !NativeNumber(' 0o1') || !NativeNumber('0b1') || NativeNumb
 
 
 /***/ }),
-/* 642 */
+/* 641 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -53938,11 +44811,11 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 643 */
+/* 642 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var numberIsFinite = __webpack_require__(644);
+var numberIsFinite = __webpack_require__(643);
 
 // `Number.isFinite` method
 // https://tc39.es/ecma262/#sec-number.isfinite
@@ -53950,7 +44823,7 @@ $({ target: 'Number', stat: true }, { isFinite: numberIsFinite });
 
 
 /***/ }),
-/* 644 */
+/* 643 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -53966,7 +44839,7 @@ module.exports = Number.isFinite || function isFinite(it) {
 
 
 /***/ }),
-/* 645 */
+/* 644 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -53980,7 +44853,7 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 646 */
+/* 645 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -53996,7 +44869,7 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 647 */
+/* 646 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -54014,7 +44887,7 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 648 */
+/* 647 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -54027,7 +44900,7 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 649 */
+/* 648 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -54040,11 +44913,11 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 650 */
+/* 649 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
-var parseFloat = __webpack_require__(651);
+var parseFloat = __webpack_require__(650);
 
 // `Number.parseFloat` method
 // https://tc39.es/ecma262/#sec-number.parseFloat
@@ -54055,7 +44928,7 @@ $({ target: 'Number', stat: true, forced: Number.parseFloat != parseFloat }, {
 
 
 /***/ }),
-/* 651 */
+/* 650 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(1);
@@ -54083,7 +44956,7 @@ module.exports = FORCED ? function parseFloat(string) {
 
 
 /***/ }),
-/* 652 */
+/* 651 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var $ = __webpack_require__(2);
@@ -54098,7 +44971,7 @@ $({ target: 'Number', stat: true, forced: Number.parseInt != parseInt }, {
 
 
 /***/ }),
-/* 653 */
+/* 652 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54236,7 +45109,7 @@ $({ target: 'Number', proto: true, forced: FORCED }, {
 
 
 /***/ }),
-/* 654 */
+/* 653 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54268,7 +45141,7 @@ $({ target: 'Number', proto: true, forced: FORCED }, {
 
 
 /***/ }),
-/* 655 */
+/* 654 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54314,13 +45187,13 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 656 */
+/* 655 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var $ = __webpack_require__(2);
-var NumericRangeIterator = __webpack_require__(657);
+var NumericRangeIterator = __webpack_require__(656);
 
 // `Number.range` method
 // https://github.com/tc39/proposal-Number.range
@@ -54332,7 +45205,7 @@ $({ target: 'Number', stat: true }, {
 
 
 /***/ }),
-/* 657 */
+/* 656 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54445,7 +45318,7 @@ module.exports = $RangeIterator;
 
 
 /***/ }),
-/* 658 */
+/* 657 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54467,12 +45340,12 @@ Object.defineProperty(exports, "waitForInFlightQueries", {
   }
 });
 
-var _createApolloClient = __webpack_require__(659);
+var _createApolloClient = __webpack_require__(658);
 
 var _helpers = __webpack_require__(331);
 
 /***/ }),
-/* 659 */
+/* 658 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -54487,15 +45360,15 @@ exports.buildApolloClientUri = exports.createApolloClient = void 0;
 
 var _apolloClient = _interopRequireDefault(__webpack_require__(132));
 
-var _apolloLinkBatchHttp = __webpack_require__(668);
+var _apolloLinkBatchHttp = __webpack_require__(667);
 
-var _apolloCacheInmemory = __webpack_require__(671);
+var _apolloCacheInmemory = __webpack_require__(670);
 
 var _apolloLink = __webpack_require__(45);
 
-var _apolloLinkError = __webpack_require__(680);
+var _apolloLinkError = __webpack_require__(679);
 
-var _fetchWithCsrf = __webpack_require__(683);
+var _fetchWithCsrf = __webpack_require__(682);
 
 var _helpers = __webpack_require__(331); // Returns an ApolloClient instance
 // https://www.apollographql.com/docs/react/
@@ -54603,7 +45476,7 @@ var buildApolloClientUri = function buildApolloClientUri(_ref2) {
 exports.buildApolloClientUri = buildApolloClientUri;
 
 /***/ }),
-/* 660 */
+/* 659 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -55214,7 +46087,7 @@ if (hasSymbols()) {
 }
 
 /***/ }),
-/* 661 */
+/* 660 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -55223,13 +46096,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
 /* harmony import */ var graphql_language_printer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55);
 /* harmony import */ var graphql_language_printer__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(graphql_language_printer__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(662);
+/* harmony import */ var apollo_link_dedup__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(661);
 /* harmony import */ var apollo_utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(56);
-/* harmony import */ var _scheduler_scheduler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(663);
+/* harmony import */ var _scheduler_scheduler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(662);
 /* harmony import */ var _errors_ApolloError__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(139);
 /* harmony import */ var _util_Observable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(313);
-/* harmony import */ var _data_mutations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(664);
-/* harmony import */ var _data_queries__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(665);
+/* harmony import */ var _data_mutations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(663);
+/* harmony import */ var _data_queries__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(664);
 /* harmony import */ var _ObservableQuery__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(134);
 /* harmony import */ var _networkStatus__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(75);
 /* harmony import */ var _types__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(101);
@@ -56159,7 +47032,7 @@ var QueryManager = /** @class */ (function () {
 //# sourceMappingURL=QueryManager.js.map
 
 /***/ }),
-/* 662 */
+/* 661 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56171,7 +47044,7 @@ __webpack_require__.r(__webpack_exports__);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 663 */
+/* 662 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56328,7 +47201,7 @@ var QueryScheduler = /** @class */ (function () {
 //# sourceMappingURL=scheduler.js.map
 
 /***/ }),
-/* 664 */
+/* 663 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56377,7 +47250,7 @@ var MutationStore = /** @class */ (function () {
 //# sourceMappingURL=mutations.js.map
 
 /***/ }),
-/* 665 */
+/* 664 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56533,7 +47406,7 @@ var QueryStore = /** @class */ (function () {
 //# sourceMappingURL=queries.js.map
 
 /***/ }),
-/* 666 */
+/* 665 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56689,13 +47562,13 @@ var DataStore = /** @class */ (function () {
 //# sourceMappingURL=store.js.map
 
 /***/ }),
-/* 667 */
+/* 666 */
 /***/ (function(module, exports) {
 
 exports.version = "2.3.4"
 
 /***/ }),
-/* 668 */
+/* 667 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56707,7 +47580,7 @@ __webpack_require__.r(__webpack_exports__);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 669 */
+/* 668 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56863,7 +47736,7 @@ var selectURI = function (operation, fallbackURI) {
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 670 */
+/* 669 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56877,7 +47750,7 @@ __webpack_require__.r(__webpack_exports__);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 671 */
+/* 670 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56923,7 +47796,7 @@ __webpack_require__.r(__webpack_exports__);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 672 */
+/* 671 */
 /***/ (function(module, exports) {
 
 var testMap = new Map();
@@ -56975,7 +47848,7 @@ catch (_a) {
 //# sourceMappingURL=fixPolyfills.js.map
 
 /***/ }),
-/* 673 */
+/* 672 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -56991,7 +47864,7 @@ __webpack_require__.r(__webpack_exports__);
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 674 */
+/* 673 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57100,15 +47973,15 @@ var justTypenameQuery = {
 //# sourceMappingURL=utils.js.map
 
 /***/ }),
-/* 675 */
+/* 674 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cache = __webpack_require__(676).Cache;
-var tuple = __webpack_require__(677).tuple;
-var Entry = __webpack_require__(678).Entry;
+var Cache = __webpack_require__(675).Cache;
+var tuple = __webpack_require__(676).tuple;
+var Entry = __webpack_require__(677).Entry;
 var getLocal = __webpack_require__(330).get;
 
 function defaultMakeCacheKey() {
@@ -57215,7 +48088,7 @@ exports.wrap = wrap;
 
 
 /***/ }),
-/* 676 */
+/* 675 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57336,7 +48209,7 @@ Cp.delete = function (key) {
 
 
 /***/ }),
-/* 677 */
+/* 676 */
 /***/ (function(__webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57593,7 +48466,7 @@ tuple.prototype.concat = function () {
 
 
 /***/ }),
-/* 678 */
+/* 677 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -57985,7 +48858,7 @@ function unsubscribe(entry) {
 
 
 /***/ }),
-/* 679 */
+/* 678 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58124,7 +48997,7 @@ function safeSortedKeys(object) {
 //# sourceMappingURL=queryKeyMaker.js.map
 
 /***/ }),
-/* 680 */
+/* 679 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58132,7 +49005,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorLink", function() { return ErrorLink; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "onError", function() { return onError; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(103);
-/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(681);
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(680);
 
 
 
@@ -58220,7 +49093,7 @@ var ErrorLink = (function (_super) {
 
 
 /***/ }),
-/* 681 */
+/* 680 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58438,7 +49311,7 @@ function execute(link, operation) {
 
 
 /***/ }),
-/* 682 */
+/* 681 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58662,7 +49535,7 @@ function __importDefault(mod) {
 
 
 /***/ }),
-/* 683 */
+/* 682 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -58733,14 +49606,14 @@ function getLocalCsrfCookie() {
 }
 
 /***/ }),
-/* 684 */
+/* 683 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RetryLink", function() { return RetryLink; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(103);
-/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(685);
+/* harmony import */ var apollo_link__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(684);
 
 
 
@@ -58909,7 +49782,7 @@ var RetryLink = (function (_super) {
 
 
 /***/ }),
-/* 685 */
+/* 684 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59127,7 +50000,7 @@ function execute(link, operation) {
 
 
 /***/ }),
-/* 686 */
+/* 685 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59351,7 +50224,7 @@ function __importDefault(mod) {
 
 
 /***/ }),
-/* 687 */
+/* 686 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseMerge = __webpack_require__(333),
@@ -59396,7 +50269,7 @@ module.exports = merge;
 
 
 /***/ }),
-/* 688 */
+/* 687 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var assignMergeValue = __webpack_require__(334),
@@ -59406,14 +50279,14 @@ var assignMergeValue = __webpack_require__(334),
     initCloneObject = __webpack_require__(337),
     isArguments = __webpack_require__(88),
     isArray = __webpack_require__(10),
-    isArrayLikeObject = __webpack_require__(689),
+    isArrayLikeObject = __webpack_require__(688),
     isBuffer = __webpack_require__(69),
     isFunction = __webpack_require__(67),
     isObject = __webpack_require__(18),
-    isPlainObject = __webpack_require__(690),
+    isPlainObject = __webpack_require__(689),
     isTypedArray = __webpack_require__(90),
     safeGet = __webpack_require__(338),
-    toPlainObject = __webpack_require__(691);
+    toPlainObject = __webpack_require__(690);
 
 /**
  * A specialized version of `baseMerge` for arrays and objects which performs
@@ -59496,7 +50369,7 @@ module.exports = baseMergeDeep;
 
 
 /***/ }),
-/* 689 */
+/* 688 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isArrayLike = __webpack_require__(42),
@@ -59535,7 +50408,7 @@ module.exports = isArrayLikeObject;
 
 
 /***/ }),
-/* 690 */
+/* 689 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -59603,7 +50476,7 @@ module.exports = isPlainObject;
 
 
 /***/ }),
-/* 691 */
+/* 690 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(105),
@@ -59641,7 +50514,7 @@ module.exports = toPlainObject;
 
 
 /***/ }),
-/* 692 */
+/* 691 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var identity = __webpack_require__(92),
@@ -59664,7 +50537,7 @@ module.exports = baseRest;
 
 
 /***/ }),
-/* 693 */
+/* 692 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var eq = __webpack_require__(87),
@@ -59700,7 +50573,7 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 694 */
+/* 693 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;// TinyColor v1.3.0
@@ -60900,7 +51773,7 @@ else {}
 
 
 /***/ }),
-/* 695 */
+/* 694 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60985,11 +51858,11 @@ var LARGER_BREAKPOINTS_WORDING = (_LARGER_BREAKPOINTS_W = {}, (0, _definePropert
 exports.LARGER_BREAKPOINTS_WORDING = LARGER_BREAKPOINTS_WORDING;
 
 /***/ }),
-/* 696 */
+/* 695 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var capitalize = __webpack_require__(697),
-    createCompounder = __webpack_require__(705);
+var capitalize = __webpack_require__(696),
+    createCompounder = __webpack_require__(704);
 
 /**
  * Converts `string` to [camel case](https://en.wikipedia.org/wiki/CamelCase).
@@ -61020,11 +51893,11 @@ module.exports = camelCase;
 
 
 /***/ }),
-/* 697 */
+/* 696 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toString = __webpack_require__(54),
-    upperFirst = __webpack_require__(698);
+    upperFirst = __webpack_require__(697);
 
 /**
  * Converts the first character of `string` to upper case and the remaining
@@ -61049,10 +51922,10 @@ module.exports = capitalize;
 
 
 /***/ }),
-/* 698 */
+/* 697 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createCaseFirst = __webpack_require__(699);
+var createCaseFirst = __webpack_require__(698);
 
 /**
  * Converts the first character of `string` to upper case.
@@ -61077,12 +51950,12 @@ module.exports = upperFirst;
 
 
 /***/ }),
-/* 699 */
+/* 698 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var castSlice = __webpack_require__(700),
+var castSlice = __webpack_require__(699),
     hasUnicode = __webpack_require__(172),
-    stringToArray = __webpack_require__(702),
+    stringToArray = __webpack_require__(701),
     toString = __webpack_require__(54);
 
 /**
@@ -61116,10 +51989,10 @@ module.exports = createCaseFirst;
 
 
 /***/ }),
-/* 700 */
+/* 699 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseSlice = __webpack_require__(701);
+var baseSlice = __webpack_require__(700);
 
 /**
  * Casts `array` to a slice if it's needed.
@@ -61140,7 +52013,7 @@ module.exports = castSlice;
 
 
 /***/ }),
-/* 701 */
+/* 700 */
 /***/ (function(module, exports) {
 
 /**
@@ -61177,12 +52050,12 @@ module.exports = baseSlice;
 
 
 /***/ }),
-/* 702 */
+/* 701 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var asciiToArray = __webpack_require__(703),
+var asciiToArray = __webpack_require__(702),
     hasUnicode = __webpack_require__(172),
-    unicodeToArray = __webpack_require__(704);
+    unicodeToArray = __webpack_require__(703);
 
 /**
  * Converts `string` to an array.
@@ -61201,7 +52074,7 @@ module.exports = stringToArray;
 
 
 /***/ }),
-/* 703 */
+/* 702 */
 /***/ (function(module, exports) {
 
 /**
@@ -61219,7 +52092,7 @@ module.exports = asciiToArray;
 
 
 /***/ }),
-/* 704 */
+/* 703 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -61265,12 +52138,12 @@ module.exports = unicodeToArray;
 
 
 /***/ }),
-/* 705 */
+/* 704 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayReduce = __webpack_require__(267),
-    deburr = __webpack_require__(706),
-    words = __webpack_require__(708);
+    deburr = __webpack_require__(705),
+    words = __webpack_require__(707);
 
 /** Used to compose unicode capture groups. */
 var rsApos = "['\u2019]";
@@ -61295,10 +52168,10 @@ module.exports = createCompounder;
 
 
 /***/ }),
-/* 706 */
+/* 705 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var deburrLetter = __webpack_require__(707),
+var deburrLetter = __webpack_require__(706),
     toString = __webpack_require__(54);
 
 /** Used to match Latin Unicode letters (excluding mathematical operators). */
@@ -61346,7 +52219,7 @@ module.exports = deburr;
 
 
 /***/ }),
-/* 707 */
+/* 706 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var basePropertyOf = __webpack_require__(217);
@@ -61423,13 +52296,13 @@ module.exports = deburrLetter;
 
 
 /***/ }),
-/* 708 */
+/* 707 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var asciiWords = __webpack_require__(709),
-    hasUnicodeWord = __webpack_require__(710),
+var asciiWords = __webpack_require__(708),
+    hasUnicodeWord = __webpack_require__(709),
     toString = __webpack_require__(54),
-    unicodeWords = __webpack_require__(711);
+    unicodeWords = __webpack_require__(710);
 
 /**
  * Splits `string` into an array of its words.
@@ -61464,7 +52337,7 @@ module.exports = words;
 
 
 /***/ }),
-/* 709 */
+/* 708 */
 /***/ (function(module, exports) {
 
 /** Used to match words composed of alphanumeric characters. */
@@ -61485,7 +52358,7 @@ module.exports = asciiWords;
 
 
 /***/ }),
-/* 710 */
+/* 709 */
 /***/ (function(module, exports) {
 
 /** Used to detect strings that need a more robust regexp to match words. */
@@ -61506,7 +52379,7 @@ module.exports = hasUnicodeWord;
 
 
 /***/ }),
-/* 711 */
+/* 710 */
 /***/ (function(module, exports) {
 
 /** Used to compose unicode character classes. */
@@ -61581,7 +52454,7 @@ module.exports = unicodeWords;
 
 
 /***/ }),
-/* 712 */
+/* 711 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62413,7 +53286,7 @@ var SECTION_NAMES = {
 exports.SECTION_NAMES = SECTION_NAMES;
 
 /***/ }),
-/* 713 */
+/* 712 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62430,7 +53303,916 @@ var PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY = 'commerce-products-type';
 exports.PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY = PRODUCTS_BINDING_CONTEXT_EXTERNAL_KEY;
 
 /***/ }),
+/* 713 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.paypalCurrencyList = void 0; // Note: These currencies are extracted by getting PayPal compatible currencies from:
+//
+// curl https://developer.paypal.com/docs/api/reference/currency-codes
+//
+// And then populating in the names from ISO 4217:
+
+var paypalCurrencyList = [
+/*
+ * ----------------------------------------------------------------------------
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ *
+ * This const is duplicated to @packages/systems/core/constants/SharedConfig.js
+ * to avoid bundling this entire SharedConfig file in the webflow.js published
+ * site bundle. Once we have support for bundling for the Dashboard (this
+ * config is injected in to window.SharedConfig for angular), we should
+ * be able to delete the const in SharedConfig and use the commerce/consts
+ * package whenever `paypalCurrencyList` const is needed.
+ *
+ * In the meantime, if you make changes to this const, please make sure to
+ * update in the other location as well.
+ *
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * ----------------------------------------------------------------------------
+ */
+{
+  code: 'AUD',
+  digits: 2,
+  minCharge: 1,
+  name: 'Australian Dollar'
+}, {
+  code: 'BRL',
+  digits: 2,
+  minCharge: 1,
+  name: 'Brazilian Real'
+}, {
+  code: 'CAD',
+  digits: 2,
+  minCharge: 1,
+  name: 'Canadian Dollar'
+}, {
+  code: 'CNY',
+  digits: 2,
+  minCharge: 1,
+  name: 'Chinese Renmenbi'
+}, {
+  code: 'CZK',
+  digits: 2,
+  minCharge: 1,
+  name: 'Czech Koruna'
+}, {
+  code: 'DKK',
+  digits: 2,
+  minCharge: 1,
+  name: 'Danish Krone'
+}, {
+  code: 'EUR',
+  digits: 2,
+  minCharge: 1,
+  name: 'Euro'
+}, {
+  code: 'HKD',
+  digits: 2,
+  minCharge: 1,
+  name: 'Hong Kong Dollar'
+}, // HUF is currently disabled, due to issues with PayPal's 0-decimal implementation
+// See: https://github.com/webflow/webflow/issues/32865
+// {code: 'HUF', digits: 0, minCharge: 1, name: 'Hungarian Forint'},
+{
+  code: 'INR',
+  digits: 2,
+  minCharge: 1,
+  name: 'Indian Rupee'
+}, {
+  code: 'ILS',
+  digits: 2,
+  minCharge: 1,
+  name: 'Israeli New Sheqel'
+}, {
+  code: 'JPY',
+  digits: 0,
+  minCharge: 1,
+  name: 'Japanese Yen'
+}, {
+  code: 'MYR',
+  digits: 2,
+  minCharge: 1,
+  name: 'Malaysian Ringgit'
+}, {
+  code: 'MXN',
+  digits: 2,
+  minCharge: 1,
+  name: 'Mexican Peso'
+}, {
+  code: 'TWD',
+  digits: 0,
+  minCharge: 1,
+  name: 'New Taiwan Dollar'
+}, {
+  code: 'NZD',
+  digits: 2,
+  minCharge: 1,
+  name: 'New Zealand Dollar'
+}, {
+  code: 'NOK',
+  digits: 2,
+  minCharge: 1,
+  name: 'Norwegian Krone'
+}, {
+  code: 'PHP',
+  digits: 2,
+  minCharge: 1,
+  name: 'Philippine Peso'
+}, {
+  code: 'PLN',
+  digits: 2,
+  minCharge: 1,
+  name: 'Polish Złoty'
+}, {
+  code: 'GBP',
+  digits: 2,
+  minCharge: 1,
+  name: 'British Pound'
+}, {
+  code: 'RUB',
+  digits: 2,
+  minCharge: 1,
+  name: 'Russian Ruble'
+}, {
+  code: 'SGD',
+  digits: 2,
+  minCharge: 1,
+  name: 'Singapore Dollar'
+}, {
+  code: 'SEK',
+  digits: 2,
+  minCharge: 1,
+  name: 'Swedish Krona'
+}, {
+  code: 'CHF',
+  digits: 2,
+  minCharge: 1,
+  name: 'Swiss Franc'
+}, {
+  code: 'THB',
+  digits: 2,
+  minCharge: 1,
+  name: 'Thai Baht'
+}, {
+  code: 'USD',
+  digits: 2,
+  minCharge: 1,
+  name: 'United States Dollar'
+}];
+exports.paypalCurrencyList = paypalCurrencyList;
+
+/***/ }),
 /* 714 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.stripeCurrencyList = void 0; // Note: These currencies are extracted by getting Stripe compatible currencies with:
+//
+// curl https://api.stripe.com/v1/country_specs\?limit\=100 -u $STRIPE_TEST_KEY: -G \
+//   | jq '.data|.[]|.supported_payment_currencies|.[]' \
+//   | sort \
+//   | uniq
+//
+// And then populating in the names from ISO 4217:
+//
+// Digit counts are also added. Stripe is treated as the source-of-truth for that number, even though their
+// numbers are often at odds with ISO 4217. Notes:
+//
+//  - CVE had a subunit (centavo), that has been discontinued. The ISO reflects this, but stripe sticks
+//    with 2 digits, since the currency is still commonly formatted as "1$00". ¯\_(ツ)_/¯
+//  - ISK had a subunit (eyrir) that was obsoleted in 2003, but Stripe sticks with 2 digits instead of
+//    the ISO's 0.
+//  - MGA is strange, since its smallest denomination is a 1/5th piece (the Iraimbilanja), but is
+//    represented as a decimal, so the currency goes "1.3, 1.4, 2.0, ...". Stripe dodges this strangeness
+//    by ignoring that minimum unit, and so do we, since it has so little value.
+//  - UGX had a subunit (cent) that was discontinued in 2013. Stripe still counts it, tho, even though
+//    that cent is work 1/350000th of a penny.
+
+var stripeCurrencyList = [
+/*
+ * ----------------------------------------------------------------------------
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ *
+ * This const is duplicated to @packages/systems/core/constants/SharedConfig.js
+ * to avoid bundling this entire SharedConfig file in the webflow.js published
+ * site bundle. Once we have support for bundling for the Dashboard (this
+ * config is injected in to window.SharedConfig for angular), we should
+ * be able to delete the const in SharedConfig and use the commerce/consts
+ * package whenever `stripeCurrencyList` const is needed.
+ *
+ * In the meantime, if you make changes to this const, please make sure to
+ * update in the other location as well.
+ *
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE NOTE
+ * ----------------------------------------------------------------------------
+ */
+{
+  code: 'AED',
+  digits: 2,
+  minCharge: 0,
+  name: 'United Arab Emirates Dirham'
+}, {
+  code: 'AFN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Afghanistan Afghani'
+}, {
+  code: 'ALL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Albanian Lek'
+}, {
+  code: 'AMD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Armenia Dram'
+}, {
+  code: 'ANG',
+  digits: 2,
+  minCharge: 0,
+  name: 'Netherlands Antillean Gulden'
+}, {
+  code: 'AOA',
+  digits: 2,
+  minCharge: 0,
+  name: 'Angola Kwanza'
+}, {
+  code: 'ARS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Argentine Peso'
+}, {
+  code: 'AUD',
+  digits: 2,
+  minCharge: 50,
+  name: 'Australian Dollar'
+}, {
+  code: 'AWG',
+  digits: 2,
+  minCharge: 0,
+  name: 'Aruban Florin'
+}, {
+  code: 'AZN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Azerbaijan Manat'
+}, {
+  code: 'BAM',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bosnia and Herzegovina Convertible Marka'
+}, {
+  code: 'BBD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Barbadian Dollar'
+}, {
+  code: 'BDT',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bangladeshi Taka'
+}, {
+  code: 'BGN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bulgaria Lev'
+}, {
+  code: 'BIF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Burundian Franc'
+}, {
+  code: 'BMD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bermudian Dollar'
+}, {
+  code: 'BND',
+  digits: 2,
+  minCharge: 0,
+  name: 'Brunei Dollar'
+}, {
+  code: 'BOB',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bolivian Boliviano'
+}, {
+  code: 'BRL',
+  digits: 2,
+  minCharge: 50,
+  name: 'Brazilian Real'
+}, {
+  code: 'BSD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Bahamian Dollar'
+}, {
+  code: 'BWP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Botswana Pula'
+}, {
+  code: 'BZD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Belize Dollar'
+}, {
+  code: 'CAD',
+  digits: 2,
+  minCharge: 50,
+  name: 'Canadian Dollar'
+}, {
+  code: 'CDF',
+  digits: 2,
+  minCharge: 0,
+  name: 'Congo/Kinshasa Franc'
+}, {
+  code: 'CHF',
+  digits: 2,
+  minCharge: 50,
+  name: 'Swiss Franc'
+}, {
+  code: 'CLP',
+  digits: 0,
+  minCharge: 0,
+  name: 'Chilean Peso'
+}, {
+  code: 'CNY',
+  digits: 2,
+  minCharge: 0,
+  name: 'Chinese Renminbi Yuan'
+}, {
+  code: 'COP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Colombian Peso'
+}, {
+  code: 'CRC',
+  digits: 2,
+  minCharge: 0,
+  name: 'Costa Rican Colón'
+}, {
+  code: 'CVE',
+  digits: 2,
+  minCharge: 0,
+  name: 'Cape Verdean Escudo'
+}, // See above.
+{
+  code: 'CZK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Czech Koruna'
+}, {
+  code: 'DJF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Djiboutian Franc'
+}, {
+  code: 'DKK',
+  digits: 2,
+  minCharge: 250,
+  name: 'Danish Krone'
+}, {
+  code: 'DOP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Dominican Peso'
+}, {
+  code: 'DZD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Algerian Dinar'
+}, {
+  code: 'EGP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Egyptian Pound'
+}, {
+  code: 'ETB',
+  digits: 2,
+  minCharge: 0,
+  name: 'Ethiopian Birr'
+}, {
+  code: 'EUR',
+  digits: 2,
+  minCharge: 50,
+  name: 'Euro'
+}, {
+  code: 'FJD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Fijian Dollar'
+}, {
+  code: 'FKP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Falkland Islands Pound'
+}, {
+  code: 'GBP',
+  digits: 2,
+  minCharge: 30,
+  name: 'British Pound'
+}, {
+  code: 'GEL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Georgia Lari'
+}, {
+  code: 'GIP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Gibraltar Pound'
+}, {
+  code: 'GMD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Gambian Dalasi'
+}, {
+  code: 'GNF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Guinean Franc'
+}, {
+  code: 'GTQ',
+  digits: 2,
+  minCharge: 0,
+  name: 'Guatemalan Quetzal'
+}, {
+  code: 'GYD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Guyanese Dollar'
+}, {
+  code: 'HKD',
+  digits: 2,
+  minCharge: 400,
+  name: 'Hong Kong Dollar'
+}, {
+  code: 'HNL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Honduran Lempira'
+}, {
+  code: 'HRK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Croatian Kuna'
+}, {
+  code: 'HTG',
+  digits: 2,
+  minCharge: 0,
+  name: 'Haitian Gourde'
+}, {
+  code: 'HUF',
+  digits: 2,
+  minCharge: 0,
+  name: 'Hungarian Forint'
+}, {
+  code: 'IDR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Indonesian Rupiah'
+}, {
+  code: 'ILS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Israeli New Sheqel'
+}, {
+  code: 'INR',
+  digits: 2,
+  minCharge: 50,
+  name: 'Indian Rupee'
+}, {
+  code: 'ISK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Icelandic Króna'
+}, // See above.
+{
+  code: 'JMD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Jamaican Dollar'
+}, {
+  code: 'JPY',
+  digits: 0,
+  minCharge: 50,
+  name: 'Japanese Yen'
+}, {
+  code: 'KES',
+  digits: 2,
+  minCharge: 0,
+  name: 'Kenyan Shilling'
+}, {
+  code: 'KGS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Kyrgyzstan Som'
+}, {
+  code: 'KHR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Cambodian Riel'
+}, {
+  code: 'KMF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Comorian Franc'
+}, {
+  code: 'KRW',
+  digits: 0,
+  minCharge: 0,
+  name: 'South Korean Won'
+}, {
+  code: 'KYD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Cayman Islands Dollar'
+}, {
+  code: 'KZT',
+  digits: 2,
+  minCharge: 0,
+  name: 'Kazakhstani Tenge'
+}, {
+  code: 'LAK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Lao Kip'
+}, {
+  code: 'LBP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Lebanese Pound'
+}, {
+  code: 'LKR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Sri Lankan Rupee'
+}, {
+  code: 'LRD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Liberian Dollar'
+}, {
+  code: 'LSL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Lesotho Loti'
+}, {
+  code: 'MAD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Moroccan Dirham'
+}, {
+  code: 'MDL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Moldovan Leu'
+}, {
+  code: 'MGA',
+  digits: 0,
+  minCharge: 0,
+  name: 'Madagascar Ariary'
+}, // See above.
+{
+  code: 'MKD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Macedonia Denar'
+}, {
+  code: 'MMK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Myanmar (Burma) Kyat'
+}, {
+  code: 'MNT',
+  digits: 2,
+  minCharge: 0,
+  name: 'Mongolian Tögrög'
+}, {
+  code: 'MOP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Macanese Pataca'
+}, {
+  code: 'MRO',
+  digits: 2,
+  minCharge: 0,
+  name: 'Mauritanian Ouguiya'
+}, {
+  code: 'MUR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Mauritian Rupee'
+}, {
+  code: 'MVR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Maldivian Rufiyaa'
+}, {
+  code: 'MWK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Malawian Kwacha'
+}, {
+  code: 'MXN',
+  digits: 2,
+  minCharge: 1000,
+  name: 'Mexican Peso'
+}, {
+  code: 'MYR',
+  digits: 2,
+  minCharge: 200,
+  name: 'Malaysian Ringgit'
+}, {
+  code: 'MZN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Mozambique Metical'
+}, {
+  code: 'NAD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Namibian Dollar'
+}, {
+  code: 'NGN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Nigerian Naira'
+}, {
+  code: 'NIO',
+  digits: 2,
+  minCharge: 0,
+  name: 'Nicaraguan Córdoba'
+}, {
+  code: 'NOK',
+  digits: 2,
+  minCharge: 300,
+  name: 'Norwegian Krone'
+}, {
+  code: 'NPR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Nepalese Rupee'
+}, {
+  code: 'NZD',
+  digits: 2,
+  minCharge: 50,
+  name: 'New Zealand Dollar'
+}, {
+  code: 'PAB',
+  digits: 2,
+  minCharge: 0,
+  name: 'Panamanian Balboa'
+}, {
+  code: 'PEN',
+  digits: 2,
+  minCharge: 0,
+  name: 'Peruvian Nuevo Sol'
+}, {
+  code: 'PGK',
+  digits: 2,
+  minCharge: 0,
+  name: 'Papua New Guinean Kina'
+}, {
+  code: 'PHP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Philippine Peso'
+}, {
+  code: 'PKR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Pakistani Rupee'
+}, {
+  code: 'PLN',
+  digits: 2,
+  minCharge: 200,
+  name: 'Polish Złoty'
+}, {
+  code: 'PYG',
+  digits: 0,
+  minCharge: 0,
+  name: 'Paraguayan Guaraní'
+}, {
+  code: 'QAR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Qatari Riyal'
+}, {
+  code: 'RON',
+  digits: 2,
+  minCharge: 0,
+  name: 'Romania Leu'
+}, {
+  code: 'RSD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Serbia Dinar'
+}, {
+  code: 'RUB',
+  digits: 2,
+  minCharge: 0,
+  name: 'Russian Ruble'
+}, {
+  code: 'RWF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Rwanda Franc'
+}, {
+  code: 'SAR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Saudi Riyal'
+}, {
+  code: 'SBD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Solomon Islands Dollar'
+}, {
+  code: 'SCR',
+  digits: 2,
+  minCharge: 0,
+  name: 'Seychellois Rupee'
+}, {
+  code: 'SEK',
+  digits: 2,
+  minCharge: 300,
+  name: 'Swedish Krona'
+}, {
+  code: 'SGD',
+  digits: 2,
+  minCharge: 50,
+  name: 'Singapore Dollar'
+}, {
+  code: 'SHP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Saint Helenian Pound'
+}, {
+  code: 'SLL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Sierra Leonean Leone'
+}, {
+  code: 'SOS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Somali Shilling'
+}, {
+  code: 'SRD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Suriname Dollar'
+}, {
+  code: 'STD',
+  digits: 2,
+  minCharge: 0,
+  name: 'São Tomé and Príncipe Dobra'
+}, {
+  code: 'SZL',
+  digits: 2,
+  minCharge: 0,
+  name: 'Swazi Lilangeni'
+}, {
+  code: 'THB',
+  digits: 2,
+  minCharge: 0,
+  name: 'Thai Baht'
+}, {
+  code: 'TJS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Tajikistan Somoni'
+}, {
+  code: 'TOP',
+  digits: 2,
+  minCharge: 0,
+  name: 'Tongan Paʻanga'
+}, {
+  code: 'TRY',
+  digits: 2,
+  minCharge: 0,
+  name: 'Turkey Lira'
+}, {
+  code: 'TTD',
+  digits: 2,
+  minCharge: 0,
+  name: 'Trinidad and Tobago Dollar'
+}, {
+  code: 'TWD',
+  digits: 2,
+  minCharge: 0,
+  name: 'New Taiwan Dollar'
+}, {
+  code: 'TZS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Tanzanian Shilling'
+}, {
+  code: 'UAH',
+  digits: 2,
+  minCharge: 0,
+  name: 'Ukrainian Hryvnia'
+}, {
+  code: 'UGX',
+  digits: 0,
+  minCharge: 0,
+  name: 'Ugandan Shilling'
+}, // See above.
+{
+  code: 'USD',
+  digits: 2,
+  minCharge: 50,
+  name: 'United States Dollar'
+}, {
+  code: 'UYU',
+  digits: 2,
+  minCharge: 0,
+  name: 'Uruguayan Peso'
+}, {
+  code: 'UZS',
+  digits: 2,
+  minCharge: 0,
+  name: 'Uzbekistani Som'
+}, {
+  code: 'VND',
+  digits: 0,
+  minCharge: 0,
+  name: 'Vietnamese Đồng'
+}, {
+  code: 'VUV',
+  digits: 0,
+  minCharge: 0,
+  name: 'Vanuatu Vatu'
+}, {
+  code: 'WST',
+  digits: 2,
+  minCharge: 0,
+  name: 'Samoan Tala'
+}, {
+  code: 'XAF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Central African Cfa Franc'
+}, {
+  code: 'XCD',
+  digits: 2,
+  minCharge: 0,
+  name: 'East Caribbean Dollar'
+}, {
+  code: 'XOF',
+  digits: 0,
+  minCharge: 0,
+  name: 'West African Cfa Franc'
+}, {
+  code: 'XPF',
+  digits: 0,
+  minCharge: 0,
+  name: 'Cfp Franc'
+}, {
+  code: 'YER',
+  digits: 2,
+  minCharge: 0,
+  name: 'Yemeni Rial'
+}, {
+  code: 'ZAR',
+  digits: 2,
+  minCharge: 0,
+  name: 'South African Rand'
+}, {
+  code: 'ZMW',
+  digits: 2,
+  minCharge: 0,
+  name: 'Zambia Kwacha'
+}];
+exports.stripeCurrencyList = stripeCurrencyList;
+
+/***/ }),
+/* 715 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -62483,15 +54265,15 @@ var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
 var _graphqlTag = _interopRequireDefault(__webpack_require__(60));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
-var _constants2 = __webpack_require__(724);
+var _constants2 = __webpack_require__(725);
 
 var _constants3 = __webpack_require__(145);
 
-var _constants4 = __webpack_require__(731);
+var _constants4 = __webpack_require__(732);
 
-var _utils = __webpack_require__(732);
+var _utils = __webpack_require__(733);
 
 var _get = _interopRequireDefault(__webpack_require__(70));
 
@@ -62503,7 +54285,7 @@ var _commerceUtils = __webpack_require__(35);
 
 var _RenderingUtils = __webpack_require__(347);
 
-var _CurrencyUtils = __webpack_require__(359);
+var _CurrencyUtils = __webpack_require__(358);
 
 var _debug = _interopRequireDefault(__webpack_require__(76));
 
@@ -62513,9 +54295,9 @@ var _find = _interopRequireDefault(__webpack_require__(159));
 
 var _rendering = __webpack_require__(146);
 
-var _addToCartStore = __webpack_require__(797);
+var _addToCartStore = __webpack_require__(798);
 
-var _PillGroup = __webpack_require__(798);
+var _PillGroup = __webpack_require__(799);
 /* globals document, window, Element, HTMLElement, CustomEvent, HTMLFormElement, HTMLInputElement, HTMLSelectElement, HTMLAnchorElement*/
 // $FlowFixMe ApolloClient is an untyped any
 
@@ -63628,7 +55410,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 715 */
+/* 716 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63644,15 +55426,15 @@ exports.parseConstValue = parseConstValue;
 exports.parseTypeReference = parseTypeReference;
 exports.parseNamedType = parseNamedType;
 
-var _source = __webpack_require__(716);
+var _source = __webpack_require__(717);
 
 var _error = __webpack_require__(342);
 
-var _lexer = __webpack_require__(720);
+var _lexer = __webpack_require__(721);
 
-var _kinds = __webpack_require__(722);
+var _kinds = __webpack_require__(723);
 
-var _directiveLocation = __webpack_require__(723);
+var _directiveLocation = __webpack_require__(724);
 
 /**
  * Given a GraphQL source, parses it into a Document.
@@ -64987,7 +56769,7 @@ function many(lexer, openKind, parseFn, closeKind) {
 }
 
 /***/ }),
-/* 716 */
+/* 717 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65032,7 +56814,7 @@ var Source = exports.Source = function Source(body, name, locationOffset) {
 };
 
 /***/ }),
-/* 717 */
+/* 718 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65063,7 +56845,7 @@ function syntaxError(source, position, description) {
 }
 
 /***/ }),
-/* 718 */
+/* 719 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65100,7 +56882,7 @@ function locatedError(originalError, nodes, path) {
    */
 
 /***/ }),
-/* 719 */
+/* 720 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65141,7 +56923,7 @@ function formatError(error) {
 }
 
 /***/ }),
-/* 720 */
+/* 721 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65156,7 +56938,7 @@ exports.getTokenDesc = getTokenDesc;
 
 var _error = __webpack_require__(342);
 
-var _blockStringValue = __webpack_require__(721);
+var _blockStringValue = __webpack_require__(722);
 
 var _blockStringValue2 = _interopRequireDefault(_blockStringValue);
 
@@ -65747,7 +57529,7 @@ function readName(source, start, line, col, prev) {
 }
 
 /***/ }),
-/* 721 */
+/* 722 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65820,7 +57602,7 @@ function isBlank(str) {
 }
 
 /***/ }),
-/* 722 */
+/* 723 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65910,7 +57692,7 @@ var Kind = exports.Kind = Object.freeze({
  */
 
 /***/ }),
-/* 723 */
+/* 724 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -65959,7 +57741,7 @@ var DirectiveLocation = exports.DirectiveLocation = Object.freeze({
  */
 
 /***/ }),
-/* 724 */
+/* 725 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66001,7 +57783,7 @@ exports.CONFIRM_UNSAVED_CHANGES_COPY = exports.EMAIL_TEMPLATE_TYPES = exports.ME
 
 var _utils = __webpack_require__(345);
 
-var _errorStates = __webpack_require__(729);
+var _errorStates = __webpack_require__(730);
 
 Object.keys(_errorStates).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -66014,7 +57796,7 @@ Object.keys(_errorStates).forEach(function (key) {
   });
 });
 
-var _types = __webpack_require__(730);
+var _types = __webpack_require__(731);
 
 Object.keys(_types).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -66212,7 +57994,7 @@ var CONFIRM_UNSAVED_CHANGES_COPY = {
 exports.CONFIRM_UNSAVED_CHANGES_COPY = CONFIRM_UNSAVED_CHANGES_COPY;
 
 /***/ }),
-/* 725 */
+/* 726 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66259,7 +58041,7 @@ var getConst = function getConst(con // $FlowFixMe
 exports.getConst = getConst;
 
 /***/ }),
-/* 726 */
+/* 727 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66305,7 +58087,7 @@ var runIdentity = function runIdentity(object // $FlowFixMe
 exports.runIdentity = runIdentity;
 
 /***/ }),
-/* 727 */
+/* 728 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66474,7 +58256,7 @@ var of = Some;
 exports.of = of;
 
 /***/ }),
-/* 728 */
+/* 729 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66628,7 +58410,7 @@ var of = Ok;
 exports.of = of;
 
 /***/ }),
-/* 729 */
+/* 730 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66827,14 +58609,14 @@ var resetPasswordErrorStates = (0, _defineProperty2["default"])({}, RESET_PASSWO
 exports.resetPasswordErrorStates = resetPasswordErrorStates;
 
 /***/ }),
-/* 730 */
+/* 731 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 /***/ }),
-/* 731 */
+/* 732 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66866,7 +58648,7 @@ var getColumnNumberClassName = function getColumnNumberClassName(cols) {
 exports.getColumnNumberClassName = getColumnNumberClassName;
 
 /***/ }),
-/* 732 */
+/* 733 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66924,7 +58706,7 @@ var createJsonFromBoundMedia = function createJsonFromBoundMedia(binding, nodeJs
 exports.createJsonFromBoundMedia = createJsonFromBoundMedia;
 
 /***/ }),
-/* 733 */
+/* 734 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66938,7 +58720,7 @@ exports.applyConditionToNode = exports.removeWDynBindEmptyClass = void 0;
 
 var _constants = __webpack_require__(145);
 
-var _ConditionUtils = __webpack_require__(734);
+var _ConditionUtils = __webpack_require__(735);
 
 var removeClass = function removeClass(node, className) {
   if (node.classList.contains(className)) {
@@ -67019,7 +58801,7 @@ function walkDOM(el, fn) {
 }
 
 /***/ }),
-/* 734 */
+/* 735 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67029,7 +58811,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ConditionUtils = __webpack_require__(735);
+var _ConditionUtils = __webpack_require__(736);
 
 Object.keys(_ConditionUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -67042,7 +58824,7 @@ Object.keys(_ConditionUtils).forEach(function (key) {
 });
 
 /***/ }),
-/* 735 */
+/* 736 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67065,19 +58847,19 @@ var _objectWithoutPropertiesLoose2 = _interopRequireDefault(__webpack_require__(
 
 var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
-var _DynamoConditionUtils = __webpack_require__(737);
+var _DynamoConditionUtils = __webpack_require__(738);
 
 var _momentTimezone = _interopRequireDefault(__webpack_require__(219));
 
-var _SlugUtils = __webpack_require__(746);
+var _SlugUtils = __webpack_require__(747);
 
-var _memo = __webpack_require__(753);
+var _memo = __webpack_require__(754);
 
 var _ParamFieldPathUtils = __webpack_require__(356);
 
 var _constants = __webpack_require__(145);
 
-var _FilterUtils = __webpack_require__(358); // Avoid adding unnecessary code or imports to this file,
+var _FilterUtils = __webpack_require__(357); // Avoid adding unnecessary code or imports to this file,
 // because it will directly affect the webflow.js bundle size.
 // inlined from `@packages/systems/core/utils/RecordUtils` to keep bundle size minimal
 
@@ -67311,7 +59093,7 @@ var castFieldValue = function castFieldValue(fieldValue, fieldType, timezone) {
 };
 
 /***/ }),
-/* 736 */
+/* 737 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -67343,7 +59125,7 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 737 */
+/* 738 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67365,20 +59147,20 @@ exports.castItemValue = castItemValue;
 exports.castConditionValue = castConditionValue;
 exports.parseDate = parseDate;
 exports.getItemFieldValue = getItemFieldValue;
+exports.EXAMPLE_IMG_URL = void 0;
 
 var _momentTimezone = _interopRequireDefault(__webpack_require__(219));
 
 var _ParamFieldPathUtils = __webpack_require__(356);
 
-var _SharedConfig = _interopRequireDefault(__webpack_require__(357));
-
-var _FilterUtils = __webpack_require__(358);
+var _FilterUtils = __webpack_require__(357);
 /**
  * Contains static utilities to deal with Dynamo conditional visibility for DOM nodes.
  */
 
 
-var EXAMPLE_IMG_URL = _SharedConfig["default"].paths.EXAMPLE_IMG_URL;
+var EXAMPLE_IMG_URL = 'https://d3e54v103j8qbb.cloudfront.net/img/image-placeholder.svg';
+exports.EXAMPLE_IMG_URL = EXAMPLE_IMG_URL;
 var OPERATOR_FNS = {
   eq: function eq(a, b) {
     return a == b; // eslint-disable-line eqeqeq
@@ -67935,7 +59717,7 @@ function _getLegacyItemType(name, value) {
 }
 
 /***/ }),
-/* 738 */
+/* 739 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//! moment-timezone.js
@@ -68638,7 +60420,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 739 */
+/* 740 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
@@ -68674,16 +60456,16 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 739;
+webpackContext.id = 740;
 
 /***/ }),
-/* 740 */
+/* 741 */
 /***/ (function(module) {
 
 module.exports = JSON.parse("{\"version\":\"2020a\",\"zones\":[\"Africa/Abidjan|LMT GMT|g.8 0|01|-2ldXH.Q|48e5\",\"Africa/Accra|LMT GMT +0020|.Q 0 -k|012121212121212121212121212121212121212121212121|-26BbX.8 6tzX.8 MnE 1BAk MnE 1BAk MnE 1BAk MnE 1C0k MnE 1BAk MnE 1BAk MnE 1BAk MnE 1C0k MnE 1BAk MnE 1BAk MnE 1BAk MnE 1C0k MnE 1BAk MnE 1BAk MnE 1BAk MnE 1C0k MnE 1BAk MnE 1BAk MnE 1BAk MnE 1C0k MnE 1BAk MnE 1BAk MnE|41e5\",\"Africa/Nairobi|LMT EAT +0230 +0245|-2r.g -30 -2u -2J|01231|-1F3Cr.g 3Dzr.g okMu MFXJ|47e5\",\"Africa/Algiers|PMT WET WEST CET CEST|-9.l 0 -10 -10 -20|0121212121212121343431312123431213|-2nco9.l cNb9.l HA0 19A0 1iM0 11c0 1oo0 Wo0 1rc0 QM0 1EM0 UM0 DA0 Imo0 rd0 De0 9Xz0 1fb0 1ap0 16K0 2yo0 mEp0 hwL0 jxA0 11A0 dDd0 17b0 11B0 1cN0 2Dy0 1cN0 1fB0 1cL0|26e5\",\"Africa/Lagos|LMT WAT|-d.A -10|01|-22y0d.A|17e6\",\"Africa/Bissau|LMT -01 GMT|12.k 10 0|012|-2ldX0 2xoo0|39e4\",\"Africa/Maputo|LMT CAT|-2a.k -20|01|-2GJea.k|26e5\",\"Africa/Cairo|EET EEST|-20 -30|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-1bIO0 vb0 1ip0 11z0 1iN0 1nz0 12p0 1pz0 10N0 1pz0 16p0 1jz0 s3d0 Vz0 1oN0 11b0 1oO0 10N0 1pz0 10N0 1pb0 10N0 1pb0 10N0 1pb0 10N0 1pz0 10N0 1pb0 10N0 1pb0 11d0 1oL0 11d0 1pb0 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 1oL0 11d0 1WL0 rd0 1Rz0 wp0 1pb0 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 1qL0 Xd0 1oL0 11d0 1oL0 11d0 1pb0 11d0 1oL0 11d0 1oL0 11d0 1ny0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 WL0 1qN0 Rb0 1wp0 On0 1zd0 Lz0 1EN0 Fb0 c10 8n0 8Nd0 gL0 e10 mn0|15e6\",\"Africa/Casablanca|LMT +00 +01|u.k 0 -10|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212|-2gMnt.E 130Lt.E rb0 Dd0 dVb0 b6p0 TX0 EoB0 LL0 gnd0 rz0 43d0 AL0 1Nd0 XX0 1Cp0 pz0 dEp0 4mn0 SyN0 AL0 1Nd0 wn0 1FB0 Db0 1zd0 Lz0 1Nf0 wM0 co0 go0 1o00 s00 dA0 vc0 11A0 A00 e00 y00 11A0 uM0 e00 Dc0 11A0 s00 e00 IM0 WM0 mo0 gM0 LA0 WM0 jA0 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 gM0 2600 e00 2600 gM0|32e5\",\"Africa/Ceuta|WET WEST CET CEST|0 -10 -10 -20|010101010101010101010232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-25KN0 11z0 drd0 18p0 3HX0 17d0 1fz0 1a10 1io0 1a00 1y7o0 LL0 gnd0 rz0 43d0 AL0 1Nd0 XX0 1Cp0 pz0 dEp0 4VB0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|85e3\",\"Africa/El_Aaiun|LMT -01 +00 +01|Q.M 10 0 -10|012323232323232323232323232323232323232323232323232323232323232323232323232323232323|-1rDz7.c 1GVA7.c 6L0 AL0 1Nd0 XX0 1Cp0 pz0 1cBB0 AL0 1Nd0 wn0 1FB0 Db0 1zd0 Lz0 1Nf0 wM0 co0 go0 1o00 s00 dA0 vc0 11A0 A00 e00 y00 11A0 uM0 e00 Dc0 11A0 s00 e00 IM0 WM0 mo0 gM0 LA0 WM0 jA0 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 e00 28M0 e00 2600 gM0 2600 e00 2600 gM0 2600 gM0 2600 e00 2600 gM0|20e4\",\"Africa/Johannesburg|SAST SAST SAST|-1u -20 -30|012121|-2GJdu 1Ajdu 1cL0 1cN0 1cL0|84e5\",\"Africa/Juba|LMT CAT CAST EAT|-26.s -20 -30 -30|01212121212121212121212121212121213|-1yW26.s 1zK06.s 16L0 1iN0 17b0 1jd0 17b0 1ip0 17z0 1i10 17X0 1hB0 18n0 1hd0 19b0 1gp0 19z0 1iN0 17b0 1ip0 17z0 1i10 18n0 1hd0 18L0 1gN0 19b0 1gp0 19z0 1iN0 17z0 1i10 17X0 yGd0|\",\"Africa/Khartoum|LMT CAT CAST EAT|-2a.8 -20 -30 -30|012121212121212121212121212121212131|-1yW2a.8 1zK0a.8 16L0 1iN0 17b0 1jd0 17b0 1ip0 17z0 1i10 17X0 1hB0 18n0 1hd0 19b0 1gp0 19z0 1iN0 17b0 1ip0 17z0 1i10 18n0 1hd0 18L0 1gN0 19b0 1gp0 19z0 1iN0 17z0 1i10 17X0 yGd0 HjL0|51e5\",\"Africa/Monrovia|MMT MMT GMT|H.8 I.u 0|012|-23Lzg.Q 28G01.m|11e5\",\"Africa/Ndjamena|LMT WAT WAST|-10.c -10 -20|0121|-2le10.c 2J3c0.c Wn0|13e5\",\"Africa/Sao_Tome|LMT GMT WAT|A.J 0 -10|0121|-2le00 4i6N0 2q00|\",\"Africa/Tripoli|LMT CET CEST EET|-Q.I -10 -20 -20|012121213121212121212121213123123|-21JcQ.I 1hnBQ.I vx0 4iP0 xx0 4eN0 Bb0 7ip0 U0n0 A10 1db0 1cN0 1db0 1dd0 1db0 1eN0 1bb0 1e10 1cL0 1c10 1db0 1dd0 1db0 1cN0 1db0 1q10 fAn0 1ep0 1db0 AKq0 TA0 1o00|11e5\",\"Africa/Tunis|PMT CET CEST|-9.l -10 -20|0121212121212121212121212121212121|-2nco9.l 18pa9.l 1qM0 DA0 3Tc0 11B0 1ze0 WM0 7z0 3d0 14L0 1cN0 1f90 1ar0 16J0 1gXB0 WM0 1rA0 11c0 nwo0 Ko0 1cM0 1cM0 1rA0 10M0 zuM0 10N0 1aN0 1qM0 WM0 1qM0 11A0 1o00|20e5\",\"Africa/Windhoek|+0130 SAST SAST CAT WAT|-1u -20 -30 -20 -10|01213434343434343434343434343434343434343434343434343|-2GJdu 1Ajdu 1cL0 1SqL0 9Io0 16P0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0|32e4\",\"America/Adak|NST NWT NPT BST BDT AHST HST HDT|b0 a0 a0 b0 a0 a0 a0 90|012034343434343434343434343434343456767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676|-17SX0 8wW0 iB0 Qlb0 52O0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 cm0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|326\",\"America/Anchorage|AST AWT APT AHST AHDT YST AKST AKDT|a0 90 90 a0 90 90 90 80|012034343434343434343434343434343456767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676|-17T00 8wX0 iA0 Qlb0 52O0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 cm0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|30e4\",\"America/Port_of_Spain|LMT AST|46.4 40|01|-2kNvR.U|43e3\",\"America/Araguaina|LMT -03 -02|3c.M 30 20|0121212121212121212121212121212121212121212121212121|-2glwL.c HdKL.c 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 dMN0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 ny10 Lz0|14e4\",\"America/Argentina/Buenos_Aires|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232323232323232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wp0 Rb0 1wp0 TX0 A4p0 uL0 1qN0 WL0|\",\"America/Argentina/Catamarca|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232323132321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wq0 Ra0 1wp0 TX0 rlB0 7B0 8zb0 uL0|\",\"America/Argentina/Cordoba|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232323132323232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wq0 Ra0 1wp0 TX0 A4p0 uL0 1qN0 WL0|\",\"America/Argentina/Jujuy|CMT -04 -03 -02|4g.M 40 30 20|012121212121212121212121212121212121212121232323121323232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1ze0 TX0 1ld0 WK0 1wp0 TX0 A4p0 uL0|\",\"America/Argentina/La_Rioja|CMT -04 -03 -02|4g.M 40 30 20|012121212121212121212121212121212121212121232323231232321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Qn0 qO0 16n0 Rb0 1wp0 TX0 rlB0 7B0 8zb0 uL0|\",\"America/Argentina/Mendoza|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232312121321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1u20 SL0 1vd0 Tb0 1wp0 TW0 ri10 Op0 7TX0 uL0|\",\"America/Argentina/Rio_Gallegos|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232323232321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wp0 Rb0 1wp0 TX0 rlB0 7B0 8zb0 uL0|\",\"America/Argentina/Salta|CMT -04 -03 -02|4g.M 40 30 20|012121212121212121212121212121212121212121232323231323232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wq0 Ra0 1wp0 TX0 A4p0 uL0|\",\"America/Argentina/San_Juan|CMT -04 -03 -02|4g.M 40 30 20|012121212121212121212121212121212121212121232323231232321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Qn0 qO0 16n0 Rb0 1wp0 TX0 rld0 m10 8lb0 uL0|\",\"America/Argentina/San_Luis|CMT -04 -03 -02|4g.M 40 30 20|012121212121212121212121212121212121212121232323121212321212|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 XX0 1q20 SL0 AN0 vDb0 m10 8lb0 8L0 jd0 1qN0 WL0 1qN0|\",\"America/Argentina/Tucuman|CMT -04 -03 -02|4g.M 40 30 20|0121212121212121212121212121212121212121212323232313232123232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wq0 Ra0 1wp0 TX0 rlB0 4N0 8BX0 uL0 1qN0 WL0|\",\"America/Argentina/Ushuaia|CMT -04 -03 -02|4g.M 40 30 20|01212121212121212121212121212121212121212123232323232321232|-20UHH.c pKnH.c Mn0 1iN0 Tb0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 1C10 LX0 1C10 LX0 1C10 LX0 1C10 Mn0 MN0 2jz0 MN0 4lX0 u10 5Lb0 1pB0 Fnz0 u10 uL0 1vd0 SL0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 zvd0 Bz0 1tB0 TX0 1wp0 Rb0 1wp0 Rb0 1wp0 TX0 rkN0 8p0 8zb0 uL0|\",\"America/Curacao|LMT -0430 AST|4z.L 4u 40|012|-2kV7o.d 28KLS.d|15e4\",\"America/Asuncion|AMT -04 -03|3O.E 40 30|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212|-1x589.k 1DKM9.k 3CL0 3Dd0 10L0 1pB0 10n0 1pB0 10n0 1pB0 1cL0 1dd0 1db0 1dd0 1cL0 1dd0 1cL0 1dd0 1cL0 1dd0 1db0 1dd0 1cL0 1dd0 1cL0 1dd0 1cL0 1dd0 1db0 1dd0 1cL0 1lB0 14n0 1dd0 1cL0 1fd0 WL0 1rd0 1aL0 1dB0 Xz0 1qp0 Xb0 1qN0 10L0 1rB0 TX0 1tB0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 1cL0 WN0 1qL0 11B0 1nX0 1ip0 WL0 1qN0 WL0 1qN0 WL0 1tB0 TX0 1tB0 TX0 1tB0 19X0 1a10 1fz0 1a10 1fz0 1cN0 17b0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1fB0 19X0 1fB0 19X0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1fB0 19X0 1fB0 19X0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1ip0 17b0 1ip0 17b0 1ip0|28e5\",\"America/Atikokan|CST CDT CWT CPT EST|60 50 50 50 50|0101234|-25TQ0 1in0 Rnb0 3je0 8x30 iw0|28e2\",\"America/Bahia_Banderas|LMT MST CST PST MDT CDT|71 70 60 80 60 50|0121212131414141414141414141414141414152525252525252525252525252525252525252525252525252525252|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 otX0 gmN0 P2N0 13Vd0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nW0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|84e3\",\"America/Bahia|LMT -03 -02|2y.4 30 20|01212121212121212121212121212121212121212121212121212121212121|-2glxp.U HdLp.U 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 1EN0 Lz0 1C10 IL0 1HB0 Db0 1HB0 On0 1zd0 On0 1zd0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 l5B0 Rb0|27e5\",\"America/Barbados|LMT BMT AST ADT|3W.t 3W.t 40 30|01232323232|-1Q0I1.v jsM0 1ODC1.v IL0 1ip0 17b0 1ip0 17b0 1ld0 13b0|28e4\",\"America/Belem|LMT -03 -02|3d.U 30 20|012121212121212121212121212121|-2glwK.4 HdKK.4 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0|20e5\",\"America/Belize|LMT CST -0530 CDT|5Q.M 60 5u 50|01212121212121212121212121212121212121212121212121213131|-2kBu7.c fPA7.c Onu 1zcu Rbu 1wou Rbu 1wou Rbu 1zcu Onu 1zcu Onu 1zcu Rbu 1wou Rbu 1wou Rbu 1wou Rbu 1zcu Onu 1zcu Onu 1zcu Rbu 1wou Rbu 1wou Rbu 1zcu Onu 1zcu Onu 1zcu Onu 1zcu Rbu 1wou Rbu 1wou Rbu 1zcu Onu 1zcu Onu 1zcu Rbu 1wou Rbu 1f0Mu qn0 lxB0 mn0|57e3\",\"America/Blanc-Sablon|AST ADT AWT APT|40 30 30 30|010230|-25TS0 1in0 UGp0 8x50 iu0|11e2\",\"America/Boa_Vista|LMT -04 -03|42.E 40 30|0121212121212121212121212121212121|-2glvV.k HdKV.k 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 smp0 WL0 1tB0 2L0|62e2\",\"America/Bogota|BMT -05 -04|4U.g 50 40|0121|-2eb73.I 38yo3.I 2en0|90e5\",\"America/Boise|PST PDT MST MWT MPT MDT|80 70 70 60 60 60|0101023425252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252|-261q0 1nX0 11B0 1nX0 8C10 JCL0 8x20 ix0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 Dd0 1Kn0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|21e4\",\"America/Cambridge_Bay|-00 MST MWT MPT MDDT MDT CST CDT EST|0 70 60 60 50 60 60 50 50|0123141515151515151515151515151515151515151515678651515151515151515151515151515151515151515151515151515151515151515151515151|-21Jc0 RO90 8x20 ix0 LCL0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11A0 1nX0 2K0 WQ0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|15e2\",\"America/Campo_Grande|LMT -04 -03|3C.s 40 30|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2glwl.w HdLl.w 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 1EN0 Lz0 1C10 IL0 1HB0 Db0 1HB0 On0 1zd0 On0 1zd0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 1C10 Lz0 1Ip0 HX0 1zd0 On0 1HB0 IL0 1wp0 On0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 Rb0 1zd0 Lz0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 On0 1zd0 On0 1HB0 FX0|77e4\",\"America/Cancun|LMT CST EST EDT CDT|5L.4 60 50 40 50|0123232341414141414141414141414141414141412|-1UQG0 2q2o0 yLB0 1lb0 14p0 1lb0 14p0 Lz0 xB0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 Dd0|63e4\",\"America/Caracas|CMT -0430 -04|4r.E 4u 40|01212|-2kV7w.k 28KM2.k 1IwOu kqo0|29e5\",\"America/Cayenne|LMT -04 -03|3t.k 40 30|012|-2mrwu.E 2gWou.E|58e3\",\"America/Panama|CMT EST|5j.A 50|01|-2uduE.o|15e5\",\"America/Chicago|CST CDT EST CWT CPT|60 50 50 50 50|01010101010101010101010101010101010102010101010103401010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261s0 1nX0 11B0 1nX0 1wp0 TX0 WN0 1qL0 1cN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 11B0 1Hz0 14p0 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 RB0 8x30 iw0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|92e5\",\"America/Chihuahua|LMT MST CST CDT MDT|74.k 70 60 50 60|0121212323241414141414141414141414141414141414141414141414141414141414141414141414141414141|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 2zQN0 1lb0 14p0 1lb0 14q0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|81e4\",\"America/Costa_Rica|SJMT CST CDT|5A.d 60 50|0121212121|-1Xd6n.L 2lu0n.L Db0 1Kp0 Db0 pRB0 15b0 1kp0 mL0|12e5\",\"America/Creston|MST PST|70 80|010|-29DR0 43B0|53e2\",\"America/Cuiaba|LMT -04 -03|3I.k 40 30|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2glwf.E HdLf.E 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 1EN0 Lz0 1C10 IL0 1HB0 Db0 1HB0 On0 1zd0 On0 1zd0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 4a10 HX0 1zd0 On0 1HB0 IL0 1wp0 On0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 Rb0 1zd0 Lz0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 On0 1zd0 On0 1HB0 FX0|54e4\",\"America/Danmarkshavn|LMT -03 -02 GMT|1e.E 30 20 0|01212121212121212121212121212121213|-2a5WJ.k 2z5fJ.k 19U0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 DC0|8\",\"America/Dawson_Creek|PST PDT PWT PPT MST|80 70 70 70 70|0102301010101010101010101010101010101010101010101010101014|-25TO0 1in0 UGp0 8x10 iy0 3NB0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 ML0|12e3\",\"America/Dawson|YST YDT YWT YPT YDDT PST PDT MST|90 80 80 80 70 80 70 70|01010230405656565656565656565656565656565656565656565656565656565656565656565656565656565657|-25TN0 1in0 1o10 13V0 Ser0 8x00 iz0 LCL0 1fA0 jrA0 fNd0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0|13e2\",\"America/Denver|MST MDT MWT MPT|70 60 60 60|01010101023010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261r0 1nX0 11B0 1nX0 11B0 1qL0 WN0 mn0 Ord0 8x20 ix0 LCN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|26e5\",\"America/Detroit|LMT CST EST EWT EPT EDT|5w.b 60 50 40 40 40|0123425252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252|-2Cgir.N peqr.N 156L0 8x40 iv0 6fd0 11z0 JxX1 SMX 1cN0 1cL0 aW10 1cL0 s10 1Vz0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|37e5\",\"America/Edmonton|LMT MST MDT MWT MPT|7x.Q 70 60 60 60|0121212121212134121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2yd4q.8 shdq.8 1in0 17d0 hz0 2dB0 1fz0 1a10 11z0 1qN0 WL0 1qN0 11z0 IGN0 8x20 ix0 3NB0 11z0 XQp0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|10e5\",\"America/Eirunepe|LMT -05 -04|4D.s 50 40|0121212121212121212121212121212121|-2glvk.w HdLk.w 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 dPB0 On0 yTd0 d5X0|31e3\",\"America/El_Salvador|LMT CST CDT|5U.M 60 50|012121|-1XiG3.c 2Fvc3.c WL0 1qN0 WL0|11e5\",\"America/Tijuana|LMT MST PST PDT PWT PPT|7M.4 70 80 70 70 70|012123245232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-1UQE0 4PX0 8mM0 8lc0 SN0 1cL0 pHB0 83r0 zI0 5O10 1Rz0 cOO0 11A0 1o00 11A0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 BUp0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 U10 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|20e5\",\"America/Fort_Nelson|PST PDT PWT PPT MST|80 70 70 70 70|01023010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010104|-25TO0 1in0 UGp0 8x10 iy0 3NB0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0|39e2\",\"America/Fort_Wayne|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|010101023010101010101010101040454545454545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 QI10 Db0 RB0 8x30 iw0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 5Tz0 1o10 qLb0 1cL0 1cN0 1cL0 1qhd0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Fortaleza|LMT -03 -02|2y 30 20|0121212121212121212121212121212121212121|-2glxq HdLq 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 nsp0 WL0 1tB0 5z0 2mN0 On0|34e5\",\"America/Glace_Bay|LMT AST ADT AWT APT|3X.M 40 30 30 30|012134121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2IsI0.c CwO0.c 1in0 UGp0 8x50 iu0 iq10 11z0 Jg10 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|19e3\",\"America/Godthab|LMT -03 -02|3q.U 30 20|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2a5Ux.4 2z5dx.4 19U0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|17e3\",\"America/Goose_Bay|NST NDT NST NDT NWT NPT AST ADT ADDT|3u.Q 2u.Q 3u 2u 2u 2u 40 30 20|010232323232323245232323232323232323232323232323232323232326767676767676767676767676767676767676767676768676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676|-25TSt.8 1in0 DXb0 2HbX.8 WL0 1qN0 WL0 1qN0 WL0 1tB0 TX0 1tB0 WL0 1qN0 WL0 1qN0 7UHu itu 1tB0 WL0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1tB0 WL0 1ld0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 S10 g0u 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14n1 1lb0 14p0 1nW0 11C0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zcX Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|76e2\",\"America/Grand_Turk|KMT EST EDT AST|57.a 50 40 40|01212121212121212121212121212121212121212121212121212121212121212121212121232121212121212121212121212121212121212121|-2l1uQ.O 2HHBQ.O 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 5Ip0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|37e2\",\"America/Guatemala|LMT CST CDT|62.4 60 50|0121212121|-24KhV.U 2efXV.U An0 mtd0 Nz0 ifB0 17b0 zDB0 11z0|13e5\",\"America/Guayaquil|QMT -05 -04|5e 50 40|0121|-1yVSK 2uILK rz0|27e5\",\"America/Guyana|LMT -0345 -03 -04|3Q.E 3J 30 40|0123|-2dvU7.k 2r6LQ.k Bxbf|80e4\",\"America/Halifax|LMT AST ADT AWT APT|4e.o 40 30 30 30|0121212121212121212121212121212121212121212121212134121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2IsHJ.A xzzJ.A 1db0 3I30 1in0 3HX0 IL0 1E10 ML0 1yN0 Pb0 1Bd0 Mn0 1Bd0 Rz0 1w10 Xb0 1w10 LX0 1w10 Xb0 1w10 Lz0 1C10 Jz0 1E10 OL0 1yN0 Un0 1qp0 Xb0 1qp0 11X0 1w10 Lz0 1HB0 LX0 1C10 FX0 1w10 Xb0 1qp0 Xb0 1BB0 LX0 1td0 Xb0 1qp0 Xb0 Rf0 8x50 iu0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 3Qp0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 3Qp0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 6i10 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|39e4\",\"America/Havana|HMT CST CDT|5t.A 50 40|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1Meuu.o 72zu.o ML0 sld0 An0 1Nd0 Db0 1Nd0 An0 6Ep0 An0 1Nd0 An0 JDd0 Mn0 1Ap0 On0 1fd0 11X0 1qN0 WL0 1wp0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 14n0 1ld0 14L0 1kN0 15b0 1kp0 1cL0 1cN0 1fz0 1a10 1fz0 1fB0 11z0 14p0 1nX0 11B0 1nX0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 14n0 1ld0 14n0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 1a10 1in0 1a10 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 17c0 1o00 11A0 1qM0 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 11A0 6i00 Rc0 1wo0 U00 1tA0 Rc0 1wo0 U00 1wo0 U00 1zc0 U00 1qM0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0|21e5\",\"America/Hermosillo|LMT MST CST PST MDT|7n.Q 70 60 80 60|0121212131414141|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 otX0 gmN0 P2N0 13Vd0 1lb0 14p0 1lb0 14p0 1lb0|64e4\",\"America/Indiana/Knox|CST CDT CWT CPT EST|60 50 50 50 50|0101023010101010101010101010101010101040101010101010101010101010101010101010101010101010141010101010101010101010101010101010101010101010101010101010101010|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 3NB0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 11z0 1o10 11z0 1o10 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 3Cn0 8wp0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 z8o0 1o00 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Marengo|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|0101023010101010101010104545454545414545454545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 dyN0 11z0 6fd0 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 jrz0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1VA0 LA0 1BX0 1e6p0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Petersburg|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|01010230101010101010101010104010101010101010101010141014545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 njX0 WN0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 3Fb0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 19co0 1o00 Rd0 1zb0 Oo0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Tell_City|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|01010230101010101010101010401054541010101010101010101010101010101010101010101010101010101010101010|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 njX0 WN0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 8wn0 1cN0 1cL0 1cN0 1cK0 1cN0 1cL0 1qhd0 1o00 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Vevay|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|010102304545454545454545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 kPB0 Awn0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1lnd0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Vincennes|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|01010230101010101010101010101010454541014545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 1o10 11z0 g0p0 11z0 1o10 11z0 1qL0 WN0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 WL0 1qN0 1cL0 1cN0 1cL0 1cN0 caL0 1cL0 1cN0 1cL0 1qhd0 1o00 Rd0 1zb0 Oo0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Indiana/Winamac|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|01010230101010101010101010101010101010454541054545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 jrz0 1cL0 1cN0 1cL0 1qhd0 1o00 Rd0 1za0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Inuvik|-00 PST PDDT MST MDT|0 80 60 70 60|0121343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343|-FnA0 tWU0 1fA0 wPe0 2pz0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|35e2\",\"America/Iqaluit|-00 EWT EPT EST EDDT EDT CST CDT|0 40 40 50 30 40 60 50|01234353535353535353535353535353535353535353567353535353535353535353535353535353535353535353535353535353535353535353535353|-16K00 7nX0 iv0 LCL0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11C0 1nX0 11A0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|67e2\",\"America/Jamaica|KMT EST EDT|57.a 50 40|0121212121212121212121|-2l1uQ.O 2uM1Q.O 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0|94e4\",\"America/Juneau|PST PWT PPT PDT YDT YST AKST AKDT|80 70 70 70 80 90 90 80|01203030303030303030303030403030356767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676|-17T20 8x10 iy0 Vo10 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cM0 1cM0 1cL0 1cN0 1fz0 1a10 1fz0 co0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|33e3\",\"America/Kentucky/Louisville|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|0101010102301010101010101010101010101454545454545414545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 3Fd0 Nb0 LPd0 11z0 RB0 8x30 iw0 1nX1 e0X 9vd0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 xz0 gso0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1VA0 LA0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Kentucky/Monticello|CST CDT CWT CPT EST EDT|60 50 50 50 50 40|0101023010101010101010101010101010101010101010101010101010101010101010101454545454545454545454545454545454545454545454545454545454545454545454545454|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 SWp0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11A0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/La_Paz|CMT BST -04|4w.A 3w.A 40|012|-1x37r.o 13b0|19e5\",\"America/Lima|LMT -05 -04|58.A 50 40|0121212121212121|-2tyGP.o 1bDzP.o zX0 1aN0 1cL0 1cN0 1cL0 1PrB0 zX0 1O10 zX0 6Gp0 zX0 98p0 zX0|11e6\",\"America/Los_Angeles|PST PDT PWT PPT|80 70 70 70|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261q0 1nX0 11B0 1nX0 SgN0 8x10 iy0 5Wp1 1VaX 3dA0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1a00 1fA0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|15e6\",\"America/Maceio|LMT -03 -02|2m.Q 30 20|012121212121212121212121212121212121212121|-2glxB.8 HdLB.8 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 dMN0 Lz0 8Q10 WL0 1tB0 5z0 2mN0 On0|93e4\",\"America/Managua|MMT CST EST CDT|5J.c 60 50 50|0121313121213131|-1quie.M 1yAMe.M 4mn0 9Up0 Dz0 1K10 Dz0 s3F0 1KH0 DB0 9In0 k8p0 19X0 1o30 11y0|22e5\",\"America/Manaus|LMT -04 -03|40.4 40 30|01212121212121212121212121212121|-2glvX.U HdKX.U 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 dPB0 On0|19e5\",\"America/Martinique|FFMT AST ADT|44.k 40 30|0121|-2mPTT.E 2LPbT.E 19X0|39e4\",\"America/Matamoros|LMT CST CDT|6E 60 50|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1UQG0 2FjC0 1nX0 i6p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 U10 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|45e4\",\"America/Mazatlan|LMT MST CST PST MDT|75.E 70 60 80 60|0121212131414141414141414141414141414141414141414141414141414141414141414141414141414141414141|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 otX0 gmN0 P2N0 13Vd0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|44e4\",\"America/Menominee|CST CDT CWT CPT EST|60 50 50 50 50|01010230101041010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 1o10 11z0 LCN0 1fz0 6410 9Jb0 1cM0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|85e2\",\"America/Merida|LMT CST EST CDT|5W.s 60 50 50|0121313131313131313131313131313131313131313131313131313131313131313131313131313131313131|-1UQG0 2q2o0 2hz0 wu30 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|11e5\",\"America/Metlakatla|PST PWT PPT PDT AKST AKDT|80 70 70 70 90 80|01203030303030303030303030303030304545450454545454545454545454545454545454545454|-17T20 8x10 iy0 Vo10 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1hU10 Rd0 1zb0 Op0 1zb0 Op0 1zb0 uM0 jB0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|14e2\",\"America/Mexico_City|LMT MST CST CDT CWT|6A.A 70 60 50 50|012121232324232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 gEn0 TX0 3xd0 Jb0 6zB0 SL0 e5d0 17b0 1Pff0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|20e6\",\"America/Miquelon|LMT AST -03 -02|3I.E 40 30 20|012323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-2mKkf.k 2LTAf.k gQ10 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|61e2\",\"America/Moncton|EST AST ADT AWT APT|50 40 30 30 30|012121212121212121212134121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2IsH0 CwN0 1in0 zAo0 An0 1Nd0 An0 1Nd0 An0 1Nd0 An0 1Nd0 An0 1Nd0 An0 1K10 Lz0 1zB0 NX0 1u10 Wn0 S20 8x50 iu0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 3Cp0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14n1 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 ReX 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|64e3\",\"America/Monterrey|LMT CST CDT|6F.g 60 50|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1UQG0 2FjC0 1nX0 i6p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0|41e5\",\"America/Montevideo|LMT MMT -04 -03 -0330 -0230 -02 -0130|3I.P 3I.P 40 30 3u 2u 20 1u|012343434343434343434343435353636353636375363636363636363636363636363636363636363636363|-2tRUf.9 sVc0 8jcf.9 1db0 1dcu 1cLu 1dcu 1cLu ircu 11zu 1o0u 11zu 1o0u 11zu 1o0u 11zu 1qMu WLu 1qMu WLu 1fAu 1cLu 1o0u 11zu NAu 3jXu zXu Dq0u 19Xu pcu jz0 cm10 19X0 6tB0 1fbu 3o0u jX0 4vB0 xz0 3Cp0 mmu 1a10 IMu Db0 4c10 uL0 1Nd0 An0 1SN0 uL0 mp0 28L0 iPB0 un0 1SN0 xz0 1zd0 Lz0 1zd0 Rb0 1zd0 On0 1wp0 Rb0 s8p0 1fB0 1ip0 11z0 1ld0 14n0 1o10 11z0 1o10 11z0 1o10 14n0 1ld0 14n0 1ld0 14n0 1o10 11z0 1o10 11z0 1o10 11z0|17e5\",\"America/Toronto|EST EDT EWT EPT|50 40 40 40|01010101010101010101010101010101010101010101012301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-25TR0 1in0 11Wu 1nzu 1fD0 WJ0 1wr0 Nb0 1Ap0 On0 1zd0 On0 1wp0 TX0 1tB0 TX0 1tB0 TX0 1tB0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 4kM0 8x40 iv0 1o10 11z0 1nX0 11z0 1o10 11z0 1o10 1qL0 11D0 1nX0 11B0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|65e5\",\"America/Nassau|LMT EST EDT|59.u 50 40|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2kNuO.u 26XdO.u 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|24e4\",\"America/New_York|EST EDT EWT EPT|50 40 40 40|01010101010101010101010101010101010101010101010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261t0 1nX0 11B0 1nX0 11B0 1qL0 1a10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 RB0 8x40 iv0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|21e6\",\"America/Nipigon|EST EDT EWT EPT|50 40 40 40|010123010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-25TR0 1in0 Rnb0 3je0 8x40 iv0 19yN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|16e2\",\"America/Nome|NST NWT NPT BST BDT YST AKST AKDT|b0 a0 a0 b0 a0 90 90 80|012034343434343434343434343434343456767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676767676|-17SX0 8wW0 iB0 Qlb0 52O0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 cl0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|38e2\",\"America/Noronha|LMT -02 -01|29.E 20 10|0121212121212121212121212121212121212121|-2glxO.k HdKO.k 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 nsp0 WL0 1tB0 2L0 2pB0 On0|30e2\",\"America/North_Dakota/Beulah|MST MDT MWT MPT CST CDT|70 60 60 60 60 50|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101014545454545454545454545454545454545454545454545454545454|-261r0 1nX0 11B0 1nX0 SgN0 8x20 ix0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Oo0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/North_Dakota/Center|MST MDT MWT MPT CST CDT|70 60 60 60 60 50|010102301010101010101010101010101010101010101010101010101014545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-261r0 1nX0 11B0 1nX0 SgN0 8x20 ix0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14o0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/North_Dakota/New_Salem|MST MDT MWT MPT CST CDT|70 60 60 60 60 50|010102301010101010101010101010101010101010101010101010101010101010101010101010101454545454545454545454545454545454545454545454545454545454545454545454|-261r0 1nX0 11B0 1nX0 SgN0 8x20 ix0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14o0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"America/Ojinaga|LMT MST CST CDT MDT|6V.E 70 60 50 60|0121212323241414141414141414141414141414141414141414141414141414141414141414141414141414141|-1UQF0 deL0 8lc0 17c0 10M0 1dd0 2zQN0 1lb0 14p0 1lb0 14q0 1lb0 14p0 1nX0 11B0 1nX0 1fB0 WL0 1fB0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 U10 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|23e3\",\"America/Pangnirtung|-00 AST AWT APT ADDT ADT EDT EST CST CDT|0 40 30 30 20 30 40 50 60 50|012314151515151515151515151515151515167676767689767676767676767676767676767676767676767676767676767676767676767676767676767|-1XiM0 PnG0 8x50 iu0 LCL0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1o00 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11C0 1nX0 11A0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|14e2\",\"America/Paramaribo|LMT PMT PMT -0330 -03|3E.E 3E.Q 3E.A 3u 30|01234|-2nDUj.k Wqo0.c qanX.I 1yVXN.o|24e4\",\"America/Phoenix|MST MDT MWT|70 60 60|01010202010|-261r0 1nX0 11B0 1nX0 SgN0 4Al1 Ap0 1db0 SWqX 1cL0|42e5\",\"America/Port-au-Prince|PPMT EST EDT|4N 50 40|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-28RHb 2FnMb 19X0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14q0 1o00 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 14o0 1o00 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 i6n0 1nX0 11B0 1nX0 d430 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 3iN0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|23e5\",\"America/Rio_Branco|LMT -05 -04|4v.c 50 40|01212121212121212121212121212121|-2glvs.M HdLs.M 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 NBd0 d5X0|31e4\",\"America/Porto_Velho|LMT -04 -03|4f.A 40 30|012121212121212121212121212121|-2glvI.o HdKI.o 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0|37e4\",\"America/Puerto_Rico|AST AWT APT|40 30 30|0120|-17lU0 7XT0 iu0|24e5\",\"America/Punta_Arenas|SMT -05 -04 -03|4G.K 50 40 30|0102021212121212121232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323|-2q2jh.e fJAh.e 5knG.K 1Vzh.e jRAG.K 1pbh.e 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 nHX0 op0 blz0 ko0 Qeo0 WL0 1zd0 On0 1ip0 11z0 1o10 11z0 1qN0 WL0 1ld0 14n0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 1cL0 1cN0 11z0 1o10 11z0 1qN0 WL0 1fB0 19X0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1ip0 1fz0 1fB0 11z0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1o10 19X0 1fB0 1nX0 G10 1EL0 Op0 1zb0 Rd0 1wn0 Rd0 46n0 Ap0|\",\"America/Rainy_River|CST CDT CWT CPT|60 50 50 50|010123010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-25TQ0 1in0 Rnb0 3je0 8x30 iw0 19yN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|842\",\"America/Rankin_Inlet|-00 CST CDDT CDT EST|0 60 40 50 50|012131313131313131313131313131313131313131313431313131313131313131313131313131313131313131313131313131313131313131313131|-vDc0 keu0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|26e2\",\"America/Recife|LMT -03 -02|2j.A 30 20|0121212121212121212121212121212121212121|-2glxE.o HdLE.o 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 nsp0 WL0 1tB0 2L0 2pB0 On0|33e5\",\"America/Regina|LMT MST MDT MWT MPT CST|6W.A 70 60 60 60 60|012121212121212121212121341212121212121212121212121215|-2AD51.o uHe1.o 1in0 s2L0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 66N0 1cL0 1cN0 19X0 1fB0 1cL0 1fB0 1cL0 1cN0 1cL0 M30 8x20 ix0 1ip0 1cL0 1ip0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 3NB0 1cL0 1cN0|19e4\",\"America/Resolute|-00 CST CDDT CDT EST|0 60 40 50 50|012131313131313131313131313131313131313131313431313131313431313131313131313131313131313131313131313131313131313131313131|-SnA0 GWS0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|229\",\"America/Santarem|LMT -04 -03|3C.M 40 30|0121212121212121212121212121212|-2glwl.c HdLl.c 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 qe10 xb0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 NBd0|21e4\",\"America/Santiago|SMT -05 -04 -03|4G.K 50 40 30|010202121212121212321232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323|-2q2jh.e fJAh.e 5knG.K 1Vzh.e jRAG.K 1pbh.e 11d0 1oL0 11d0 1oL0 11d0 1oL0 11d0 1pb0 11d0 nHX0 op0 9Bz0 jb0 1oN0 ko0 Qeo0 WL0 1zd0 On0 1ip0 11z0 1o10 11z0 1qN0 WL0 1ld0 14n0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 1cL0 1cN0 11z0 1o10 11z0 1qN0 WL0 1fB0 19X0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1ip0 1fz0 1fB0 11z0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1o10 19X0 1fB0 1nX0 G10 1EL0 Op0 1zb0 Rd0 1wn0 Rd0 46n0 Ap0 1Nb0 Ap0 1Nb0 Ap0 1zb0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0|62e5\",\"America/Santo_Domingo|SDMT EST EDT -0430 AST|4E 50 40 4u 40|01213131313131414|-1ttjk 1lJMk Mn0 6sp0 Lbu 1Cou yLu 1RAu wLu 1QMu xzu 1Q0u xXu 1PAu 13jB0 e00|29e5\",\"America/Sao_Paulo|LMT -03 -02|36.s 30 20|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2glwR.w HdKR.w 1cc0 1e10 1bX0 Ezd0 So0 1vA0 Mn0 1BB0 ML0 1BB0 zX0 pTd0 PX0 2ep0 nz0 1C10 zX0 1C10 LX0 1C10 Mn0 H210 Rb0 1tB0 IL0 1Fd0 FX0 1EN0 FX0 1HB0 Lz0 1EN0 Lz0 1C10 IL0 1HB0 Db0 1HB0 On0 1zd0 On0 1zd0 Lz0 1zd0 Rb0 1wN0 Wn0 1tB0 Rb0 1tB0 WL0 1tB0 Rb0 1zd0 On0 1HB0 FX0 1C10 Lz0 1Ip0 HX0 1zd0 On0 1HB0 IL0 1wp0 On0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 Rb0 1zd0 Lz0 1C10 Lz0 1C10 On0 1zd0 On0 1zd0 On0 1zd0 On0 1HB0 FX0|20e6\",\"America/Scoresbysund|LMT -02 -01 +00|1r.Q 20 10 0|0121323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-2a5Ww.8 2z5ew.8 1a00 1cK0 1cL0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|452\",\"America/Sitka|PST PWT PPT PDT YST AKST AKDT|80 70 70 70 90 90 80|01203030303030303030303030303030345656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565|-17T20 8x10 iy0 Vo10 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 co0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|90e2\",\"America/St_Johns|NST NDT NST NDT NWT NPT NDDT|3u.Q 2u.Q 3u 2u 2u 2u 1u|01010101010101010101010101010101010102323232323232324523232323232323232323232323232323232323232323232323232323232323232323232323232323232326232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-28oit.8 14L0 1nB0 1in0 1gm0 Dz0 1JB0 1cL0 1cN0 1cL0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1fB0 1cL0 1cN0 1cL0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1fB0 19X0 1fB0 1cL0 1fB0 19X0 1fB0 19X0 10O0 eKX.8 19X0 1iq0 WL0 1qN0 WL0 1qN0 WL0 1tB0 TX0 1tB0 WL0 1qN0 WL0 1qN0 7UHu itu 1tB0 WL0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1tB0 WL0 1ld0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14n1 1lb0 14p0 1nW0 11C0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zcX Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|11e4\",\"America/Swift_Current|LMT MST MDT MWT MPT CST|7b.k 70 60 60 60 60|012134121212121212121215|-2AD4M.E uHdM.E 1in0 UGp0 8x20 ix0 1o10 17b0 1ip0 11z0 1o10 11z0 1o10 11z0 isN0 1cL0 3Cp0 1cL0 1cN0 11z0 1qN0 WL0 pMp0|16e3\",\"America/Tegucigalpa|LMT CST CDT|5M.Q 60 50|01212121|-1WGGb.8 2ETcb.8 WL0 1qN0 WL0 GRd0 AL0|11e5\",\"America/Thule|LMT AST ADT|4z.8 40 30|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2a5To.Q 31NBo.Q 1cL0 1cN0 1cL0 1fB0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|656\",\"America/Thunder_Bay|CST EST EWT EPT EDT|60 50 40 40 40|0123141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141414141|-2q5S0 1iaN0 8x40 iv0 XNB0 1cL0 1cN0 1fz0 1cN0 1cL0 3Cp0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|11e4\",\"America/Vancouver|PST PDT PWT PPT|80 70 70 70|0102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-25TO0 1in0 UGp0 8x10 iy0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|23e5\",\"America/Whitehorse|YST YDT YWT YPT YDDT PST PDT MST|90 80 80 80 70 80 70 70|01010230405656565656565656565656565656565656565656565656565656565656565656565656565656565657|-25TN0 1in0 1o10 13V0 Ser0 8x00 iz0 LCL0 1fA0 3NA0 vrd0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0|23e3\",\"America/Winnipeg|CST CDT CWT CPT|60 50 50 50|010101023010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aIi0 WL0 3ND0 1in0 Jap0 Rb0 aCN0 8x30 iw0 1tB0 11z0 1ip0 11z0 1o10 11z0 1o10 11z0 1rd0 10L0 1op0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 1cL0 1cN0 11z0 6i10 WL0 6i10 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1a00 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1a00 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 14o0 1lc0 14o0 1o00 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 14o0 1o00 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1o00 11A0 1o00 11A0 1o00 14o0 1lc0 14o0 1lc0 14o0 1o00 11A0 1o00 11A0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|66e4\",\"America/Yakutat|YST YWT YPT YDT AKST AKDT|90 80 80 80 90 80|01203030303030303030303030303030304545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-17T10 8x00 iz0 Vo10 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 cn0 10q0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|642\",\"America/Yellowknife|-00 MST MWT MPT MDDT MDT|0 70 60 60 50 60|012314151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151515151|-1pdA0 hix0 8x20 ix0 LCL0 1fA0 zgO0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|19e3\",\"Antarctica/Casey|-00 +08 +11|0 -80 -b0|01212121|-2q00 1DjS0 T90 40P0 KL0 blz0 3m10|10\",\"Antarctica/Davis|-00 +07 +05|0 -70 -50|01012121|-vyo0 iXt0 alj0 1D7v0 VB0 3Wn0 KN0|70\",\"Antarctica/DumontDUrville|-00 +10|0 -a0|0101|-U0o0 cfq0 bFm0|80\",\"Antarctica/Macquarie|AEST AEDT -00 +11|-a0 -b0 0 -b0|0102010101010101010101010101010101010101010101010101010101010101010101010101010101010101013|-29E80 19X0 4SL0 1ayy0 Lvs0 1cM0 1o00 Rc0 1wo0 Rc0 1wo0 U00 1wo0 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 11A0 1qM0 WM0 1qM0 Oo0 1zc0 Oo0 1zc0 Oo0 1wo0 WM0 1tA0 WM0 1tA0 U00 1tA0 U00 1tA0 11A0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 11A0 1o00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1cM0 1cM0 1cM0|1\",\"Antarctica/Mawson|-00 +06 +05|0 -60 -50|012|-CEo0 2fyk0|60\",\"Pacific/Auckland|NZMT NZST NZST NZDT|-bu -cu -c0 -d0|01020202020202020202020202023232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323|-1GCVu Lz0 1tB0 11zu 1o0u 11zu 1o0u 11zu 1o0u 14nu 1lcu 14nu 1lcu 1lbu 11Au 1nXu 11Au 1nXu 11Au 1nXu 11Au 1nXu 11Au 1qLu WMu 1qLu 11Au 1n1bu IM0 1C00 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1qM0 14o0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1io0 17c0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1io0 17c0 1io0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00|14e5\",\"Antarctica/Palmer|-00 -03 -04 -02|0 30 40 20|0121212121213121212121212121212121212121212121212121212121212121212121212121212121|-cao0 nD0 1vd0 SL0 1vd0 17z0 1cN0 1fz0 1cN0 1cL0 1cN0 asn0 Db0 jsN0 14N0 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 1cL0 1cN0 11z0 1o10 11z0 1qN0 WL0 1fB0 19X0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1ip0 1fz0 1fB0 11z0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1o10 19X0 1fB0 1nX0 G10 1EL0 Op0 1zb0 Rd0 1wn0 Rd0 46n0 Ap0|40\",\"Antarctica/Rothera|-00 -03|0 30|01|gOo0|130\",\"Antarctica/Syowa|-00 +03|0 -30|01|-vs00|20\",\"Antarctica/Troll|-00 +00 +02|0 0 -20|01212121212121212121212121212121212121212121212121212121212121212121|1puo0 hd0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|40\",\"Antarctica/Vostok|-00 +06|0 -60|01|-tjA0|25\",\"Europe/Oslo|CET CEST|-10 -20|010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2awM0 Qm0 W6o0 5pf0 WM0 1fA0 1cM0 1cM0 1cM0 1cM0 wJc0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1qM0 WM0 zpc0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|62e4\",\"Asia/Riyadh|LMT +03|-36.Q -30|01|-TvD6.Q|57e5\",\"Asia/Almaty|LMT +05 +06 +07|-57.M -50 -60 -70|012323232323232323232321232323232323232323232323232|-1Pc57.M eUo7.M 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0|15e5\",\"Asia/Amman|LMT EET EEST|-2n.I -20 -30|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1yW2n.I 1HiMn.I KL0 1oN0 11b0 1oN0 11b0 1pd0 1dz0 1cp0 11b0 1op0 11b0 fO10 1db0 1e10 1cL0 1cN0 1cL0 1cN0 1fz0 1pd0 10n0 1ld0 14n0 1hB0 15b0 1ip0 19X0 1cN0 1cL0 1cN0 17b0 1ld0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1So0 y00 1fc0 1dc0 1co0 1dc0 1cM0 1cM0 1cM0 1o00 11A0 1lc0 17c0 1cM0 1cM0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 4bX0 Dd0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0|25e5\",\"Asia/Anadyr|LMT +12 +13 +14 +11|-bN.U -c0 -d0 -e0 -b0|01232121212121212121214121212121212121212121212121212121212141|-1PcbN.U eUnN.U 23CL0 1db0 2q10 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 2sp0 WM0|13e3\",\"Asia/Aqtau|LMT +04 +05 +06|-3l.4 -40 -50 -60|012323232323232323232123232312121212121212121212|-1Pc3l.4 eUnl.4 24PX0 2pX0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0|15e4\",\"Asia/Aqtobe|LMT +04 +05 +06|-3M.E -40 -50 -60|0123232323232323232321232323232323232323232323232|-1Pc3M.E eUnM.E 23CL0 3Db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0|27e4\",\"Asia/Ashgabat|LMT +04 +05 +06|-3R.w -40 -50 -60|0123232323232323232323212|-1Pc3R.w eUnR.w 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0|41e4\",\"Asia/Atyrau|LMT +03 +05 +06 +04|-3r.I -30 -50 -60 -40|01232323232323232323242323232323232324242424242|-1Pc3r.I eUor.I 24PW0 2pX0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 2sp0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0|\",\"Asia/Baghdad|BMT +03 +04|-2V.A -30 -40|012121212121212121212121212121212121212121212121212121|-26BeV.A 2ACnV.A 11b0 1cp0 1dz0 1dd0 1db0 1cN0 1cp0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1de0 1dc0 1dc0 1dc0 1cM0 1dc0 1cM0 1dc0 1cM0 1dc0 1dc0 1dc0 1cM0 1dc0 1cM0 1dc0 1cM0 1dc0 1dc0 1dc0 1cM0 1dc0 1cM0 1dc0 1cM0 1dc0 1dc0 1dc0 1cM0 1dc0 1cM0 1dc0 1cM0 1dc0|66e5\",\"Asia/Qatar|LMT +04 +03|-3q.8 -40 -30|012|-21Jfq.8 27BXq.8|96e4\",\"Asia/Baku|LMT +03 +04 +05|-3j.o -30 -40 -50|01232323232323232323232123232323232323232323232323232323232323232|-1Pc3j.o 1jUoj.o WCL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 1cM0 9Je0 1o00 11z0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00|27e5\",\"Asia/Bangkok|BMT +07|-6G.4 -70|01|-218SG.4|15e6\",\"Asia/Barnaul|LMT +06 +07 +08|-5z -60 -70 -80|0123232323232323232323212323232321212121212121212121212121212121212|-21S5z pCnz 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 p90 LE0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3rd0|\",\"Asia/Beirut|EET EEST|-20 -30|010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-21aq0 1on0 1410 1db0 19B0 1in0 1ip0 WL0 1lQp0 11b0 1oN0 11b0 1oN0 11b0 1pd0 11b0 1oN0 11b0 q6N0 En0 1oN0 11b0 1oN0 11b0 1oN0 11b0 1pd0 11b0 1oN0 11b0 1op0 11b0 dA10 17b0 1iN0 17b0 1iN0 17b0 1iN0 17b0 1vB0 SL0 1mp0 13z0 1iN0 17b0 1iN0 17b0 1jd0 12n0 1a10 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0|22e5\",\"Asia/Bishkek|LMT +05 +06 +07|-4W.o -50 -60 -70|012323232323232323232321212121212121212121212121212|-1Pc4W.o eUnW.o 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2e00 1tX0 17b0 1ip0 17b0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1cPu 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0|87e4\",\"Asia/Brunei|LMT +0730 +08|-7D.E -7u -80|012|-1KITD.E gDc9.E|42e4\",\"Asia/Kolkata|MMT IST +0630|-5l.a -5u -6u|012121|-2zOtl.a 1r2LP.a 1un0 HB0 7zX0|15e6\",\"Asia/Chita|LMT +08 +09 +10|-7x.Q -80 -90 -a0|012323232323232323232321232323232323232323232323232323232323232312|-21Q7x.Q pAnx.Q 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3re0|33e4\",\"Asia/Choibalsan|LMT +07 +08 +10 +09|-7C -70 -80 -a0 -90|0123434343434343434343434343434343434343434343424242|-2APHC 2UkoC cKn0 1da0 1dd0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 6hD0 11z0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 3Db0 h1f0 1cJ0 1cP0 1cJ0|38e3\",\"Asia/Shanghai|CST CDT|-80 -90|01010101010101010101010101010|-23uw0 18n0 OjB0 Rz0 11d0 1wL0 A10 8HX0 1G10 Tz0 1ip0 1jX0 1cN0 11b0 1oN0 aL0 1tU30 Rb0 1o10 11z0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0|23e6\",\"Asia/Colombo|MMT +0530 +06 +0630|-5j.w -5u -60 -6u|01231321|-2zOtj.w 1rFbN.w 1zzu 7Apu 23dz0 11zu n3cu|22e5\",\"Asia/Dhaka|HMT +0630 +0530 +06 +07|-5R.k -6u -5u -60 -70|0121343|-18LFR.k 1unn.k HB0 m6n0 2kxbu 1i00|16e6\",\"Asia/Damascus|LMT EET EEST|-2p.c -20 -30|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-21Jep.c Hep.c 17b0 1ip0 17b0 1ip0 17b0 1ip0 19X0 1xRB0 11X0 1oN0 10L0 1pB0 11b0 1oN0 10L0 1mp0 13X0 1oN0 11b0 1pd0 11b0 1oN0 11b0 1oN0 11b0 1oN0 11b0 1pd0 11b0 1oN0 11b0 1oN0 11b0 1oN0 11b0 1pd0 11b0 1oN0 Nb0 1AN0 Nb0 bcp0 19X0 1gp0 19X0 3ld0 1xX0 Vd0 1Bz0 Sp0 1vX0 10p0 1dz0 1cN0 1cL0 1db0 1db0 1g10 1an0 1ap0 1db0 1fd0 1db0 1cN0 1db0 1dd0 1db0 1cp0 1dz0 1c10 1dX0 1cN0 1db0 1dd0 1db0 1cN0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1db0 1cN0 1db0 1cN0 19z0 1fB0 1qL0 11B0 1on0 Wp0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0|26e5\",\"Asia/Dili|LMT +08 +09|-8m.k -80 -90|01212|-2le8m.k 1dnXm.k 1nfA0 Xld0|19e4\",\"Asia/Dubai|LMT +04|-3F.c -40|01|-21JfF.c|39e5\",\"Asia/Dushanbe|LMT +05 +06 +07|-4z.c -50 -60 -70|012323232323232323232321|-1Pc4z.c eUnz.c 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2hB0|76e4\",\"Asia/Famagusta|LMT EET EEST +03|-2f.M -20 -30 -30|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212312121212121212121212121212121212121212121|-1Vc2f.M 2a3cf.M 1cL0 1qp0 Xz0 19B0 19X0 1fB0 1db0 1cp0 1cL0 1fB0 19X0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1o30 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 15U0 2Ks0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|\",\"Asia/Gaza|EET EEST IST IDT|-20 -30 -20 -30|0101010101010101010101010101010123232323232323232323232323232320101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-1c2q0 5Rb0 10r0 1px0 10N0 1pz0 16p0 1jB0 16p0 1jx0 pBd0 Vz0 1oN0 11b0 1oO0 10N0 1pz0 10N0 1pb0 10N0 1pb0 10N0 1pb0 10N0 1pz0 10N0 1pb0 10N0 1pb0 11d0 1oL0 dW0 hfB0 Db0 1fB0 Rb0 bXd0 gM0 8Q00 IM0 1wM0 11z0 1C10 IL0 1s10 10n0 1o10 WL0 1zd0 On0 1ld0 11z0 1o10 14n0 1o10 14n0 1nd0 12n0 1nd0 Xz0 1q10 12n0 M10 C00 17c0 1io0 17c0 1io0 17c0 1o00 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 17c0 1io0 18N0 1bz0 19z0 1gp0 1610 1iL0 11z0 1o10 14o0 1lA1 SKX 1xd1 MKX 1AN0 1a00 1fA0 1cL0 1cN0 1nX0 1210 1nz0 1220 1qL0 WN0 1qL0 WN0 1qL0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0|18e5\",\"Asia/Hebron|EET EEST IST IDT|-20 -30 -20 -30|010101010101010101010101010101012323232323232323232323232323232010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-1c2q0 5Rb0 10r0 1px0 10N0 1pz0 16p0 1jB0 16p0 1jx0 pBd0 Vz0 1oN0 11b0 1oO0 10N0 1pz0 10N0 1pb0 10N0 1pb0 10N0 1pb0 10N0 1pz0 10N0 1pb0 10N0 1pb0 11d0 1oL0 dW0 hfB0 Db0 1fB0 Rb0 bXd0 gM0 8Q00 IM0 1wM0 11z0 1C10 IL0 1s10 10n0 1o10 WL0 1zd0 On0 1ld0 11z0 1o10 14n0 1o10 14n0 1nd0 12n0 1nd0 Xz0 1q10 12n0 M10 C00 17c0 1io0 17c0 1io0 17c0 1o00 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 17c0 1io0 18N0 1bz0 19z0 1gp0 1610 1iL0 12L0 1mN0 14o0 1lc0 Tb0 1xd1 MKX bB0 cn0 1cN0 1a00 1fA0 1cL0 1cN0 1nX0 1210 1nz0 1220 1qL0 WN0 1qL0 WN0 1qL0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0 Wo0 1rc0 11c0 1oo0 11c0 1oo0 11c0 1oo0 11c0 1rc0|25e4\",\"Asia/Ho_Chi_Minh|LMT PLMT +07 +08 +09|-76.E -76.u -70 -80 -90|0123423232|-2yC76.E bK00.a 1h7b6.u 5lz0 18o0 3Oq0 k5b0 aW00 BAM0|90e5\",\"Asia/Hong_Kong|LMT HKT HKST HKWT JST|-7A.G -80 -90 -8u -90|0123412121212121212121212121212121212121212121212121212121212121212121|-2CFH0 1taO0 Hc0 xUu 9tBu 11z0 1tDu Rc0 1wo0 11A0 1cM0 11A0 1o00 11A0 1o00 11A0 1o00 14o0 1o00 11A0 1nX0 U10 1tz0 U10 1wn0 Rd0 1wn0 U10 1tz0 U10 1tz0 U10 1tz0 U10 1wn0 Rd0 1wn0 Rd0 1wn0 U10 1tz0 U10 1tz0 17d0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 s10 1Vz0 1cN0 1cL0 1cN0 1cL0 6fd0 14n0|73e5\",\"Asia/Hovd|LMT +06 +07 +08|-66.A -60 -70 -80|012323232323232323232323232323232323232323232323232|-2APG6.A 2Uko6.A cKn0 1db0 1dd0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 6hD0 11z0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 kEp0 1cJ0 1cP0 1cJ0|81e3\",\"Asia/Irkutsk|IMT +07 +08 +09|-6V.5 -70 -80 -90|01232323232323232323232123232323232323232323232323232323232323232|-21zGV.5 pjXV.5 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|60e4\",\"Europe/Istanbul|IMT EET EEST +03 +04|-1U.U -20 -30 -30 -40|0121212121212121212121212121212121212121212121234312121212121212121212121212121212121212121212121212121212121212123|-2ogNU.U dzzU.U 11b0 8tB0 1on0 1410 1db0 19B0 1in0 3Rd0 Un0 1oN0 11b0 zSN0 CL0 mp0 1Vz0 1gN0 8yn0 1yp0 ML0 1kp0 17b0 1ip0 17b0 1fB0 19X0 1ip0 19X0 1ip0 17b0 qdB0 38L0 1jd0 Tz0 l6O0 11A0 WN0 1qL0 TB0 1tX0 U10 1tz0 11B0 1in0 17d0 z90 cne0 pb0 2Cp0 1800 14o0 1dc0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1a00 1fA0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WO0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 Xc0 1qo0 WM0 1qM0 11A0 1o00 1200 1nA0 11A0 1tA0 U00 15w0|13e6\",\"Asia/Jakarta|BMT +0720 +0730 +09 +08 WIB|-77.c -7k -7u -90 -80 -70|01232425|-1Q0Tk luM0 mPzO 8vWu 6kpu 4PXu xhcu|31e6\",\"Asia/Jayapura|LMT +09 +0930 WIT|-9m.M -90 -9u -90|0123|-1uu9m.M sMMm.M L4nu|26e4\",\"Asia/Jerusalem|JMT IST IDT IDDT|-2k.E -20 -30 -40|012121212121321212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-26Bek.E SyMk.E 5Rb0 10r0 1px0 10N0 1pz0 16p0 1jB0 16p0 1jx0 3LB0 Em0 or0 1cn0 1dB0 16n0 10O0 1ja0 1tC0 14o0 1cM0 1a00 11A0 1Na0 An0 1MP0 AJ0 1Kp0 LC0 1oo0 Wl0 EQN0 Db0 1fB0 Rb0 bXd0 gM0 8Q00 IM0 1wM0 11z0 1C10 IL0 1s10 10n0 1o10 WL0 1zd0 On0 1ld0 11z0 1o10 14n0 1o10 14n0 1nd0 12n0 1nd0 Xz0 1q10 12n0 1hB0 1dX0 1ep0 1aL0 1eN0 17X0 1nf0 11z0 1tB0 19W0 1e10 17b0 1ep0 1gL0 18N0 1fz0 1eN0 17b0 1gq0 1gn0 19d0 1dz0 1c10 17X0 1hB0 1gn0 19d0 1dz0 1c10 17X0 1kp0 1dz0 1c10 1aL0 1eN0 1oL0 10N0 1oL0 10N0 1oL0 10N0 1rz0 W10 1rz0 W10 1rz0 10N0 1oL0 10N0 1oL0 10N0 1rz0 W10 1rz0 W10 1rz0 10N0 1oL0 10N0 1oL0 10N0 1oL0 10N0 1rz0 W10 1rz0 W10 1rz0 10N0 1oL0 10N0 1oL0 10N0 1rz0 W10 1rz0 W10 1rz0 W10 1rz0 10N0 1oL0 10N0 1oL0|81e4\",\"Asia/Kabul|+04 +0430|-40 -4u|01|-10Qs0|46e5\",\"Asia/Kamchatka|LMT +11 +12 +13|-ay.A -b0 -c0 -d0|012323232323232323232321232323232323232323232323232323232323212|-1SLKy.A ivXy.A 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 2sp0 WM0|18e4\",\"Asia/Karachi|LMT +0530 +0630 +05 PKT PKST|-4s.c -5u -6u -50 -50 -60|012134545454|-2xoss.c 1qOKW.c 7zX0 eup0 LqMu 1fy00 1cL0 dK10 11b0 1610 1jX0|24e6\",\"Asia/Urumqi|LMT +06|-5O.k -60|01|-1GgtO.k|32e5\",\"Asia/Kathmandu|LMT +0530 +0545|-5F.g -5u -5J|012|-21JhF.g 2EGMb.g|12e5\",\"Asia/Khandyga|LMT +08 +09 +10 +11|-92.d -80 -90 -a0 -b0|0123232323232323232323212323232323232323232323232343434343434343432|-21Q92.d pAp2.d 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 qK0 yN0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 17V0 7zD0|66e2\",\"Asia/Krasnoyarsk|LMT +06 +07 +08|-6b.q -60 -70 -80|01232323232323232323232123232323232323232323232323232323232323232|-21Hib.q prAb.q 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|10e5\",\"Asia/Kuala_Lumpur|SMT +07 +0720 +0730 +09 +08|-6T.p -70 -7k -7u -90 -80|0123435|-2Bg6T.p 17anT.p l5XE 17bO 8Fyu 1so1u|71e5\",\"Asia/Kuching|LMT +0730 +08 +0820 +09|-7l.k -7u -80 -8k -90|0123232323232323242|-1KITl.k gDbP.k 6ynu AnE 1O0k AnE 1NAk AnE 1NAk AnE 1NAk AnE 1O0k AnE 1NAk AnE pAk 8Fz0|13e4\",\"Asia/Macau|LMT CST +09 +10 CDT|-7y.a -80 -90 -a0 -90|012323214141414141414141414141414141414141414141414141414141414141414141|-2CFHy.a 1uqKy.a PX0 1kn0 15B0 11b0 4Qq0 1oM0 11c0 1ko0 1u00 11A0 1cM0 11c0 1o00 11A0 1o00 11A0 1oo0 1400 1o00 11A0 1o00 U00 1tA0 U00 1wo0 Rc0 1wru U10 1tz0 U10 1tz0 U10 1tz0 U10 1wn0 Rd0 1wn0 Rd0 1wn0 U10 1tz0 U10 1tz0 17d0 1cK0 1cO0 1cK0 1cO0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 s10 1Vz0 1cN0 1cL0 1cN0 1cL0 6fd0 14n0|57e4\",\"Asia/Magadan|LMT +10 +11 +12|-a3.c -a0 -b0 -c0|012323232323232323232321232323232323232323232323232323232323232312|-1Pca3.c eUo3.c 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3Cq0|95e3\",\"Asia/Makassar|LMT MMT +08 +09 WITA|-7V.A -7V.A -80 -90 -80|01234|-21JjV.A vfc0 myLV.A 8ML0|15e5\",\"Asia/Manila|PST PDT JST|-80 -90 -90|010201010|-1kJI0 AL0 cK10 65X0 mXB0 vX0 VK10 1db0|24e6\",\"Asia/Nicosia|LMT EET EEST|-2d.s -20 -30|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1Vc2d.s 2a3cd.s 1cL0 1qp0 Xz0 19B0 19X0 1fB0 1db0 1cp0 1cL0 1fB0 19X0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1o30 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|32e4\",\"Asia/Novokuznetsk|LMT +06 +07 +08|-5M.M -60 -70 -80|012323232323232323232321232323232323232323232323232323232323212|-1PctM.M eULM.M 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 2sp0 WM0|55e4\",\"Asia/Novosibirsk|LMT +06 +07 +08|-5v.E -60 -70 -80|0123232323232323232323212323212121212121212121212121212121212121212|-21Qnv.E pAFv.E 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 ml0 Os0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 4eN0|15e5\",\"Asia/Omsk|LMT +05 +06 +07|-4R.u -50 -60 -70|01232323232323232323232123232323232323232323232323232323232323232|-224sR.u pMLR.u 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|12e5\",\"Asia/Oral|LMT +03 +05 +06 +04|-3p.o -30 -50 -60 -40|01232323232323232424242424242424242424242424242|-1Pc3p.o eUop.o 23CK0 3Db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1fA0 1cM0 1cM0 IM0 1EM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0|27e4\",\"Asia/Pontianak|LMT PMT +0730 +09 +08 WITA WIB|-7h.k -7h.k -7u -90 -80 -80 -70|012324256|-2ua7h.k XE00 munL.k 8Rau 6kpu 4PXu xhcu Wqnu|23e4\",\"Asia/Pyongyang|LMT KST JST KST|-8n -8u -90 -90|012313|-2um8n 97XR 1lTzu 2Onc0 6BA0|29e5\",\"Asia/Qostanay|LMT +04 +05 +06|-4e.s -40 -50 -60|012323232323232323232123232323232323232323232323|-1Pc4e.s eUoe.s 23CL0 3Db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0|\",\"Asia/Qyzylorda|LMT +04 +05 +06|-4l.Q -40 -50 -60|01232323232323232323232323232323232323232323232|-1Pc4l.Q eUol.Q 23CL0 3Db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 3ao0 1EM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 zQl0|73e4\",\"Asia/Rangoon|RMT +0630 +09|-6o.L -6u -90|0121|-21Jio.L SmnS.L 7j9u|48e5\",\"Asia/Sakhalin|LMT +09 +11 +12 +10|-9u.M -90 -b0 -c0 -a0|01232323232323232323232423232323232424242424242424242424242424242|-2AGVu.M 1BoMu.M 1qFa0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 2pB0 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3rd0|58e4\",\"Asia/Samarkand|LMT +04 +05 +06|-4r.R -40 -50 -60|01232323232323232323232|-1Pc4r.R eUor.R 23CL0 3Db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0|36e4\",\"Asia/Seoul|LMT KST JST KST KDT KDT|-8r.Q -8u -90 -90 -a0 -9u|012343434343151515151515134343|-2um8r.Q 97XV.Q 1m1zu 6CM0 Fz0 1kN0 14n0 1kN0 14L0 1zd0 On0 69B0 2I0u OL0 1FB0 Rb0 1qN0 TX0 1tB0 TX0 1tB0 TX0 1tB0 TX0 2ap0 12FBu 11A0 1o00 11A0|23e6\",\"Asia/Srednekolymsk|LMT +10 +11 +12|-ae.Q -a0 -b0 -c0|01232323232323232323232123232323232323232323232323232323232323232|-1Pcae.Q eUoe.Q 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|35e2\",\"Asia/Taipei|CST JST CDT|-80 -90 -90|01020202020202020202020202020202020202020|-1iw80 joM0 1yo0 Tz0 1ip0 1jX0 1cN0 11b0 1oN0 11b0 1oN0 11b0 1oN0 11b0 10N0 1BX0 10p0 1pz0 10p0 1pz0 10p0 1db0 1dd0 1db0 1cN0 1db0 1cN0 1db0 1cN0 1db0 1BB0 ML0 1Bd0 ML0 uq10 1db0 1cN0 1db0 97B0 AL0|74e5\",\"Asia/Tashkent|LMT +05 +06 +07|-4B.b -50 -60 -70|012323232323232323232321|-1Pc4B.b eUnB.b 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0|23e5\",\"Asia/Tbilisi|TBMT +03 +04 +05|-2X.b -30 -40 -50|0123232323232323232323212121232323232323232323212|-1Pc2X.b 1jUnX.b WCL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 1cK0 1cL0 1cN0 1cL0 1cN0 2pz0 1cL0 1fB0 3Nz0 11B0 1nX0 11B0 1qL0 WN0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 An0 Os0 WM0|11e5\",\"Asia/Tehran|LMT TMT +0330 +04 +05 +0430|-3p.I -3p.I -3u -40 -50 -4u|01234325252525252525252525252525252525252525252525252525252525252525252525252525252525252525252525252|-2btDp.I 1d3c0 1huLT.I TXu 1pz0 sN0 vAu 1cL0 1dB0 1en0 pNB0 UL0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 64p0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0 1cN0 1dz0 1cp0 1dz0 1cp0 1dz0 1cp0 1dz0|14e6\",\"Asia/Thimphu|LMT +0530 +06|-5W.A -5u -60|012|-Su5W.A 1BGMs.A|79e3\",\"Asia/Tokyo|JST JDT|-90 -a0|010101010|-QJJ0 Rc0 1lc0 14o0 1zc0 Oo0 1zc0 Oo0|38e6\",\"Asia/Tomsk|LMT +06 +07 +08|-5D.P -60 -70 -80|0123232323232323232323212323232323232323232323212121212121212121212|-21NhD.P pxzD.P 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 co0 1bB0 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3Qp0|10e5\",\"Asia/Ulaanbaatar|LMT +07 +08 +09|-77.w -70 -80 -90|012323232323232323232323232323232323232323232323232|-2APH7.w 2Uko7.w cKn0 1db0 1dd0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 6hD0 11z0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 kEp0 1cJ0 1cP0 1cJ0|12e5\",\"Asia/Ust-Nera|LMT +08 +09 +12 +11 +10|-9w.S -80 -90 -c0 -b0 -a0|012343434343434343434345434343434343434343434343434343434343434345|-21Q9w.S pApw.S 23CL0 1d90 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 17V0 7zD0|65e2\",\"Asia/Vladivostok|LMT +09 +10 +11|-8L.v -90 -a0 -b0|01232323232323232323232123232323232323232323232323232323232323232|-1SJIL.v itXL.v 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|60e4\",\"Asia/Yakutsk|LMT +08 +09 +10|-8C.W -80 -90 -a0|01232323232323232323232123232323232323232323232323232323232323232|-21Q8C.W pAoC.W 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|28e4\",\"Asia/Yekaterinburg|LMT PMT +04 +05 +06|-42.x -3J.5 -40 -50 -60|012343434343434343434343234343434343434343434343434343434343434343|-2ag42.x 7mQh.s qBvJ.5 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|14e5\",\"Asia/Yerevan|LMT +03 +04 +05|-2W -30 -40 -50|0123232323232323232323212121212323232323232323232323232323232|-1Pc2W 1jUnW WCL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 2pB0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 4RX0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0|13e5\",\"Atlantic/Azores|HMT -02 -01 +00 WET|1S.w 20 10 0 0|01212121212121212121212121212121212121212121232123212321232121212121212121212121212121212121212121232323232323232323232323232323234323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-2ldW0 aPX0 Sp0 LX0 1vc0 Tc0 1uM0 SM0 1vc0 Tc0 1vc0 SM0 1vc0 6600 1co0 3E00 17c0 1fA0 1a00 1io0 1a00 1io0 17c0 3I00 17c0 1cM0 1cM0 3Fc0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Dc0 1tA0 1cM0 1dc0 1400 gL0 IM0 s10 U00 dX0 Rc0 pd0 Rc0 gL0 Oo0 pd0 Rc0 gL0 Oo0 pd0 14o0 1cM0 1cP0 1cM0 1cM0 1cM0 1cM0 1cM0 3Co0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 qIl0 1cM0 1fA0 1cM0 1cM0 1cN0 1cL0 1cN0 1cM0 1cM0 1cM0 1cM0 1cN0 1cL0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cL0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|25e4\",\"Atlantic/Bermuda|LMT AST ADT|4j.i 40 30|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1BnRE.G 1LTbE.G 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|65e3\",\"Atlantic/Canary|LMT -01 WET WEST|11.A 10 0 -10|01232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-1UtaW.o XPAW.o 1lAK0 1a10 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|54e4\",\"Atlantic/Cape_Verde|LMT -02 -01|1y.4 20 10|01212|-2ldW0 1eEo0 7zX0 1djf0|50e4\",\"Atlantic/Faroe|LMT WET WEST|r.4 0 -10|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2uSnw.U 2Wgow.U 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|49e3\",\"Atlantic/Madeira|FMT -01 +00 +01 WET WEST|17.A 10 0 -10 0 -10|01212121212121212121212121212121212121212121232123212321232121212121212121212121212121212121212121454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-2ldX0 aPX0 Sp0 LX0 1vc0 Tc0 1uM0 SM0 1vc0 Tc0 1vc0 SM0 1vc0 6600 1co0 3E00 17c0 1fA0 1a00 1io0 1a00 1io0 17c0 3I00 17c0 1cM0 1cM0 3Fc0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Dc0 1tA0 1cM0 1dc0 1400 gL0 IM0 s10 U00 dX0 Rc0 pd0 Rc0 gL0 Oo0 pd0 Rc0 gL0 Oo0 pd0 14o0 1cM0 1cP0 1cM0 1cM0 1cM0 1cM0 1cM0 3Co0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 qIl0 1cM0 1fA0 1cM0 1cM0 1cN0 1cL0 1cN0 1cM0 1cM0 1cM0 1cM0 1cN0 1cL0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|27e4\",\"Atlantic/Reykjavik|LMT -01 +00 GMT|1s 10 0 0|012121212121212121212121212121212121212121212121212121212121212121213|-2uWmw mfaw 1Bd0 ML0 1LB0 Cn0 1LB0 3fX0 C10 HrX0 1cO0 LB0 1EL0 LA0 1C00 Oo0 1wo0 Rc0 1wo0 Rc0 1wo0 Rc0 1zc0 Oo0 1zc0 14o0 1lc0 14o0 1lc0 14o0 1o00 11A0 1lc0 14o0 1o00 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1o00 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1o00 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1lc0 14o0 1o00 14o0|12e4\",\"Atlantic/South_Georgia|-02|20|0||30\",\"Atlantic/Stanley|SMT -04 -03 -02|3P.o 40 30 20|012121212121212323212121212121212121212121212121212121212121212121212|-2kJw8.A 12bA8.A 19X0 1fB0 19X0 1ip0 19X0 1fB0 19X0 1fB0 19X0 1fB0 Cn0 1Cc10 WL0 1qL0 U10 1tz0 2mN0 WN0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1tz0 U10 1tz0 WN0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1tz0 WN0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1qL0 WN0 1qN0 U10 1wn0 Rd0 1wn0 U10 1tz0 U10 1tz0 U10 1tz0 U10 1tz0 U10 1wn0 U10 1tz0 U10 1tz0 U10|21e2\",\"Australia/Sydney|AEST AEDT|-a0 -b0|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-293lX xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 14o0 1o00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 U00 1qM0 WM0 1tA0 WM0 1tA0 U00 1tA0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 11A0 1o00 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 14o0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|40e5\",\"Australia/Adelaide|ACST ACDT|-9u -au|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-293lt xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 U00 1qM0 WM0 1tA0 WM0 1tA0 U00 1tA0 U00 1tA0 Oo0 1zc0 WM0 1qM0 Rc0 1zc0 U00 1tA0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 14o0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|11e5\",\"Australia/Brisbane|AEST AEDT|-a0 -b0|01010101010101010|-293lX xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 H1A0 Oo0 1zc0 Oo0 1zc0 Oo0|20e5\",\"Australia/Broken_Hill|ACST ACDT|-9u -au|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-293lt xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 14o0 1o00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 U00 1qM0 WM0 1tA0 WM0 1tA0 U00 1tA0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 14o0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|18e3\",\"Australia/Currie|AEST AEDT|-a0 -b0|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-29E80 19X0 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 11A0 1qM0 WM0 1qM0 Oo0 1zc0 Oo0 1zc0 Oo0 1wo0 WM0 1tA0 WM0 1tA0 U00 1tA0 U00 1tA0 11A0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 11A0 1o00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|746\",\"Australia/Darwin|ACST ACDT|-9u -au|010101010|-293lt xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0|12e4\",\"Australia/Eucla|+0845 +0945|-8J -9J|0101010101010101010|-293kI xcX 10jd0 yL0 1cN0 1cL0 1gSp0 Oo0 l5A0 Oo0 iJA0 G00 zU00 IM0 1qM0 11A0 1o00 11A0|368\",\"Australia/Hobart|AEST AEDT|-a0 -b0|010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-29E80 19X0 10jd0 yL0 1cN0 1cL0 1fB0 19X0 VfB0 1cM0 1o00 Rc0 1wo0 Rc0 1wo0 U00 1wo0 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 11A0 1qM0 WM0 1qM0 Oo0 1zc0 Oo0 1zc0 Oo0 1wo0 WM0 1tA0 WM0 1tA0 U00 1tA0 U00 1tA0 11A0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 11A0 1o00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|21e4\",\"Australia/Lord_Howe|AEST +1030 +1130 +11|-a0 -au -bu -b0|0121212121313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313131313|raC0 1zdu Rb0 1zd0 On0 1zd0 On0 1zd0 On0 1zd0 TXu 1qMu WLu 1tAu WLu 1tAu TXu 1tAu Onu 1zcu Onu 1zcu Onu 1zcu Rbu 1zcu Onu 1zcu Onu 1zcu 11zu 1o0u 11zu 1o0u 11zu 1o0u 11zu 1qMu WLu 11Au 1nXu 1qMu 11zu 1o0u 11zu 1o0u 11zu 1qMu WLu 1qMu 11zu 1o0u WLu 1qMu 14nu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1fAu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1fAu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1fzu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1fAu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1cMu 1cLu 1fAu 1cLu 1cMu 1cLu 1cMu|347\",\"Australia/Lindeman|AEST AEDT|-a0 -b0|010101010101010101010|-293lX xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 H1A0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0|10\",\"Australia/Melbourne|AEST AEDT|-a0 -b0|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101|-293lX xcX 10jd0 yL0 1cN0 1cL0 1fB0 19X0 17c10 LA0 1C00 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 U00 1qM0 WM0 1qM0 11A0 1tA0 U00 1tA0 U00 1tA0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 11A0 1o00 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 14o0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|39e5\",\"Australia/Perth|AWST AWDT|-80 -90|0101010101010101010|-293jX xcX 10jd0 yL0 1cN0 1cL0 1gSp0 Oo0 l5A0 Oo0 iJA0 G00 zU00 IM0 1qM0 11A0 1o00 11A0|18e5\",\"CET|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1o00 11A0 Qrc0 6i00 WM0 1fA0 1cM0 1cM0 1cM0 16M0 1gMM0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|\",\"Pacific/Easter|EMT -07 -06 -05|7h.s 70 60 50|012121212121212121212121212123232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323|-1uSgG.w 1s4IG.w WL0 1zd0 On0 1ip0 11z0 1o10 11z0 1qN0 WL0 1ld0 14n0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 2pA0 11z0 1o10 11z0 1qN0 WL0 1qN0 WL0 1qN0 1cL0 1cN0 11z0 1o10 11z0 1qN0 WL0 1fB0 19X0 1qN0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1ip0 1fz0 1fB0 11z0 1qN0 WL0 1qN0 WL0 1qN0 WL0 1qN0 11z0 1o10 11z0 1o10 11z0 1qN0 WL0 1qN0 17b0 1ip0 11z0 1o10 19X0 1fB0 1nX0 G10 1EL0 Op0 1zb0 Rd0 1wn0 Rd0 46n0 Ap0 1Nb0 Ap0 1Nb0 Ap0 1zb0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1nX0 11B0 1qL0 WN0 1qL0 11B0 1nX0 11B0|30e2\",\"CST6CDT|CST CDT CWT CPT|60 50 50 50|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261s0 1nX0 11B0 1nX0 SgN0 8x30 iw0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"EET|EET EEST|-20 -30|010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|hDB0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|\",\"Europe/Dublin|DMT IST GMT BST IST|p.l -y.D 0 -10 -10|01232323232324242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242424242|-2ax9y.D Rc0 1fzy.D 14M0 1fc0 1g00 1co0 1dc0 1co0 1oo0 1400 1dc0 19A0 1io0 1io0 WM0 1o00 14o0 1o00 17c0 1io0 17c0 1fA0 1a00 1lc0 17c0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1cM0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1a00 1io0 1qM0 Dc0 g600 14o0 1wo0 17c0 1io0 11A0 1o00 17c0 1fA0 1a00 1fA0 1cM0 1fA0 1a00 17c0 1fA0 1a00 1io0 17c0 1lc0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1a00 1a00 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1tA0 IM0 90o0 U00 1tA0 U00 1tA0 U00 1tA0 U00 1tA0 WM0 1qM0 WM0 1qM0 WM0 1tA0 U00 1tA0 U00 1tA0 11z0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 14o0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5\",\"EST|EST|50|0||\",\"EST5EDT|EST EDT EWT EPT|50 40 40 40|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261t0 1nX0 11B0 1nX0 SgN0 8x40 iv0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"Etc/GMT-0|GMT|0|0||\",\"Etc/GMT-1|+01|-10|0||\",\"Pacific/Port_Moresby|+10|-a0|0||25e4\",\"Etc/GMT-11|+11|-b0|0||\",\"Pacific/Tarawa|+12|-c0|0||29e3\",\"Etc/GMT-13|+13|-d0|0||\",\"Etc/GMT-14|+14|-e0|0||\",\"Etc/GMT-2|+02|-20|0||\",\"Etc/GMT-3|+03|-30|0||\",\"Etc/GMT-4|+04|-40|0||\",\"Etc/GMT-5|+05|-50|0||\",\"Etc/GMT-6|+06|-60|0||\",\"Indian/Christmas|+07|-70|0||21e2\",\"Etc/GMT-8|+08|-80|0||\",\"Pacific/Palau|+09|-90|0||21e3\",\"Etc/GMT+1|-01|10|0||\",\"Etc/GMT+10|-10|a0|0||\",\"Etc/GMT+11|-11|b0|0||\",\"Etc/GMT+12|-12|c0|0||\",\"Etc/GMT+3|-03|30|0||\",\"Etc/GMT+4|-04|40|0||\",\"Etc/GMT+5|-05|50|0||\",\"Etc/GMT+6|-06|60|0||\",\"Etc/GMT+7|-07|70|0||\",\"Etc/GMT+8|-08|80|0||\",\"Etc/GMT+9|-09|90|0||\",\"Etc/UTC|UTC|0|0||\",\"Europe/Amsterdam|AMT NST +0120 +0020 CEST CET|-j.w -1j.w -1k -k -20 -10|010101010101010101010101010101010101010101012323234545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545|-2aFcj.w 11b0 1iP0 11A0 1io0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1co0 1io0 1yo0 Pc0 1a00 1fA0 1Bc0 Mo0 1tc0 Uo0 1tA0 U00 1uo0 W00 1s00 VA0 1so0 Vc0 1sM0 UM0 1wo0 Rc0 1u00 Wo0 1rA0 W00 1s00 VA0 1sM0 UM0 1w00 fV0 BCX.w 1tA0 U00 1u00 Wo0 1sm0 601k WM0 1fA0 1cM0 1cM0 1cM0 16M0 1gMM0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|16e5\",\"Europe/Andorra|WET CET CEST|0 -10 -20|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-UBA0 1xIN0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|79e3\",\"Europe/Astrakhan|LMT +03 +04 +05|-3c.c -30 -40 -50|012323232323232323212121212121212121212121212121212121212121212|-1Pcrc.c eUMc.c 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1fA0 1cM0 3Co0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3rd0|10e5\",\"Europe/Athens|AMT EET EEST CEST CET|-1y.Q -20 -30 -20 -10|012123434121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2a61x.Q CNbx.Q mn0 kU10 9b0 3Es0 Xa0 1fb0 1dd0 k3X0 Nz0 SCp0 1vc0 SO0 1cM0 1a00 1ao0 1fc0 1a10 1fG0 1cg0 1dX0 1bX0 1cQ0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|35e5\",\"Europe/London|GMT BST BDST|0 -10 -20|0101010101010101010101010101010101010101010101010121212121210101210101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2axa0 Rc0 1fA0 14M0 1fc0 1g00 1co0 1dc0 1co0 1oo0 1400 1dc0 19A0 1io0 1io0 WM0 1o00 14o0 1o00 17c0 1io0 17c0 1fA0 1a00 1lc0 17c0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1cM0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1a00 1io0 1qM0 Dc0 2Rz0 Dc0 1zc0 Oo0 1zc0 Rc0 1wo0 17c0 1iM0 FA0 xB0 1fA0 1a00 14o0 bb0 LA0 xB0 Rc0 1wo0 11A0 1o00 17c0 1fA0 1a00 1fA0 1cM0 1fA0 1a00 17c0 1fA0 1a00 1io0 17c0 1lc0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1a00 1a00 1qM0 WM0 1qM0 11A0 1o00 WM0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1tA0 IM0 90o0 U00 1tA0 U00 1tA0 U00 1tA0 U00 1tA0 WM0 1qM0 WM0 1qM0 WM0 1tA0 U00 1tA0 U00 1tA0 11z0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1o00 14o0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|10e6\",\"Europe/Belgrade|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-19RC0 3IP0 WM0 1fA0 1cM0 1cM0 1rc0 Qo0 1vmo0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5\",\"Europe/Berlin|CET CEST CEMT|-10 -20 -30|01010101010101210101210101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1o00 11A0 Qrc0 6i00 WM0 1fA0 1cM0 1cM0 1cM0 kL0 Nc0 m10 WM0 1ao0 1cp0 dX0 jz0 Dd0 1io0 17c0 1fA0 1a00 1ehA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|41e5\",\"Europe/Prague|CET CEST GMT|-10 -20 0|01010101010101010201010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1o00 11A0 Qrc0 6i00 WM0 1fA0 1cM0 1cM0 1cM0 1cM0 1qM0 11c0 mp0 xA0 mn0 17c0 1io0 17c0 1fc0 1ao0 1bNc0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|13e5\",\"Europe/Brussels|WET CET CEST WEST|0 -10 -20 -10|0121212103030303030303030303030303030303030303030303212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2ehc0 3zX0 11c0 1iO0 11A0 1o00 11A0 my0 Ic0 1qM0 Rc0 1EM0 UM0 1u00 10o0 1io0 1io0 17c0 1a00 1fA0 1cM0 1cM0 1io0 17c0 1fA0 1a00 1io0 1a30 1io0 17c0 1fA0 1a00 1io0 17c0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Dc0 y00 5Wn0 WM0 1fA0 1cM0 16M0 1iM0 16M0 1C00 Uo0 1eeo0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|21e5\",\"Europe/Bucharest|BMT EET EEST|-1I.o -20 -30|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1xApI.o 20LI.o RA0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1Axc0 On0 1fA0 1a10 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cK0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cL0 1cN0 1cL0 1fB0 1nX0 11E0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|19e5\",\"Europe/Budapest|CET CEST|-10 -20|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1ip0 17b0 1op0 1tb0 Q2m0 3Ne0 WM0 1fA0 1cM0 1cM0 1oJ0 1dc0 1030 1fA0 1cM0 1cM0 1cM0 1cM0 1fA0 1a00 1iM0 1fA0 8Ha0 Rb0 1wN0 Rb0 1BB0 Lz0 1C20 LB0 SNX0 1a10 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|17e5\",\"Europe/Zurich|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-19Lc0 11A0 1o00 11A0 1xG10 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|38e4\",\"Europe/Chisinau|CMT BMT EET EEST CEST CET MSK MSD|-1T -1I.o -20 -30 -20 -10 -30 -40|012323232323232323234545467676767676767676767323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232323232|-26jdT wGMa.A 20LI.o RA0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 27A0 2en0 39g0 WM0 1fA0 1cM0 V90 1t7z0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 gL0 WO0 1cM0 1cM0 1cK0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1nX0 11D0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|67e4\",\"Europe/Copenhagen|CET CEST|-10 -20|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2azC0 Tz0 VuO0 60q0 WM0 1fA0 1cM0 1cM0 1cM0 S00 1HA0 Nc0 1C00 Dc0 1Nc0 Ao0 1h5A0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5\",\"Europe/Gibraltar|GMT BST BDST CET CEST|0 -10 -20 -10 -20|010101010101010101010101010101010101010101010101012121212121010121010101010101010101034343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343|-2axa0 Rc0 1fA0 14M0 1fc0 1g00 1co0 1dc0 1co0 1oo0 1400 1dc0 19A0 1io0 1io0 WM0 1o00 14o0 1o00 17c0 1io0 17c0 1fA0 1a00 1lc0 17c0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1cM0 1io0 17c0 1fA0 1a00 1io0 17c0 1io0 17c0 1fA0 1a00 1io0 1qM0 Dc0 2Rz0 Dc0 1zc0 Oo0 1zc0 Rc0 1wo0 17c0 1iM0 FA0 xB0 1fA0 1a00 14o0 bb0 LA0 xB0 Rc0 1wo0 11A0 1o00 17c0 1fA0 1a00 1fA0 1cM0 1fA0 1a00 17c0 1fA0 1a00 1io0 17c0 1lc0 17c0 1fA0 10Jz0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|30e3\",\"Europe/Helsinki|HMT EET EEST|-1D.N -20 -30|0121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-1WuND.N OULD.N 1dA0 1xGq0 1cM0 1cM0 1cM0 1cN0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5\",\"Europe/Kaliningrad|CET CEST EET EEST MSK MSD +03|-10 -20 -20 -30 -30 -40 -30|01010101010101232454545454545454543232323232323232323232323232323232323232323262|-2aFe0 11d0 1iO0 11A0 1o00 11A0 Qrc0 6i00 WM0 1fA0 1cM0 1cM0 1cM0 390 7A0 1en0 12N0 1pbb0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|44e4\",\"Europe/Kiev|KMT EET MSK CEST CET MSD EEST|-22.4 -20 -30 -20 -10 -40 -30|0123434252525252525252525256161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161|-1Pc22.4 eUo2.4 rnz0 2Hg0 WM0 1fA0 da0 1v4m0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 Db0 3220 1cK0 1cL0 1cN0 1cL0 1cN0 1cL0 1cQ0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|34e5\",\"Europe/Kirov|LMT +03 +04 +05|-3i.M -30 -40 -50|01232323232323232321212121212121212121212121212121212121212121|-22WM0 qH90 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1fA0 1cM0 3Co0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|48e4\",\"Europe/Lisbon|LMT WET WEST WEMT CET CEST|A.J 0 -10 -20 -10 -20|012121212121212121212121212121212121212121212321232123212321212121212121212121212121212121212121214121212121212121212121212121212124545454212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2le00 aPX0 Sp0 LX0 1vc0 Tc0 1uM0 SM0 1vc0 Tc0 1vc0 SM0 1vc0 6600 1co0 3E00 17c0 1fA0 1a00 1io0 1a00 1io0 17c0 3I00 17c0 1cM0 1cM0 3Fc0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Dc0 1tA0 1cM0 1dc0 1400 gL0 IM0 s10 U00 dX0 Rc0 pd0 Rc0 gL0 Oo0 pd0 Rc0 gL0 Oo0 pd0 14o0 1cM0 1cP0 1cM0 1cM0 1cM0 1cM0 1cM0 3Co0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 pvy0 1cM0 1cM0 1fA0 1cM0 1cM0 1cN0 1cL0 1cN0 1cM0 1cM0 1cM0 1cM0 1cN0 1cL0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|27e5\",\"Europe/Luxembourg|LMT CET CEST WET WEST WEST WET|-o.A -10 -20 0 -10 -20 -10|0121212134343434343434343434343434343434343434343434565651212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2DG0o.A t6mo.A TB0 1nX0 Up0 1o20 11A0 rW0 CM0 1qP0 R90 1EO0 UK0 1u20 10m0 1ip0 1in0 17e0 19W0 1fB0 1db0 1cp0 1in0 17d0 1fz0 1a10 1in0 1a10 1in0 17f0 1fA0 1a00 1io0 17c0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Dc0 vA0 60L0 WM0 1fA0 1cM0 17c0 1io0 16M0 1C00 Uo0 1eeo0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|54e4\",\"Europe/Madrid|WET WEST WEMT CET CEST|0 -10 -20 -10 -20|010101010101010101210343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343|-25Td0 19B0 1cL0 1dd0 b1z0 18p0 3HX0 17d0 1fz0 1a10 1io0 1a00 1in0 17d0 iIn0 Hd0 1cL0 bb0 1200 2s20 14n0 5aL0 Mp0 1vz0 17d0 1in0 17d0 1in0 17d0 1in0 17d0 6hX0 11B0 XHX0 1a10 1fz0 1a10 19X0 1cN0 1fz0 1a10 1fC0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|62e5\",\"Europe/Malta|CET CEST|-10 -20|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2arB0 Lz0 1cN0 1db0 1410 1on0 Wp0 1qL0 17d0 1cL0 M3B0 5M20 WM0 1fA0 1co0 17c0 1iM0 16m0 1de0 1lc0 14m0 1lc0 WO0 1qM0 GTW0 On0 1C10 LA0 1C00 LA0 1EM0 LA0 1C00 LA0 1zc0 Oo0 1C00 Oo0 1co0 1cM0 1lA0 Xc0 1qq0 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1o10 11z0 1iN0 19z0 1fB0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|42e4\",\"Europe/Minsk|MMT EET MSK CEST CET MSD EEST +03|-1O -20 -30 -20 -10 -40 -30 -30|01234343252525252525252525261616161616161616161616161616161616161617|-1Pc1O eUnO qNX0 3gQ0 WM0 1fA0 1cM0 Al0 1tsn0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 3Fc0 1cN0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0|19e5\",\"Europe/Monaco|PMT WET WEST WEMT CET CEST|-9.l 0 -10 -20 -10 -20|01212121212121212121212121212121212121212121212121232323232345454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-2nco9.l cNb9.l HA0 19A0 1iM0 11c0 1oo0 Wo0 1rc0 QM0 1EM0 UM0 1u00 10o0 1io0 1wo0 Rc0 1a00 1fA0 1cM0 1cM0 1io0 17c0 1fA0 1a00 1io0 1a00 1io0 17c0 1fA0 1a00 1io0 17c0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Df0 2RV0 11z0 11B0 1ze0 WM0 1fA0 1cM0 1fa0 1aq0 16M0 1ekn0 1cL0 1fC0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|38e3\",\"Europe/Moscow|MMT MMT MST MDST MSD MSK +05 EET EEST MSK|-2u.h -2v.j -3v.j -4v.j -40 -30 -50 -20 -30 -40|012132345464575454545454545454545458754545454545454545454545454545454545454595|-2ag2u.h 2pyW.W 1bA0 11X0 GN0 1Hb0 c4v.j ik0 3DA0 dz0 15A0 c10 2q10 iM10 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cN0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0|16e6\",\"Europe/Paris|PMT WET WEST CEST CET WEMT|-9.l 0 -10 -20 -10 -20|0121212121212121212121212121212121212121212121212123434352543434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434|-2nco8.l cNb8.l HA0 19A0 1iM0 11c0 1oo0 Wo0 1rc0 QM0 1EM0 UM0 1u00 10o0 1io0 1wo0 Rc0 1a00 1fA0 1cM0 1cM0 1io0 17c0 1fA0 1a00 1io0 1a00 1io0 17c0 1fA0 1a00 1io0 17c0 1cM0 1cM0 1a00 1io0 1cM0 1cM0 1a00 1fA0 1io0 17c0 1cM0 1cM0 1a00 1fA0 1io0 1qM0 Df0 Ik0 5M30 WM0 1fA0 1cM0 Vx0 hB0 1aq0 16M0 1ekn0 1cL0 1fC0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|11e6\",\"Europe/Riga|RMT LST EET MSK CEST CET MSD EEST|-1A.y -2A.y -20 -30 -20 -10 -40 -30|010102345454536363636363636363727272727272727272727272727272727272727272727272727272727272727272727272727272727272727272727272|-25TzA.y 11A0 1iM0 ko0 gWm0 yDXA.y 2bX0 3fE0 WM0 1fA0 1cM0 1cM0 4m0 1sLy0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cN0 1o00 11A0 1o00 11A0 1qM0 3oo0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|64e4\",\"Europe/Rome|CET CEST|-10 -20|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2arB0 Lz0 1cN0 1db0 1410 1on0 Wp0 1qL0 17d0 1cL0 M3B0 5M20 WM0 1fA0 1cM0 16M0 1iM0 16m0 1de0 1lc0 14m0 1lc0 WO0 1qM0 GTW0 On0 1C10 LA0 1C00 LA0 1EM0 LA0 1C00 LA0 1zc0 Oo0 1C00 Oo0 1C00 LA0 1zc0 Oo0 1C00 LA0 1C00 LA0 1zc0 Oo0 1C00 Oo0 1zc0 Oo0 1fC0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|39e5\",\"Europe/Samara|LMT +03 +04 +05|-3k.k -30 -40 -50|0123232323232323232121232323232323232323232323232323232323212|-22WM0 qH90 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1fA0 2y10 14m0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 2sp0 WM0|12e5\",\"Europe/Saratov|LMT +03 +04 +05|-34.i -30 -40 -50|012323232323232321212121212121212121212121212121212121212121212|-22WM0 qH90 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1cM0 1cM0 1fA0 1cM0 3Co0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 5810|\",\"Europe/Simferopol|SMT EET MSK CEST CET MSD EEST MSK|-2g -20 -30 -20 -10 -40 -30 -40|012343432525252525252525252161616525252616161616161616161616161616161616172|-1Pc2g eUog rEn0 2qs0 WM0 1fA0 1cM0 3V0 1u0L0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1Q00 4eL0 1cL0 1cN0 1cL0 1cN0 dX0 WL0 1cN0 1cL0 1fB0 1o30 11B0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11z0 1nW0|33e4\",\"Europe/Sofia|EET CET CEST EEST|-20 -10 -20 -30|01212103030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030303030|-168L0 WM0 1fA0 1cM0 1cM0 1cN0 1mKH0 1dd0 1fb0 1ap0 1fb0 1a20 1fy0 1a30 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cK0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 1nX0 11E0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5\",\"Europe/Stockholm|CET CEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2azC0 TB0 2yDe0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|15e5\",\"Europe/Tallinn|TMT CET CEST EET MSK MSD EEST|-1D -10 -20 -20 -30 -40 -30|012103421212454545454545454546363636363636363636363636363636363636363636363636363636363636363636363636363636363636363636363|-26oND teD 11A0 1Ta0 4rXl KSLD 2FX0 2Jg0 WM0 1fA0 1cM0 18J0 1sTX0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o10 11A0 1qM0 5QM0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|41e4\",\"Europe/Tirane|LMT CET CEST|-1j.k -10 -20|01212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2glBj.k 14pcj.k 5LC0 WM0 4M0 1fCK0 10n0 1op0 11z0 1pd0 11z0 1qN0 WL0 1qp0 Xb0 1qp0 Xb0 1qp0 11z0 1lB0 11z0 1qN0 11z0 1iN0 16n0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|42e4\",\"Europe/Ulyanovsk|LMT +03 +04 +05 +02|-3d.A -30 -40 -50 -20|01232323232323232321214121212121212121212121212121212121212121212|-22WM0 qH90 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1fA0 2pB0 IM0 rX0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 3rd0|13e5\",\"Europe/Uzhgorod|CET CEST MSK MSD EET EEST|-10 -20 -30 -40 -20 -30|010101023232323232323232320454545454545454545454545454545454545454545454545454545454545454545454545454545454545454545454|-1cqL0 6i00 WM0 1fA0 1cM0 1ml0 1Cp0 1r3W0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1Q00 1Nf0 2pw0 1cL0 1cN0 1cL0 1cN0 1cL0 1cQ0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|11e4\",\"Europe/Vienna|CET CEST|-10 -20|0101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1o00 11A0 3KM0 14o0 LA00 6i00 WM0 1fA0 1cM0 1cM0 1cM0 400 2qM0 1ao0 1co0 1cM0 1io0 17c0 1gHa0 19X0 1cP0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|18e5\",\"Europe/Vilnius|WMT KMT CET EET MSK CEST MSD EEST|-1o -1z.A -10 -20 -30 -20 -40 -30|012324525254646464646464646473737373737373737352537373737373737373737373737373737373737373737373737373737373737373737373|-293do 6ILM.o 1Ooz.A zz0 Mfd0 29W0 3is0 WM0 1fA0 1cM0 LV0 1tgL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11B0 1o00 11A0 1qM0 8io0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|54e4\",\"Europe/Volgograd|LMT +03 +04 +05|-2V.E -30 -40 -50|012323232323232321212121212121212121212121212121212121212121212|-21IqV.E psLV.E 23CL0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 2pB0 1cM0 1cM0 1cM0 1fA0 1cM0 3Co0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 8Hz0 9Jd0|10e5\",\"Europe/Warsaw|WMT CET CEST EET EEST|-1o -10 -20 -20 -30|012121234312121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121|-2ctdo 1LXo 11d0 1iO0 11A0 1o00 11A0 1on0 11A0 6zy0 HWP0 5IM0 WM0 1fA0 1cM0 1dz0 1mL0 1en0 15B0 1aq0 1nA0 11A0 1io0 17c0 1fA0 1a00 iDX0 LA0 1cM0 1cM0 1C00 Oo0 1cM0 1cM0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1C00 LA0 uso0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cN0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|17e5\",\"Europe/Zaporozhye|+0220 EET MSK CEST CET MSD EEST|-2k -20 -30 -20 -10 -40 -30|01234342525252525252525252526161616161616161616161616161616161616161616161616161616161616161616161616161616161616161616161|-1Pc2k eUok rdb0 2RE0 WM0 1fA0 8m0 1v9a0 1db0 1cN0 1db0 1cN0 1db0 1dd0 1cO0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cK0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cQ0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|77e4\",\"HST|HST|a0|0||\",\"Indian/Chagos|LMT +05 +06|-4N.E -50 -60|012|-2xosN.E 3AGLN.E|30e2\",\"Indian/Cocos|+0630|-6u|0||596\",\"Indian/Kerguelen|-00 +05|0 -50|01|-MG00|130\",\"Indian/Mahe|LMT +04|-3F.M -40|01|-2yO3F.M|79e3\",\"Indian/Maldives|MMT +05|-4S -50|01|-olgS|35e4\",\"Indian/Mauritius|LMT +04 +05|-3O -40 -50|012121|-2xorO 34unO 14L0 12kr0 11z0|15e4\",\"Indian/Reunion|LMT +04|-3F.Q -40|01|-2mDDF.Q|84e4\",\"Pacific/Kwajalein|+11 +10 +09 -12 +12|-b0 -a0 -90 c0 -c0|012034|-1kln0 akp0 6Up0 12ry0 Wan0|14e3\",\"MET|MET MEST|-10 -20|01010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-2aFe0 11d0 1iO0 11A0 1o00 11A0 Qrc0 6i00 WM0 1fA0 1cM0 1cM0 1cM0 16M0 1gMM0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|\",\"MST|MST|70|0||\",\"MST7MDT|MST MDT MWT MPT|70 60 60 60|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261r0 1nX0 11B0 1nX0 SgN0 8x20 ix0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"Pacific/Chatham|+1215 +1245 +1345|-cf -cJ -dJ|012121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212|-WqAf 1adef IM0 1C00 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Oo0 1zc0 Rc0 1zc0 Oo0 1qM0 14o0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1io0 17c0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1lc0 14o0 1lc0 14o0 1lc0 17c0 1io0 17c0 1io0 17c0 1io0 17c0 1io0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00|600\",\"Pacific/Apia|LMT -1130 -11 -10 +14 +13|bq.U bu b0 a0 -e0 -d0|01232345454545454545454545454545454545454545454545454545454|-2nDMx.4 1yW03.4 2rRbu 1ff0 1a00 CI0 AQ0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1io0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1a00 1fA0 1cM0 1fA0 1a00 1fA0 1a00|37e3\",\"Pacific/Bougainville|+10 +09 +11|-a0 -90 -b0|0102|-16Wy0 7CN0 2MQp0|18e4\",\"Pacific/Chuuk|+10 +09|-a0 -90|01010|-2ewy0 axB0 RVX0 axd0|49e3\",\"Pacific/Efate|LMT +11 +12|-bd.g -b0 -c0|0121212121212121212121|-2l9nd.g 2Szcd.g 1cL0 1oN0 10L0 1fB0 19X0 1fB0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1fB0 Lz0 1Nd0 An0|66e3\",\"Pacific/Enderbury|-12 -11 +13|c0 b0 -d0|012|nIc0 B7X0|1\",\"Pacific/Fakaofo|-11 +13|b0 -d0|01|1Gfn0|483\",\"Pacific/Fiji|LMT +12 +13|-bT.I -c0 -d0|0121212121212121212121212121212121212121212121212121212121212121|-2bUzT.I 3m8NT.I LA0 1EM0 IM0 nJc0 LA0 1o00 Rc0 1wo0 Ao0 1Nc0 Ao0 1Q00 xz0 1SN0 uM0 1SM0 uM0 1VA0 s00 1VA0 s00 1VA0 s00 20o0 pc0 20o0 s00 20o0 pc0 20o0 pc0 20o0 pc0 20o0 pc0 20o0 s00 1VA0 s00 20o0 pc0 20o0 pc0 20o0 pc0 20o0 pc0 20o0 s00 20o0 pc0 20o0 pc0 20o0 pc0 20o0 pc0 20o0 s00 1VA0 s00|88e4\",\"Pacific/Galapagos|LMT -05 -06|5W.o 50 60|01212|-1yVS1.A 2dTz1.A gNd0 rz0|25e3\",\"Pacific/Gambier|LMT -09|8X.M 90|01|-2jof0.c|125\",\"Pacific/Guadalcanal|LMT +11|-aD.M -b0|01|-2joyD.M|11e4\",\"Pacific/Guam|GST +09 GDT ChST|-a0 -90 -b0 -a0|01020202020202020203|-18jK0 6pB0 AhB0 3QL0 g2p0 3p91 WOX rX0 1zd0 Rb0 1wp0 Rb0 5xd0 rX0 5sN0 zb1 1C0X On0 ULb0|17e4\",\"Pacific/Honolulu|HST HDT HWT HPT HST|au 9u 9u 9u a0|0102304|-1thLu 8x0 lef0 8wWu iAu 46p0|37e4\",\"Pacific/Kiritimati|-1040 -10 +14|aE a0 -e0|012|nIaE B7Xk|51e2\",\"Pacific/Kosrae|+11 +09 +10 +12|-b0 -90 -a0 -c0|01021030|-2ewz0 axC0 HBy0 akp0 axd0 WOK0 1bdz0|66e2\",\"Pacific/Majuro|+11 +09 +10 +12|-b0 -90 -a0 -c0|0102103|-2ewz0 axC0 HBy0 akp0 6RB0 12um0|28e3\",\"Pacific/Marquesas|LMT -0930|9i 9u|01|-2joeG|86e2\",\"Pacific/Pago_Pago|LMT SST|bm.M b0|01|-2nDMB.c|37e2\",\"Pacific/Nauru|LMT +1130 +09 +12|-b7.E -bu -90 -c0|01213|-1Xdn7.E QCnB.E 7mqu 1lnbu|10e3\",\"Pacific/Niue|-1120 -1130 -11|bk bu b0|012|-KfME 17y0a|12e2\",\"Pacific/Norfolk|+1112 +1130 +1230 +11 +12|-bc -bu -cu -b0 -c0|012134343434343434343434343434343434343434|-Kgbc W01G Oo0 1COo0 9Jcu 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0|25e4\",\"Pacific/Noumea|LMT +11 +12|-b5.M -b0 -c0|01212121|-2l9n5.M 2EqM5.M xX0 1PB0 yn0 HeP0 Ao0|98e3\",\"Pacific/Pitcairn|-0830 -08|8u 80|01|18Vku|56\",\"Pacific/Pohnpei|+11 +09 +10|-b0 -90 -a0|010210|-2ewz0 axC0 HBy0 akp0 axd0|34e3\",\"Pacific/Rarotonga|-1030 -0930 -10|au 9u a0|012121212121212121212121212|lyWu IL0 1zcu Onu 1zcu Onu 1zcu Rbu 1zcu Onu 1zcu Onu 1zcu Onu 1zcu Onu 1zcu Onu 1zcu Rbu 1zcu Onu 1zcu Onu 1zcu Onu|13e3\",\"Pacific/Tahiti|LMT -10|9W.g a0|01|-2joe1.I|18e4\",\"Pacific/Tongatapu|+1220 +13 +14|-ck -d0 -e0|0121212121|-1aB0k 2n5dk 15A0 1wo0 xz0 1Q10 xz0 zWN0 s00|75e3\",\"PST8PDT|PST PDT PWT PPT|80 70 70 70|010102301010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|-261q0 1nX0 11B0 1nX0 SgN0 8x10 iy0 QwN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1cN0 1cL0 1cN0 1cL0 s10 1Vz0 LB0 1BX0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 1cN0 1fz0 1a10 1fz0 1cN0 1cL0 1cN0 1cL0 1cN0 1cL0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 14p0 1lb0 14p0 1lb0 14p0 1nX0 11B0 1nX0 11B0 1nX0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Rd0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0 Op0 1zb0|\",\"WET|WET WEST|0 -10|010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010|hDB0 1a00 1fA0 1cM0 1cM0 1cM0 1fA0 1a00 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1cM0 1fA0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|\"],\"links\":[\"Africa/Abidjan|Africa/Bamako\",\"Africa/Abidjan|Africa/Banjul\",\"Africa/Abidjan|Africa/Conakry\",\"Africa/Abidjan|Africa/Dakar\",\"Africa/Abidjan|Africa/Freetown\",\"Africa/Abidjan|Africa/Lome\",\"Africa/Abidjan|Africa/Nouakchott\",\"Africa/Abidjan|Africa/Ouagadougou\",\"Africa/Abidjan|Africa/Timbuktu\",\"Africa/Abidjan|Atlantic/St_Helena\",\"Africa/Cairo|Egypt\",\"Africa/Johannesburg|Africa/Maseru\",\"Africa/Johannesburg|Africa/Mbabane\",\"Africa/Lagos|Africa/Bangui\",\"Africa/Lagos|Africa/Brazzaville\",\"Africa/Lagos|Africa/Douala\",\"Africa/Lagos|Africa/Kinshasa\",\"Africa/Lagos|Africa/Libreville\",\"Africa/Lagos|Africa/Luanda\",\"Africa/Lagos|Africa/Malabo\",\"Africa/Lagos|Africa/Niamey\",\"Africa/Lagos|Africa/Porto-Novo\",\"Africa/Maputo|Africa/Blantyre\",\"Africa/Maputo|Africa/Bujumbura\",\"Africa/Maputo|Africa/Gaborone\",\"Africa/Maputo|Africa/Harare\",\"Africa/Maputo|Africa/Kigali\",\"Africa/Maputo|Africa/Lubumbashi\",\"Africa/Maputo|Africa/Lusaka\",\"Africa/Nairobi|Africa/Addis_Ababa\",\"Africa/Nairobi|Africa/Asmara\",\"Africa/Nairobi|Africa/Asmera\",\"Africa/Nairobi|Africa/Dar_es_Salaam\",\"Africa/Nairobi|Africa/Djibouti\",\"Africa/Nairobi|Africa/Kampala\",\"Africa/Nairobi|Africa/Mogadishu\",\"Africa/Nairobi|Indian/Antananarivo\",\"Africa/Nairobi|Indian/Comoro\",\"Africa/Nairobi|Indian/Mayotte\",\"Africa/Tripoli|Libya\",\"America/Adak|America/Atka\",\"America/Adak|US/Aleutian\",\"America/Anchorage|US/Alaska\",\"America/Argentina/Buenos_Aires|America/Buenos_Aires\",\"America/Argentina/Catamarca|America/Argentina/ComodRivadavia\",\"America/Argentina/Catamarca|America/Catamarca\",\"America/Argentina/Cordoba|America/Cordoba\",\"America/Argentina/Cordoba|America/Rosario\",\"America/Argentina/Jujuy|America/Jujuy\",\"America/Argentina/Mendoza|America/Mendoza\",\"America/Atikokan|America/Coral_Harbour\",\"America/Chicago|US/Central\",\"America/Curacao|America/Aruba\",\"America/Curacao|America/Kralendijk\",\"America/Curacao|America/Lower_Princes\",\"America/Denver|America/Shiprock\",\"America/Denver|Navajo\",\"America/Denver|US/Mountain\",\"America/Detroit|US/Michigan\",\"America/Edmonton|Canada/Mountain\",\"America/Fort_Wayne|America/Indiana/Indianapolis\",\"America/Fort_Wayne|America/Indianapolis\",\"America/Fort_Wayne|US/East-Indiana\",\"America/Godthab|America/Nuuk\",\"America/Halifax|Canada/Atlantic\",\"America/Havana|Cuba\",\"America/Indiana/Knox|America/Knox_IN\",\"America/Indiana/Knox|US/Indiana-Starke\",\"America/Jamaica|Jamaica\",\"America/Kentucky/Louisville|America/Louisville\",\"America/Los_Angeles|US/Pacific\",\"America/Los_Angeles|US/Pacific-New\",\"America/Manaus|Brazil/West\",\"America/Mazatlan|Mexico/BajaSur\",\"America/Mexico_City|Mexico/General\",\"America/New_York|US/Eastern\",\"America/Noronha|Brazil/DeNoronha\",\"America/Panama|America/Cayman\",\"America/Phoenix|US/Arizona\",\"America/Port_of_Spain|America/Anguilla\",\"America/Port_of_Spain|America/Antigua\",\"America/Port_of_Spain|America/Dominica\",\"America/Port_of_Spain|America/Grenada\",\"America/Port_of_Spain|America/Guadeloupe\",\"America/Port_of_Spain|America/Marigot\",\"America/Port_of_Spain|America/Montserrat\",\"America/Port_of_Spain|America/St_Barthelemy\",\"America/Port_of_Spain|America/St_Kitts\",\"America/Port_of_Spain|America/St_Lucia\",\"America/Port_of_Spain|America/St_Thomas\",\"America/Port_of_Spain|America/St_Vincent\",\"America/Port_of_Spain|America/Tortola\",\"America/Port_of_Spain|America/Virgin\",\"America/Regina|Canada/Saskatchewan\",\"America/Rio_Branco|America/Porto_Acre\",\"America/Rio_Branco|Brazil/Acre\",\"America/Santiago|Chile/Continental\",\"America/Sao_Paulo|Brazil/East\",\"America/St_Johns|Canada/Newfoundland\",\"America/Tijuana|America/Ensenada\",\"America/Tijuana|America/Santa_Isabel\",\"America/Tijuana|Mexico/BajaNorte\",\"America/Toronto|America/Montreal\",\"America/Toronto|Canada/Eastern\",\"America/Vancouver|Canada/Pacific\",\"America/Whitehorse|Canada/Yukon\",\"America/Winnipeg|Canada/Central\",\"Asia/Ashgabat|Asia/Ashkhabad\",\"Asia/Bangkok|Asia/Phnom_Penh\",\"Asia/Bangkok|Asia/Vientiane\",\"Asia/Dhaka|Asia/Dacca\",\"Asia/Dubai|Asia/Muscat\",\"Asia/Ho_Chi_Minh|Asia/Saigon\",\"Asia/Hong_Kong|Hongkong\",\"Asia/Jerusalem|Asia/Tel_Aviv\",\"Asia/Jerusalem|Israel\",\"Asia/Kathmandu|Asia/Katmandu\",\"Asia/Kolkata|Asia/Calcutta\",\"Asia/Kuala_Lumpur|Asia/Singapore\",\"Asia/Kuala_Lumpur|Singapore\",\"Asia/Macau|Asia/Macao\",\"Asia/Makassar|Asia/Ujung_Pandang\",\"Asia/Nicosia|Europe/Nicosia\",\"Asia/Qatar|Asia/Bahrain\",\"Asia/Rangoon|Asia/Yangon\",\"Asia/Riyadh|Asia/Aden\",\"Asia/Riyadh|Asia/Kuwait\",\"Asia/Seoul|ROK\",\"Asia/Shanghai|Asia/Chongqing\",\"Asia/Shanghai|Asia/Chungking\",\"Asia/Shanghai|Asia/Harbin\",\"Asia/Shanghai|PRC\",\"Asia/Taipei|ROC\",\"Asia/Tehran|Iran\",\"Asia/Thimphu|Asia/Thimbu\",\"Asia/Tokyo|Japan\",\"Asia/Ulaanbaatar|Asia/Ulan_Bator\",\"Asia/Urumqi|Asia/Kashgar\",\"Atlantic/Faroe|Atlantic/Faeroe\",\"Atlantic/Reykjavik|Iceland\",\"Atlantic/South_Georgia|Etc/GMT+2\",\"Australia/Adelaide|Australia/South\",\"Australia/Brisbane|Australia/Queensland\",\"Australia/Broken_Hill|Australia/Yancowinna\",\"Australia/Darwin|Australia/North\",\"Australia/Hobart|Australia/Tasmania\",\"Australia/Lord_Howe|Australia/LHI\",\"Australia/Melbourne|Australia/Victoria\",\"Australia/Perth|Australia/West\",\"Australia/Sydney|Australia/ACT\",\"Australia/Sydney|Australia/Canberra\",\"Australia/Sydney|Australia/NSW\",\"Etc/GMT-0|Etc/GMT\",\"Etc/GMT-0|Etc/GMT+0\",\"Etc/GMT-0|Etc/GMT0\",\"Etc/GMT-0|Etc/Greenwich\",\"Etc/GMT-0|GMT\",\"Etc/GMT-0|GMT+0\",\"Etc/GMT-0|GMT-0\",\"Etc/GMT-0|GMT0\",\"Etc/GMT-0|Greenwich\",\"Etc/UTC|Etc/UCT\",\"Etc/UTC|Etc/Universal\",\"Etc/UTC|Etc/Zulu\",\"Etc/UTC|UCT\",\"Etc/UTC|UTC\",\"Etc/UTC|Universal\",\"Etc/UTC|Zulu\",\"Europe/Belgrade|Europe/Ljubljana\",\"Europe/Belgrade|Europe/Podgorica\",\"Europe/Belgrade|Europe/Sarajevo\",\"Europe/Belgrade|Europe/Skopje\",\"Europe/Belgrade|Europe/Zagreb\",\"Europe/Chisinau|Europe/Tiraspol\",\"Europe/Dublin|Eire\",\"Europe/Helsinki|Europe/Mariehamn\",\"Europe/Istanbul|Asia/Istanbul\",\"Europe/Istanbul|Turkey\",\"Europe/Lisbon|Portugal\",\"Europe/London|Europe/Belfast\",\"Europe/London|Europe/Guernsey\",\"Europe/London|Europe/Isle_of_Man\",\"Europe/London|Europe/Jersey\",\"Europe/London|GB\",\"Europe/London|GB-Eire\",\"Europe/Moscow|W-SU\",\"Europe/Oslo|Arctic/Longyearbyen\",\"Europe/Oslo|Atlantic/Jan_Mayen\",\"Europe/Prague|Europe/Bratislava\",\"Europe/Rome|Europe/San_Marino\",\"Europe/Rome|Europe/Vatican\",\"Europe/Warsaw|Poland\",\"Europe/Zurich|Europe/Busingen\",\"Europe/Zurich|Europe/Vaduz\",\"Indian/Christmas|Etc/GMT-7\",\"Pacific/Auckland|Antarctica/McMurdo\",\"Pacific/Auckland|Antarctica/South_Pole\",\"Pacific/Auckland|NZ\",\"Pacific/Chatham|NZ-CHAT\",\"Pacific/Chuuk|Pacific/Truk\",\"Pacific/Chuuk|Pacific/Yap\",\"Pacific/Easter|Chile/EasterIsland\",\"Pacific/Guam|Pacific/Saipan\",\"Pacific/Honolulu|Pacific/Johnston\",\"Pacific/Honolulu|US/Hawaii\",\"Pacific/Kwajalein|Kwajalein\",\"Pacific/Pago_Pago|Pacific/Midway\",\"Pacific/Pago_Pago|Pacific/Samoa\",\"Pacific/Pago_Pago|US/Samoa\",\"Pacific/Palau|Etc/GMT-9\",\"Pacific/Pohnpei|Pacific/Ponape\",\"Pacific/Port_Moresby|Etc/GMT-10\",\"Pacific/Tarawa|Etc/GMT-12\",\"Pacific/Tarawa|Pacific/Funafuti\",\"Pacific/Tarawa|Pacific/Wake\",\"Pacific/Tarawa|Pacific/Wallis\"],\"countries\":[\"AD|Europe/Andorra\",\"AE|Asia/Dubai\",\"AF|Asia/Kabul\",\"AG|America/Port_of_Spain America/Antigua\",\"AI|America/Port_of_Spain America/Anguilla\",\"AL|Europe/Tirane\",\"AM|Asia/Yerevan\",\"AO|Africa/Lagos Africa/Luanda\",\"AQ|Antarctica/Casey Antarctica/Davis Antarctica/DumontDUrville Antarctica/Mawson Antarctica/Palmer Antarctica/Rothera Antarctica/Syowa Antarctica/Troll Antarctica/Vostok Pacific/Auckland Antarctica/McMurdo\",\"AR|America/Argentina/Buenos_Aires America/Argentina/Cordoba America/Argentina/Salta America/Argentina/Jujuy America/Argentina/Tucuman America/Argentina/Catamarca America/Argentina/La_Rioja America/Argentina/San_Juan America/Argentina/Mendoza America/Argentina/San_Luis America/Argentina/Rio_Gallegos America/Argentina/Ushuaia\",\"AS|Pacific/Pago_Pago\",\"AT|Europe/Vienna\",\"AU|Australia/Lord_Howe Antarctica/Macquarie Australia/Hobart Australia/Currie Australia/Melbourne Australia/Sydney Australia/Broken_Hill Australia/Brisbane Australia/Lindeman Australia/Adelaide Australia/Darwin Australia/Perth Australia/Eucla\",\"AW|America/Curacao America/Aruba\",\"AX|Europe/Helsinki Europe/Mariehamn\",\"AZ|Asia/Baku\",\"BA|Europe/Belgrade Europe/Sarajevo\",\"BB|America/Barbados\",\"BD|Asia/Dhaka\",\"BE|Europe/Brussels\",\"BF|Africa/Abidjan Africa/Ouagadougou\",\"BG|Europe/Sofia\",\"BH|Asia/Qatar Asia/Bahrain\",\"BI|Africa/Maputo Africa/Bujumbura\",\"BJ|Africa/Lagos Africa/Porto-Novo\",\"BL|America/Port_of_Spain America/St_Barthelemy\",\"BM|Atlantic/Bermuda\",\"BN|Asia/Brunei\",\"BO|America/La_Paz\",\"BQ|America/Curacao America/Kralendijk\",\"BR|America/Noronha America/Belem America/Fortaleza America/Recife America/Araguaina America/Maceio America/Bahia America/Sao_Paulo America/Campo_Grande America/Cuiaba America/Santarem America/Porto_Velho America/Boa_Vista America/Manaus America/Eirunepe America/Rio_Branco\",\"BS|America/Nassau\",\"BT|Asia/Thimphu\",\"BW|Africa/Maputo Africa/Gaborone\",\"BY|Europe/Minsk\",\"BZ|America/Belize\",\"CA|America/St_Johns America/Halifax America/Glace_Bay America/Moncton America/Goose_Bay America/Blanc-Sablon America/Toronto America/Nipigon America/Thunder_Bay America/Iqaluit America/Pangnirtung America/Atikokan America/Winnipeg America/Rainy_River America/Resolute America/Rankin_Inlet America/Regina America/Swift_Current America/Edmonton America/Cambridge_Bay America/Yellowknife America/Inuvik America/Creston America/Dawson_Creek America/Fort_Nelson America/Vancouver America/Whitehorse America/Dawson\",\"CC|Indian/Cocos\",\"CD|Africa/Maputo Africa/Lagos Africa/Kinshasa Africa/Lubumbashi\",\"CF|Africa/Lagos Africa/Bangui\",\"CG|Africa/Lagos Africa/Brazzaville\",\"CH|Europe/Zurich\",\"CI|Africa/Abidjan\",\"CK|Pacific/Rarotonga\",\"CL|America/Santiago America/Punta_Arenas Pacific/Easter\",\"CM|Africa/Lagos Africa/Douala\",\"CN|Asia/Shanghai Asia/Urumqi\",\"CO|America/Bogota\",\"CR|America/Costa_Rica\",\"CU|America/Havana\",\"CV|Atlantic/Cape_Verde\",\"CW|America/Curacao\",\"CX|Indian/Christmas\",\"CY|Asia/Nicosia Asia/Famagusta\",\"CZ|Europe/Prague\",\"DE|Europe/Zurich Europe/Berlin Europe/Busingen\",\"DJ|Africa/Nairobi Africa/Djibouti\",\"DK|Europe/Copenhagen\",\"DM|America/Port_of_Spain America/Dominica\",\"DO|America/Santo_Domingo\",\"DZ|Africa/Algiers\",\"EC|America/Guayaquil Pacific/Galapagos\",\"EE|Europe/Tallinn\",\"EG|Africa/Cairo\",\"EH|Africa/El_Aaiun\",\"ER|Africa/Nairobi Africa/Asmara\",\"ES|Europe/Madrid Africa/Ceuta Atlantic/Canary\",\"ET|Africa/Nairobi Africa/Addis_Ababa\",\"FI|Europe/Helsinki\",\"FJ|Pacific/Fiji\",\"FK|Atlantic/Stanley\",\"FM|Pacific/Chuuk Pacific/Pohnpei Pacific/Kosrae\",\"FO|Atlantic/Faroe\",\"FR|Europe/Paris\",\"GA|Africa/Lagos Africa/Libreville\",\"GB|Europe/London\",\"GD|America/Port_of_Spain America/Grenada\",\"GE|Asia/Tbilisi\",\"GF|America/Cayenne\",\"GG|Europe/London Europe/Guernsey\",\"GH|Africa/Accra\",\"GI|Europe/Gibraltar\",\"GL|America/Nuuk America/Danmarkshavn America/Scoresbysund America/Thule\",\"GM|Africa/Abidjan Africa/Banjul\",\"GN|Africa/Abidjan Africa/Conakry\",\"GP|America/Port_of_Spain America/Guadeloupe\",\"GQ|Africa/Lagos Africa/Malabo\",\"GR|Europe/Athens\",\"GS|Atlantic/South_Georgia\",\"GT|America/Guatemala\",\"GU|Pacific/Guam\",\"GW|Africa/Bissau\",\"GY|America/Guyana\",\"HK|Asia/Hong_Kong\",\"HN|America/Tegucigalpa\",\"HR|Europe/Belgrade Europe/Zagreb\",\"HT|America/Port-au-Prince\",\"HU|Europe/Budapest\",\"ID|Asia/Jakarta Asia/Pontianak Asia/Makassar Asia/Jayapura\",\"IE|Europe/Dublin\",\"IL|Asia/Jerusalem\",\"IM|Europe/London Europe/Isle_of_Man\",\"IN|Asia/Kolkata\",\"IO|Indian/Chagos\",\"IQ|Asia/Baghdad\",\"IR|Asia/Tehran\",\"IS|Atlantic/Reykjavik\",\"IT|Europe/Rome\",\"JE|Europe/London Europe/Jersey\",\"JM|America/Jamaica\",\"JO|Asia/Amman\",\"JP|Asia/Tokyo\",\"KE|Africa/Nairobi\",\"KG|Asia/Bishkek\",\"KH|Asia/Bangkok Asia/Phnom_Penh\",\"KI|Pacific/Tarawa Pacific/Enderbury Pacific/Kiritimati\",\"KM|Africa/Nairobi Indian/Comoro\",\"KN|America/Port_of_Spain America/St_Kitts\",\"KP|Asia/Pyongyang\",\"KR|Asia/Seoul\",\"KW|Asia/Riyadh Asia/Kuwait\",\"KY|America/Panama America/Cayman\",\"KZ|Asia/Almaty Asia/Qyzylorda Asia/Qostanay Asia/Aqtobe Asia/Aqtau Asia/Atyrau Asia/Oral\",\"LA|Asia/Bangkok Asia/Vientiane\",\"LB|Asia/Beirut\",\"LC|America/Port_of_Spain America/St_Lucia\",\"LI|Europe/Zurich Europe/Vaduz\",\"LK|Asia/Colombo\",\"LR|Africa/Monrovia\",\"LS|Africa/Johannesburg Africa/Maseru\",\"LT|Europe/Vilnius\",\"LU|Europe/Luxembourg\",\"LV|Europe/Riga\",\"LY|Africa/Tripoli\",\"MA|Africa/Casablanca\",\"MC|Europe/Monaco\",\"MD|Europe/Chisinau\",\"ME|Europe/Belgrade Europe/Podgorica\",\"MF|America/Port_of_Spain America/Marigot\",\"MG|Africa/Nairobi Indian/Antananarivo\",\"MH|Pacific/Majuro Pacific/Kwajalein\",\"MK|Europe/Belgrade Europe/Skopje\",\"ML|Africa/Abidjan Africa/Bamako\",\"MM|Asia/Yangon\",\"MN|Asia/Ulaanbaatar Asia/Hovd Asia/Choibalsan\",\"MO|Asia/Macau\",\"MP|Pacific/Guam Pacific/Saipan\",\"MQ|America/Martinique\",\"MR|Africa/Abidjan Africa/Nouakchott\",\"MS|America/Port_of_Spain America/Montserrat\",\"MT|Europe/Malta\",\"MU|Indian/Mauritius\",\"MV|Indian/Maldives\",\"MW|Africa/Maputo Africa/Blantyre\",\"MX|America/Mexico_City America/Cancun America/Merida America/Monterrey America/Matamoros America/Mazatlan America/Chihuahua America/Ojinaga America/Hermosillo America/Tijuana America/Bahia_Banderas\",\"MY|Asia/Kuala_Lumpur Asia/Kuching\",\"MZ|Africa/Maputo\",\"NA|Africa/Windhoek\",\"NC|Pacific/Noumea\",\"NE|Africa/Lagos Africa/Niamey\",\"NF|Pacific/Norfolk\",\"NG|Africa/Lagos\",\"NI|America/Managua\",\"NL|Europe/Amsterdam\",\"NO|Europe/Oslo\",\"NP|Asia/Kathmandu\",\"NR|Pacific/Nauru\",\"NU|Pacific/Niue\",\"NZ|Pacific/Auckland Pacific/Chatham\",\"OM|Asia/Dubai Asia/Muscat\",\"PA|America/Panama\",\"PE|America/Lima\",\"PF|Pacific/Tahiti Pacific/Marquesas Pacific/Gambier\",\"PG|Pacific/Port_Moresby Pacific/Bougainville\",\"PH|Asia/Manila\",\"PK|Asia/Karachi\",\"PL|Europe/Warsaw\",\"PM|America/Miquelon\",\"PN|Pacific/Pitcairn\",\"PR|America/Puerto_Rico\",\"PS|Asia/Gaza Asia/Hebron\",\"PT|Europe/Lisbon Atlantic/Madeira Atlantic/Azores\",\"PW|Pacific/Palau\",\"PY|America/Asuncion\",\"QA|Asia/Qatar\",\"RE|Indian/Reunion\",\"RO|Europe/Bucharest\",\"RS|Europe/Belgrade\",\"RU|Europe/Kaliningrad Europe/Moscow Europe/Simferopol Europe/Kirov Europe/Astrakhan Europe/Volgograd Europe/Saratov Europe/Ulyanovsk Europe/Samara Asia/Yekaterinburg Asia/Omsk Asia/Novosibirsk Asia/Barnaul Asia/Tomsk Asia/Novokuznetsk Asia/Krasnoyarsk Asia/Irkutsk Asia/Chita Asia/Yakutsk Asia/Khandyga Asia/Vladivostok Asia/Ust-Nera Asia/Magadan Asia/Sakhalin Asia/Srednekolymsk Asia/Kamchatka Asia/Anadyr\",\"RW|Africa/Maputo Africa/Kigali\",\"SA|Asia/Riyadh\",\"SB|Pacific/Guadalcanal\",\"SC|Indian/Mahe\",\"SD|Africa/Khartoum\",\"SE|Europe/Stockholm\",\"SG|Asia/Singapore\",\"SH|Africa/Abidjan Atlantic/St_Helena\",\"SI|Europe/Belgrade Europe/Ljubljana\",\"SJ|Europe/Oslo Arctic/Longyearbyen\",\"SK|Europe/Prague Europe/Bratislava\",\"SL|Africa/Abidjan Africa/Freetown\",\"SM|Europe/Rome Europe/San_Marino\",\"SN|Africa/Abidjan Africa/Dakar\",\"SO|Africa/Nairobi Africa/Mogadishu\",\"SR|America/Paramaribo\",\"SS|Africa/Juba\",\"ST|Africa/Sao_Tome\",\"SV|America/El_Salvador\",\"SX|America/Curacao America/Lower_Princes\",\"SY|Asia/Damascus\",\"SZ|Africa/Johannesburg Africa/Mbabane\",\"TC|America/Grand_Turk\",\"TD|Africa/Ndjamena\",\"TF|Indian/Reunion Indian/Kerguelen\",\"TG|Africa/Abidjan Africa/Lome\",\"TH|Asia/Bangkok\",\"TJ|Asia/Dushanbe\",\"TK|Pacific/Fakaofo\",\"TL|Asia/Dili\",\"TM|Asia/Ashgabat\",\"TN|Africa/Tunis\",\"TO|Pacific/Tongatapu\",\"TR|Europe/Istanbul\",\"TT|America/Port_of_Spain\",\"TV|Pacific/Funafuti\",\"TW|Asia/Taipei\",\"TZ|Africa/Nairobi Africa/Dar_es_Salaam\",\"UA|Europe/Simferopol Europe/Kiev Europe/Uzhgorod Europe/Zaporozhye\",\"UG|Africa/Nairobi Africa/Kampala\",\"UM|Pacific/Pago_Pago Pacific/Wake Pacific/Honolulu Pacific/Midway\",\"US|America/New_York America/Detroit America/Kentucky/Louisville America/Kentucky/Monticello America/Indiana/Indianapolis America/Indiana/Vincennes America/Indiana/Winamac America/Indiana/Marengo America/Indiana/Petersburg America/Indiana/Vevay America/Chicago America/Indiana/Tell_City America/Indiana/Knox America/Menominee America/North_Dakota/Center America/North_Dakota/New_Salem America/North_Dakota/Beulah America/Denver America/Boise America/Phoenix America/Los_Angeles America/Anchorage America/Juneau America/Sitka America/Metlakatla America/Yakutat America/Nome America/Adak Pacific/Honolulu\",\"UY|America/Montevideo\",\"UZ|Asia/Samarkand Asia/Tashkent\",\"VA|Europe/Rome Europe/Vatican\",\"VC|America/Port_of_Spain America/St_Vincent\",\"VE|America/Caracas\",\"VG|America/Port_of_Spain America/Tortola\",\"VI|America/Port_of_Spain America/St_Thomas\",\"VN|Asia/Bangkok Asia/Ho_Chi_Minh\",\"VU|Pacific/Efate\",\"WF|Pacific/Wallis\",\"WS|Pacific/Apia\",\"YE|Asia/Riyadh Asia/Aden\",\"YT|Africa/Nairobi Indian/Mayotte\",\"ZA|Africa/Johannesburg\",\"ZM|Africa/Maputo Africa/Lusaka\",\"ZW|Africa/Maputo Africa/Harare\"]}");
 
 /***/ }),
-/* 741 */
+/* 742 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68696,9 +60478,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isFauxDynContextField = exports.fieldPathsEqual = exports.isEmptyFieldPath = exports.createFieldPath = exports.getItemRefSlug = exports.getValueFieldSlug = exports.isFieldOfItemRef = void 0;
 
-var _first = _interopRequireDefault(__webpack_require__(742));
+var _first = _interopRequireDefault(__webpack_require__(743));
 
-var _last = _interopRequireDefault(__webpack_require__(744));
+var _last = _interopRequireDefault(__webpack_require__(745));
 /**
  * These utils are for handling field paths in node params (DynList filters and CondVis).
  * For basic fields the fieldPath is currently just the field slug. For fields of an
@@ -68759,14 +60541,14 @@ var isFauxDynContextField = function isFauxDynContextField(fieldPath) {
 exports.isFauxDynContextField = isFauxDynContextField;
 
 /***/ }),
-/* 742 */
+/* 743 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(743);
+module.exports = __webpack_require__(744);
 
 
 /***/ }),
-/* 743 */
+/* 744 */
 /***/ (function(module, exports) {
 
 /**
@@ -68795,7 +60577,7 @@ module.exports = head;
 
 
 /***/ }),
-/* 744 */
+/* 745 */
 /***/ (function(module, exports) {
 
 /**
@@ -68821,7 +60603,7 @@ module.exports = last;
 
 
 /***/ }),
-/* 745 */
+/* 746 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68878,7 +60660,7 @@ var normalizeConditionFields = function normalizeConditionFields() {
 exports.normalizeConditionFields = normalizeConditionFields;
 
 /***/ }),
-/* 746 */
+/* 747 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68888,7 +60670,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _SlugUtils = __webpack_require__(747);
+var _SlugUtils = __webpack_require__(748);
 
 Object.keys(_SlugUtils).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -68901,7 +60683,7 @@ Object.keys(_SlugUtils).forEach(function (key) {
 });
 
 /***/ }),
-/* 747 */
+/* 748 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68918,7 +60700,7 @@ Object.defineProperty(exports, "restoreSlug", {
 });
 exports.collectionSlug = exports.isDynamoGraphQLFieldSlug = exports.fieldSlug = void 0;
 
-var _SchemaEncoder = __webpack_require__(748);
+var _SchemaEncoder = __webpack_require__(749);
 
 var fieldSlug = function fieldSlug(slug) {
   return (0, _SchemaEncoder.fieldSlug)({
@@ -68944,7 +60726,7 @@ var collectionSlug = function collectionSlug(slug) {
 exports.collectionSlug = collectionSlug;
 
 /***/ }),
-/* 748 */
+/* 749 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68954,7 +60736,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _SchemaEncoder = __webpack_require__(749);
+var _SchemaEncoder = __webpack_require__(750);
 
 Object.keys(_SchemaEncoder).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -68967,7 +60749,7 @@ Object.keys(_SchemaEncoder).forEach(function (key) {
 });
 
 /***/ }),
-/* 749 */
+/* 750 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68981,7 +60763,7 @@ Object.defineProperty(exports, "__esModule", {
 exports._crapCode = _crapCode;
 exports.restoreSlug = exports._test = exports.fieldSlug = exports.collSlug = void 0;
 
-var _invert = _interopRequireDefault(__webpack_require__(750));
+var _invert = _interopRequireDefault(__webpack_require__(751));
 /**
  * This file exists because GraphQL only allows /^[a-z_][a-z_0-9]$/i identifiers, but we allow things to be slugs,
  * like: "foo-bar". Since we allow characters that are not allowed by GraphQL, we need to convert these slugs into an
@@ -69103,11 +60885,11 @@ var restoreSlug = function restoreSlug(slugWithPrefixAndCrapCode) {
 exports.restoreSlug = restoreSlug;
 
 /***/ }),
-/* 750 */
+/* 751 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var constant = __webpack_require__(278),
-    createInverter = __webpack_require__(751),
+    createInverter = __webpack_require__(752),
     identity = __webpack_require__(92);
 
 /** Used for built-in method references. */
@@ -69151,10 +60933,10 @@ module.exports = invert;
 
 
 /***/ }),
-/* 751 */
+/* 752 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseInverter = __webpack_require__(752);
+var baseInverter = __webpack_require__(753);
 
 /**
  * Creates a function like `_.invertBy`.
@@ -69174,7 +60956,7 @@ module.exports = createInverter;
 
 
 /***/ }),
-/* 752 */
+/* 753 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseForOwn = __webpack_require__(125);
@@ -69201,7 +60983,7 @@ module.exports = baseInverter;
 
 
 /***/ }),
-/* 753 */
+/* 754 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69219,21 +61001,21 @@ Object.defineProperty(exports, "__esModule", {
 exports.getHash = getHash;
 exports.once = exports.singleMemo = exports.cacheMemo = exports.createMemoizeFactoryWithDepth = exports.weakMemo = exports.memoize = exports.isEqual = void 0;
 
-var _reselect = __webpack_require__(754);
+var _reselect = __webpack_require__(755);
 
-var _lruCache = _interopRequireDefault(__webpack_require__(755));
+var _lruCache = _interopRequireDefault(__webpack_require__(756));
 
 var _isArray = _interopRequireDefault(__webpack_require__(10));
 
-var _isBoolean = _interopRequireDefault(__webpack_require__(758));
+var _isBoolean = _interopRequireDefault(__webpack_require__(759));
 
-var _isDate = _interopRequireDefault(__webpack_require__(759));
+var _isDate = _interopRequireDefault(__webpack_require__(760));
 
 var _isFunction = _interopRequireDefault(__webpack_require__(67));
 
 var _isObject = _interopRequireDefault(__webpack_require__(18));
 
-var _toPairs = _interopRequireDefault(__webpack_require__(761)); // import lodash functions individually to minimize bundle size
+var _toPairs = _interopRequireDefault(__webpack_require__(762)); // import lodash functions individually to minimize bundle size
 
 
 var True = {
@@ -69500,7 +61282,7 @@ var once = function once(fn) {
 exports.once = once;
 
 /***/ }),
-/* 754 */
+/* 755 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69619,14 +61401,14 @@ function createStructuredSelector(selectors) {
 }
 
 /***/ }),
-/* 755 */
+/* 756 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 // A linked list to keep track of recently-used-ness
-const Yallist = __webpack_require__(756)
+const Yallist = __webpack_require__(757)
 
 const MAX = Symbol('max')
 const LENGTH = Symbol('length')
@@ -69960,7 +61742,7 @@ module.exports = LRUCache
 
 
 /***/ }),
-/* 756 */
+/* 757 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70388,12 +62170,12 @@ function Node (value, prev, next, list) {
 
 try {
   // add if support for Symbol.iterator is present
-  __webpack_require__(757)(Yallist)
+  __webpack_require__(758)(Yallist)
 } catch (er) {}
 
 
 /***/ }),
-/* 757 */
+/* 758 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70408,7 +62190,7 @@ module.exports = function (Yallist) {
 
 
 /***/ }),
-/* 758 */
+/* 759 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -70443,10 +62225,10 @@ module.exports = isBoolean;
 
 
 /***/ }),
-/* 759 */
+/* 760 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsDate = __webpack_require__(760),
+var baseIsDate = __webpack_require__(761),
     baseUnary = __webpack_require__(120),
     nodeUtil = __webpack_require__(121);
 
@@ -70476,7 +62258,7 @@ module.exports = isDate;
 
 
 /***/ }),
-/* 760 */
+/* 761 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -70500,10 +62282,10 @@ module.exports = baseIsDate;
 
 
 /***/ }),
-/* 761 */
+/* 762 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var createToPairs = __webpack_require__(762),
+var createToPairs = __webpack_require__(763),
     keys = __webpack_require__(52);
 
 /**
@@ -70536,13 +62318,13 @@ module.exports = toPairs;
 
 
 /***/ }),
-/* 762 */
+/* 763 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseToPairs = __webpack_require__(763),
+var baseToPairs = __webpack_require__(764),
     getTag = __webpack_require__(53),
     mapToArray = __webpack_require__(249),
-    setToPairs = __webpack_require__(764);
+    setToPairs = __webpack_require__(765);
 
 /** `Object#toString` result references. */
 var mapTag = '[object Map]',
@@ -70572,7 +62354,7 @@ module.exports = createToPairs;
 
 
 /***/ }),
-/* 763 */
+/* 764 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayMap = __webpack_require__(168);
@@ -70596,7 +62378,7 @@ module.exports = baseToPairs;
 
 
 /***/ }),
-/* 764 */
+/* 765 */
 /***/ (function(module, exports) {
 
 /**
@@ -70620,11 +62402,11 @@ module.exports = setToPairs;
 
 
 /***/ }),
-/* 765 */
+/* 766 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseAssignValue = __webpack_require__(93),
-    createAggregator = __webpack_require__(766);
+    createAggregator = __webpack_require__(767);
 
 /**
  * Creates an object composed of keys generated from the results of running
@@ -70662,11 +62444,11 @@ module.exports = keyBy;
 
 
 /***/ }),
-/* 766 */
+/* 767 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayAggregator = __webpack_require__(767),
-    baseAggregator = __webpack_require__(768),
+var arrayAggregator = __webpack_require__(768),
+    baseAggregator = __webpack_require__(769),
     baseIteratee = __webpack_require__(36),
     isArray = __webpack_require__(10);
 
@@ -70691,7 +62473,7 @@ module.exports = createAggregator;
 
 
 /***/ }),
-/* 767 */
+/* 768 */
 /***/ (function(module, exports) {
 
 /**
@@ -70719,7 +62501,7 @@ module.exports = arrayAggregator;
 
 
 /***/ }),
-/* 768 */
+/* 769 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseEach = __webpack_require__(171);
@@ -70746,7 +62528,7 @@ module.exports = baseAggregator;
 
 
 /***/ }),
-/* 769 */
+/* 770 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseGetTag = __webpack_require__(32),
@@ -70790,7 +62572,7 @@ module.exports = isNumber;
 
 
 /***/ }),
-/* 770 */
+/* 771 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -70808,13 +62590,13 @@ exports.renderPriceFromSettings = renderPriceFromSettings;
 
 var _get = _interopRequireDefault(__webpack_require__(70));
 
-var _isInteger = _interopRequireDefault(__webpack_require__(771));
+var _isInteger = _interopRequireDefault(__webpack_require__(772));
 
-var _accounting = __webpack_require__(772);
+var _accounting = __webpack_require__(773);
 
-var _simpleReplaceTokens = __webpack_require__(773);
+var _simpleReplaceTokens = __webpack_require__(774);
 
-var _CurrencyUtils = __webpack_require__(360);
+var _CurrencyUtils = __webpack_require__(359);
 /**
  * Will convert a Price ({ value, unit }) into a FormattedPrice ({ value, unit, string }) with the string
  * formatted based on currency settings.
@@ -70915,7 +62697,7 @@ function renderPriceFromSettings(price) {
 }
 
 /***/ }),
-/* 771 */
+/* 772 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toInteger = __webpack_require__(169);
@@ -70954,7 +62736,7 @@ module.exports = isInteger;
 
 
 /***/ }),
-/* 772 */
+/* 773 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -71351,7 +63133,7 @@ module.exports = isInteger;
 
 
 /***/ }),
-/* 773 */
+/* 774 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71368,7 +63150,7 @@ var _isFunction = _interopRequireDefault(__webpack_require__(67));
 
 var _get = _interopRequireDefault(__webpack_require__(70));
 
-var _shared = __webpack_require__(774); // simpleReplaceTokens is in it's own file to fix a circular dependency
+var _shared = __webpack_require__(775); // simpleReplaceTokens is in it's own file to fix a circular dependency
 
 /**
  * Replaces tokens in text with relating field values. This is a simple version
@@ -71390,7 +63172,7 @@ function simpleReplaceTokens(replaceable, item) {
 }
 
 /***/ }),
-/* 774 */
+/* 775 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71406,7 +63188,7 @@ exports.extractToken = extractToken;
 exports.stripLegacyShorthandSuffix = stripLegacyShorthandSuffix;
 exports.getExternalTokenPattern = exports.getCatchAllTokenPattern = exports.getWfTokenPattern = void 0;
 
-var _unescape = _interopRequireDefault(__webpack_require__(775));
+var _unescape = _interopRequireDefault(__webpack_require__(776));
 
 var getWfTokenPattern = function getWfTokenPattern() {
   return /{{\s*wf\s*({.*?})\s*}}/g;
@@ -71478,11 +63260,11 @@ function stripLegacyShorthandSuffix(tokenPath) {
 }
 
 /***/ }),
-/* 775 */
+/* 776 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var toString = __webpack_require__(54),
-    unescapeHtmlChar = __webpack_require__(776);
+    unescapeHtmlChar = __webpack_require__(777);
 
 /** Used to match HTML entities and HTML characters. */
 var reEscapedHtml = /&(?:amp|lt|gt|quot|#39);/g,
@@ -71518,7 +63300,7 @@ module.exports = unescape;
 
 
 /***/ }),
-/* 776 */
+/* 777 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var basePropertyOf = __webpack_require__(217);
@@ -71545,7 +63327,7 @@ module.exports = unescapeHtmlChar;
 
 
 /***/ }),
-/* 777 */
+/* 778 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71555,7 +63337,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Transformers = __webpack_require__(778);
+var _Transformers = __webpack_require__(779);
 
 Object.keys(_Transformers).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -71568,7 +63350,7 @@ Object.keys(_Transformers).forEach(function (key) {
 });
 
 /***/ }),
-/* 778 */
+/* 779 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71578,7 +63360,7 @@ var _interopRequireDefault2 = __webpack_require__(0);
 
 var _toConsumableArray2 = _interopRequireDefault2(__webpack_require__(71));
 
-var _toArray2 = _interopRequireDefault2(__webpack_require__(779));
+var _toArray2 = _interopRequireDefault2(__webpack_require__(780));
 
 var _slicedToArray2 = _interopRequireDefault2(__webpack_require__(77));
 
@@ -71589,13 +63371,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.transformers = void 0;
 
-var _escape = _interopRequireDefault(__webpack_require__(361));
+var _escape = _interopRequireDefault(__webpack_require__(360));
 
 var _momentTimezone = _interopRequireDefault(__webpack_require__(219));
 
-var _CurrencyUtils = __webpack_require__(359);
+var _CurrencyUtils = __webpack_require__(358);
 
-var _DynamoFormattingUtils = __webpack_require__(362); // GraphQL api returns date-times as ISO strings and simple dates as YYYY-MM-DD format
+var _DynamoFormattingUtils = __webpack_require__(361); // GraphQL api returns date-times as ISO strings and simple dates as YYYY-MM-DD format
 
 
 var isSimpleDateFormat = function isSimpleDateFormat(value) {
@@ -71732,7 +63514,7 @@ var transformers = function transformers(value, filter, context) {
 exports.transformers = transformers;
 
 /***/ }),
-/* 779 */
+/* 780 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithHoles = __webpack_require__(348);
@@ -71748,7 +63530,7 @@ function _toArray(arr) {
 module.exports = _toArray;
 
 /***/ }),
-/* 780 */
+/* 781 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var basePropertyOf = __webpack_require__(217);
@@ -71775,10 +63557,10 @@ module.exports = escapeHtmlChar;
 
 
 /***/ }),
-/* 781 */
+/* 782 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseClone = __webpack_require__(782);
+var baseClone = __webpack_require__(783);
 
 /** Used to compose bitmasks for cloning. */
 var CLONE_DEEP_FLAG = 1,
@@ -71810,29 +63592,29 @@ module.exports = cloneDeep;
 
 
 /***/ }),
-/* 782 */
+/* 783 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Stack = __webpack_require__(114),
     arrayEach = __webpack_require__(175),
     assignValue = __webpack_require__(173),
-    baseAssign = __webpack_require__(783),
-    baseAssignIn = __webpack_require__(784),
+    baseAssign = __webpack_require__(784),
+    baseAssignIn = __webpack_require__(785),
     cloneBuffer = __webpack_require__(335),
     copyArray = __webpack_require__(180),
-    copySymbols = __webpack_require__(785),
-    copySymbolsIn = __webpack_require__(786),
+    copySymbols = __webpack_require__(786),
+    copySymbolsIn = __webpack_require__(787),
     getAllKeys = __webpack_require__(250),
     getAllKeysIn = __webpack_require__(273),
     getTag = __webpack_require__(53),
-    initCloneArray = __webpack_require__(787),
-    initCloneByTag = __webpack_require__(788),
+    initCloneArray = __webpack_require__(788),
+    initCloneByTag = __webpack_require__(789),
     initCloneObject = __webpack_require__(337),
     isArray = __webpack_require__(10),
     isBuffer = __webpack_require__(69),
-    isMap = __webpack_require__(792),
+    isMap = __webpack_require__(793),
     isObject = __webpack_require__(18),
-    isSet = __webpack_require__(794),
+    isSet = __webpack_require__(795),
     keys = __webpack_require__(52),
     keysIn = __webpack_require__(94);
 
@@ -71982,7 +63764,7 @@ module.exports = baseClone;
 
 
 /***/ }),
-/* 783 */
+/* 784 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(105),
@@ -72005,7 +63787,7 @@ module.exports = baseAssign;
 
 
 /***/ }),
-/* 784 */
+/* 785 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(105),
@@ -72028,7 +63810,7 @@ module.exports = baseAssignIn;
 
 
 /***/ }),
-/* 785 */
+/* 786 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(105),
@@ -72050,7 +63832,7 @@ module.exports = copySymbols;
 
 
 /***/ }),
-/* 786 */
+/* 787 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var copyObject = __webpack_require__(105),
@@ -72072,7 +63854,7 @@ module.exports = copySymbolsIn;
 
 
 /***/ }),
-/* 787 */
+/* 788 */
 /***/ (function(module, exports) {
 
 /** Used for built-in method references. */
@@ -72104,13 +63886,13 @@ module.exports = initCloneArray;
 
 
 /***/ }),
-/* 788 */
+/* 789 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var cloneArrayBuffer = __webpack_require__(216),
-    cloneDataView = __webpack_require__(789),
-    cloneRegExp = __webpack_require__(790),
-    cloneSymbol = __webpack_require__(791),
+    cloneDataView = __webpack_require__(790),
+    cloneRegExp = __webpack_require__(791),
+    cloneSymbol = __webpack_require__(792),
     cloneTypedArray = __webpack_require__(336);
 
 /** `Object#toString` result references. */
@@ -72187,7 +63969,7 @@ module.exports = initCloneByTag;
 
 
 /***/ }),
-/* 789 */
+/* 790 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var cloneArrayBuffer = __webpack_require__(216);
@@ -72209,7 +63991,7 @@ module.exports = cloneDataView;
 
 
 /***/ }),
-/* 790 */
+/* 791 */
 /***/ (function(module, exports) {
 
 /** Used to match `RegExp` flags from their coerced string values. */
@@ -72232,7 +64014,7 @@ module.exports = cloneRegExp;
 
 
 /***/ }),
-/* 791 */
+/* 792 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Symbol = __webpack_require__(68);
@@ -72256,10 +64038,10 @@ module.exports = cloneSymbol;
 
 
 /***/ }),
-/* 792 */
+/* 793 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsMap = __webpack_require__(793),
+var baseIsMap = __webpack_require__(794),
     baseUnary = __webpack_require__(120),
     nodeUtil = __webpack_require__(121);
 
@@ -72289,7 +64071,7 @@ module.exports = isMap;
 
 
 /***/ }),
-/* 793 */
+/* 794 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getTag = __webpack_require__(53),
@@ -72313,10 +64095,10 @@ module.exports = baseIsMap;
 
 
 /***/ }),
-/* 794 */
+/* 795 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseIsSet = __webpack_require__(795),
+var baseIsSet = __webpack_require__(796),
     baseUnary = __webpack_require__(120),
     nodeUtil = __webpack_require__(121);
 
@@ -72346,7 +64128,7 @@ module.exports = isSet;
 
 
 /***/ }),
-/* 795 */
+/* 796 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getTag = __webpack_require__(53),
@@ -72370,7 +64152,7 @@ module.exports = baseIsSet;
 
 
 /***/ }),
-/* 796 */
+/* 797 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayEach = __webpack_require__(175),
@@ -72441,7 +64223,7 @@ module.exports = transform;
 
 
 /***/ }),
-/* 797 */
+/* 798 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72535,7 +64317,7 @@ var createNewStore = function createNewStore() {
 exports.createNewStore = createNewStore;
 
 /***/ }),
-/* 798 */
+/* 799 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72556,7 +64338,7 @@ exports.PillGroups = void 0;
 
 var _defineProperty2 = _interopRequireDefault(__webpack_require__(20));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var KEY_CODES = Object.freeze({
   RETURN: 13,
@@ -72955,7 +64737,7 @@ function () {
 }();
 
 /***/ }),
-/* 799 */
+/* 800 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72996,11 +64778,11 @@ var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
 var _graphqlTag = _interopRequireDefault(__webpack_require__(60));
 
-var _mergeWith = _interopRequireDefault(__webpack_require__(800));
+var _mergeWith = _interopRequireDefault(__webpack_require__(801));
 
 var _forEach = _interopRequireDefault(__webpack_require__(174));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _eventHandlerProxyWithApolloClient = _interopRequireDefault(__webpack_require__(58));
 
@@ -73842,7 +65624,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 800 */
+/* 801 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var baseMerge = __webpack_require__(333),
@@ -73887,7 +65669,7 @@ module.exports = mergeWith;
 
 
 /***/ }),
-/* 801 */
+/* 802 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73904,7 +65686,7 @@ var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
 var _debounce = _interopRequireDefault(__webpack_require__(275));
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 
 var _eventHandlerProxyWithApolloClient = _interopRequireDefault(__webpack_require__(58));
 
@@ -74444,7 +66226,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 802 */
+/* 803 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74475,7 +66257,7 @@ var _extends2 = _interopRequireDefault(__webpack_require__(12));
 
 var _graphqlTag = _interopRequireDefault(__webpack_require__(60));
 
-var _qs = _interopRequireDefault(__webpack_require__(803));
+var _qs = _interopRequireDefault(__webpack_require__(804));
 
 var _eventHandlerProxyWithApolloClient = _interopRequireDefault(__webpack_require__(58));
 
@@ -74483,7 +66265,7 @@ var _commerceUtils = __webpack_require__(35);
 
 var _rendering = __webpack_require__(146);
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 /* globals window, CustomEvent */
 // FIXME: weak type is used
 // eslint-disable-next-line flowtype/no-weak-types
@@ -74569,15 +66351,15 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 803 */
+/* 804 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var stringify = __webpack_require__(804);
-var parse = __webpack_require__(805);
-var formats = __webpack_require__(365);
+var stringify = __webpack_require__(805);
+var parse = __webpack_require__(806);
+var formats = __webpack_require__(364);
 
 module.exports = {
     formats: formats,
@@ -74587,14 +66369,14 @@ module.exports = {
 
 
 /***/ }),
-/* 804 */
+/* 805 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(221);
-var formats = __webpack_require__(365);
+var formats = __webpack_require__(364);
 var has = Object.prototype.hasOwnProperty;
 
 var arrayPrefixGenerators = {
@@ -74865,7 +66647,7 @@ module.exports = function (object, opts) {
 
 
 /***/ }),
-/* 805 */
+/* 806 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75129,13 +66911,13 @@ module.exports = function (str, opts) {
 
 
 /***/ }),
-/* 806 */
+/* 807 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(807);
-/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(366);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(808);
+/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(365);
 
 
 
@@ -75164,12 +66946,12 @@ if (!globalNS.Promise) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47)))
 
 /***/ }),
-/* 807 */
+/* 808 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(setImmediate) {/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(366);
+/* WEBPACK VAR INJECTION */(function(setImmediate) {/* harmony import */ var _finally__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(365);
 
 
 // Store setTimeout reference so promise-polyfill will be unaffected by
@@ -75399,10 +67181,10 @@ Promise._unhandledRejectionFn = function _unhandledRejectionFn(err) {
 
 /* harmony default export */ __webpack_exports__["default"] = (Promise);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(808).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(809).setImmediate))
 
 /***/ }),
-/* 808 */
+/* 809 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -75458,7 +67240,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(809);
+__webpack_require__(810);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -75472,7 +67254,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47)))
 
 /***/ }),
-/* 809 */
+/* 810 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -75665,14 +67447,14 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47), __webpack_require__(74)))
 
 /***/ }),
-/* 810 */
+/* 811 */
 /***/ (function(module, exports, __webpack_require__) {
 
-if (!window.fetch) window.fetch = __webpack_require__(367).default || __webpack_require__(367);
+if (!window.fetch) window.fetch = __webpack_require__(366).default || __webpack_require__(366);
 
 
 /***/ }),
-/* 811 */
+/* 812 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75691,13 +67473,13 @@ var _commerceUtils = __webpack_require__(35);
 
 var _checkoutUtils = __webpack_require__(147);
 
-var _cartUtils = __webpack_require__(364);
+var _cartUtils = __webpack_require__(363);
 
 var _debug = _interopRequireDefault(__webpack_require__(76));
 
-var _checkoutMutations = __webpack_require__(363);
+var _checkoutMutations = __webpack_require__(362);
 
-var _constants = __webpack_require__(25);
+var _constants = __webpack_require__(21);
 /* global window, document, Element, CustomEvent, HTMLElement, HTMLFormElement */
 
 
@@ -76010,7 +67792,7 @@ var _default = {
 exports["default"] = _default;
 
 /***/ }),
-/* 812 */
+/* 813 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76034,7 +67816,7 @@ var _interopRequireDefault = __webpack_require__(0);
 
 var _slicedToArray2 = _interopRequireDefault(__webpack_require__(77));
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 Webflow.define('forms', module.exports = function ($, _) {
   var api = {};
@@ -76614,7 +68396,7 @@ Webflow.define('forms', module.exports = function ($, _) {
 });
 
 /***/ }),
-/* 813 */
+/* 814 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76628,7 +68410,7 @@ Webflow.define('forms', module.exports = function ($, _) {
  * Webflow: Navbar component
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 var IXEvents = __webpack_require__(148);
 
@@ -77213,7 +68995,7 @@ Webflow.define('navbar', module.exports = function ($, _) {
 });
 
 /***/ }),
-/* 814 */
+/* 815 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77227,7 +69009,7 @@ Webflow.define('navbar', module.exports = function ($, _) {
  * Webflow: Tabs component
  */
 
-var Webflow = __webpack_require__(21);
+var Webflow = __webpack_require__(22);
 
 var IXEvents = __webpack_require__(148);
 
@@ -77575,5 +69357,5 @@ Webflow.define('tabs', module.exports = function ($) {
  * Webflow: Interactions 2.0: Init
  */
 Webflow.require('ix2').init(
-{"events":{"e-7":{"id":"e-7","name":"","animationType":"custom","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-3","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-8"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|fbb2cfb0-0e22-75f4-4978-59c3b7e98b54","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|fbb2cfb0-0e22-75f4-4978-59c3b7e98b54","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":true,"playInReverse":false,"scrollOffsetValue":0,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1634534336596},"e-19":{"id":"e-19","name":"","animationType":"custom","eventTypeId":"SCROLLING_IN_VIEW","action":{"id":"","actionTypeId":"GENERAL_CONTINUOUS_ACTION","config":{"actionListId":"a-4","affectedElements":{},"duration":0}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d3","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d3","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":[{"continuousParameterGroupId":"a-4-p","smoothing":50,"startsEntering":true,"addStartOffset":false,"addOffsetValue":50,"startsExiting":false,"addEndOffset":false,"endOffsetValue":50}],"createdOn":1626860473655},"e-21":{"id":"e-21","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-25"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1632896086207},"e-23":{"id":"e-23","name":"","animationType":"custom","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-26"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1626765977818},"e-25":{"id":"e-25","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-37"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1632896086207},"e-26":{"id":"e-26","name":"","animationType":"custom","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-23"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1626765977820},"e-33":{"id":"e-33","name":"","animationType":"preset","eventTypeId":"NAVBAR_OPEN","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-9","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-34"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":null,"scrollOffsetUnit":null,"delay":null,"direction":null,"effectIn":null},"createdOn":1626227992075},"e-34":{"id":"e-34","name":"","animationType":"preset","eventTypeId":"NAVBAR_CLOSE","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-10","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-33"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":null,"scrollOffsetUnit":null,"delay":null,"direction":null,"effectIn":null},"createdOn":1626227992075},"e-37":{"id":"e-37","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-38"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207829212},"e-38":{"id":"e-38","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-37"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207829212},"e-39":{"id":"e-39","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-40"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207830864},"e-40":{"id":"e-40","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-39"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207830864},"e-41":{"id":"e-41","name":"","animationType":"preset","eventTypeId":"SCROLLING_IN_VIEW","action":{"id":"","actionTypeId":"GENERAL_CONTINUOUS_ACTION","config":{"actionListId":"a-4","affectedElements":{},"duration":0}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd45","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd45","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":[{"continuousParameterGroupId":"a-4-p","smoothing":50,"startsEntering":true,"addStartOffset":false,"addOffsetValue":50,"startsExiting":false,"addEndOffset":false,"endOffsetValue":50}],"createdOn":1645293057729},"e-42":{"id":"e-42","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-43"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-43":{"id":"e-43","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-42"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-44":{"id":"e-44","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-45"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-45":{"id":"e-45","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-44"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-46":{"id":"e-46","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-47"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645296870171},"e-47":{"id":"e-47","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-46"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645296870171},"e-48":{"id":"e-48","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-49"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645297920318},"e-49":{"id":"e-49","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-48"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645297920318}},"actionLists":{"a-3":{"id":"a-3","title":"Logo 3 [Loop]","actionItemGroups":[{"actionItems":[{"id":"a-3-n","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"","duration":50000,"target":{"useEventTarget":"CHILDREN","selector":".punks-slider_content","selectorGuids":["a041b608-b45e-62ae-844e-2f908ca20879"]},"xValue":-131,"xUnit":"rem","yUnit":"PX","zUnit":"PX"}}]},{"actionItems":[{"id":"a-3-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"","duration":0,"target":{"useEventTarget":"CHILDREN","selector":".punks-slider_content","selectorGuids":["a041b608-b45e-62ae-844e-2f908ca20879"]},"xValue":0,"xUnit":"rem","yUnit":"PX","zUnit":"PX"}}]}],"useFirstGroupAsInitialState":false,"createdOn":1634186546050},"a-4":{"id":"a-4","title":"Section Content 99 [Timeline Progress]","continuousParameterGroups":[{"id":"a-4-p","type":"SCROLL_PROGRESS","parameterLabel":"Scroll","continuousActionGroups":[{"keyframe":25,"actionItems":[{"id":"a-4-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"","duration":500,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"heightValue":0,"widthUnit":"PX","heightUnit":"%","locked":false}}]},{"keyframe":55,"actionItems":[{"id":"a-4-n-2","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"","duration":500,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"heightValue":100,"widthUnit":"PX","heightUnit":"%","locked":false}}]}]}],"createdOn":1626766527768},"a-5":{"id":"a-5","title":"Section Content Timeline [Scroll In]","actionItemGroups":[{"actionItems":[{"id":"a-5-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":0,"widthUnit":"%","heightUnit":"PX","locked":false}}]},{"actionItems":[{"id":"a-5-n-2","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":100,"widthUnit":"%","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":true,"createdOn":1626765982929},"a-6":{"id":"a-6","title":"Section Content Timeline [Scroll Out]","actionItemGroups":[{"actionItems":[{"id":"a-6-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":0,"widthUnit":"%","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626765982929},"a-9":{"id":"a-9","title":"Navbar 1 [Open Menu]","actionItemGroups":[{"actionItems":[{"id":"a-9-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"inOutQuint","duration":200,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-middle","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a1"]},"widthValue":0,"widthUnit":"px","heightUnit":"PX","locked":false}},{"id":"a-9-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"yValue":-8,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-9-n-3","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"yValue":8,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-9-n-4","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"zValue":-45,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-9-n-5","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"zValue":45,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626168378054},"a-10":{"id":"a-10","title":"Navbar 1 [Close Menu]","actionItemGroups":[{"actionItems":[{"id":"a-10-n","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"yValue":0,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-10-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"yValue":0,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-10-n-3","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"zValue":0,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-10-n-4","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"zValue":0,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-10-n-5","actionTypeId":"STYLE_SIZE","config":{"delay":400,"easing":"inOutQuint","duration":200,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-middle","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a1"]},"widthValue":24,"widthUnit":"px","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626168766736}},"site":{"mediaQueries":[{"key":"main","min":992,"max":10000},{"key":"medium","min":768,"max":991},{"key":"small","min":480,"max":767},{"key":"tiny","min":0,"max":479}]}}
+{"events":{"e-7":{"id":"e-7","name":"","animationType":"custom","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-3","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-8"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|fbb2cfb0-0e22-75f4-4978-59c3b7e98b54","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|fbb2cfb0-0e22-75f4-4978-59c3b7e98b54","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":true,"playInReverse":false,"scrollOffsetValue":0,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1634534336596},"e-19":{"id":"e-19","name":"","animationType":"custom","eventTypeId":"SCROLLING_IN_VIEW","action":{"id":"","actionTypeId":"GENERAL_CONTINUOUS_ACTION","config":{"actionListId":"a-4","affectedElements":{},"duration":0}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d3","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d3","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":[{"continuousParameterGroupId":"a-4-p","smoothing":50,"startsEntering":true,"addStartOffset":false,"addOffsetValue":50,"startsExiting":false,"addEndOffset":false,"endOffsetValue":50}],"createdOn":1626860473655},"e-21":{"id":"e-21","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-25"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1632896086207},"e-23":{"id":"e-23","name":"","animationType":"custom","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-26"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1626765977818},"e-25":{"id":"e-25","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-37"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341e1","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1632896086207},"e-26":{"id":"e-26","name":"","animationType":"custom","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-23"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|32d1df33-6389-b5db-ec6e-66c1b82341d6","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1626765977820},"e-33":{"id":"e-33","name":"","animationType":"preset","eventTypeId":"NAVBAR_OPEN","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-9","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-34"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":null,"scrollOffsetUnit":null,"delay":null,"direction":null,"effectIn":null},"createdOn":1626227992075},"e-34":{"id":"e-34","name":"","animationType":"preset","eventTypeId":"NAVBAR_CLOSE","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-10","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-33"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|cecbe119-dda2-0e4d-52e7-2e8f117a6968","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":null,"scrollOffsetUnit":null,"delay":null,"direction":null,"effectIn":null},"createdOn":1626227992075},"e-37":{"id":"e-37","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-38"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207829212},"e-38":{"id":"e-38","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-37"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a17ea536-1ed7-a3cb-a380-d0670854992b","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207829212},"e-39":{"id":"e-39","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-40"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207830864},"e-40":{"id":"e-40","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-39"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|94b5911f-e5d6-a565-37af-7288988a1af9","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645207830864},"e-41":{"id":"e-41","name":"","animationType":"preset","eventTypeId":"SCROLLING_IN_VIEW","action":{"id":"","actionTypeId":"GENERAL_CONTINUOUS_ACTION","config":{"actionListId":"a-4","affectedElements":{},"duration":0}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd45","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd45","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":[{"continuousParameterGroupId":"a-4-p","smoothing":50,"startsEntering":true,"addStartOffset":false,"addOffsetValue":50,"startsExiting":false,"addEndOffset":false,"endOffsetValue":50}],"createdOn":1645293057729},"e-42":{"id":"e-42","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-43"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-43":{"id":"e-43","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-42"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd48","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-44":{"id":"e-44","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-45"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-45":{"id":"e-45","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-44"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|ea8d3004-b55f-8628-8d7f-3d065e0ccd51","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645293057729},"e-46":{"id":"e-46","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-47"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645296870171},"e-47":{"id":"e-47","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-46"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|eb66a4b9-f952-680e-39e8-1dadc0004452","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645296870171},"e-48":{"id":"e-48","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-49"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645297920318},"e-49":{"id":"e-49","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-48"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|85d02215-4670-8914-939e-a37e6d1249b5","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645297920318},"e-50":{"id":"e-50","name":"","animationType":"preset","eventTypeId":"SCROLL_INTO_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-5","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-51"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a1e3cece-a8df-ca20-3147-1421ecfd0ecd","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a1e3cece-a8df-ca20-3147-1421ecfd0ecd","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645976984851},"e-51":{"id":"e-51","name":"","animationType":"preset","eventTypeId":"SCROLL_OUT_OF_VIEW","action":{"id":"","actionTypeId":"GENERAL_START_ACTION","config":{"delay":0,"easing":"","duration":0,"actionListId":"a-6","affectedElements":{},"playInReverse":false,"autoStopEventId":"e-50"}},"mediaQueries":["main","medium","small","tiny"],"target":{"id":"620bfd77564ba828ceb748e5|a1e3cece-a8df-ca20-3147-1421ecfd0ecd","appliesTo":"ELEMENT","styleBlockIds":[]},"targets":[{"id":"620bfd77564ba828ceb748e5|a1e3cece-a8df-ca20-3147-1421ecfd0ecd","appliesTo":"ELEMENT","styleBlockIds":[]}],"config":{"loop":false,"playInReverse":false,"scrollOffsetValue":50,"scrollOffsetUnit":"%","delay":null,"direction":null,"effectIn":null},"createdOn":1645976984851}},"actionLists":{"a-3":{"id":"a-3","title":"Logo 3 [Loop]","actionItemGroups":[{"actionItems":[{"id":"a-3-n","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"","duration":50000,"target":{"useEventTarget":"CHILDREN","selector":".punks-slider_content","selectorGuids":["a041b608-b45e-62ae-844e-2f908ca20879"]},"xValue":-131,"xUnit":"rem","yUnit":"PX","zUnit":"PX"}}]},{"actionItems":[{"id":"a-3-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"","duration":0,"target":{"useEventTarget":"CHILDREN","selector":".punks-slider_content","selectorGuids":["a041b608-b45e-62ae-844e-2f908ca20879"]},"xValue":0,"xUnit":"rem","yUnit":"PX","zUnit":"PX"}}]}],"useFirstGroupAsInitialState":false,"createdOn":1634186546050},"a-4":{"id":"a-4","title":"Section Content 99 [Timeline Progress]","continuousParameterGroups":[{"id":"a-4-p","type":"SCROLL_PROGRESS","parameterLabel":"Scroll","continuousActionGroups":[{"keyframe":25,"actionItems":[{"id":"a-4-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"","duration":500,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"heightValue":0,"widthUnit":"PX","heightUnit":"%","locked":false}}]},{"keyframe":55,"actionItems":[{"id":"a-4-n-2","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"","duration":500,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"heightValue":100,"widthUnit":"PX","heightUnit":"%","locked":false}}]}]}],"createdOn":1626766527768},"a-5":{"id":"a-5","title":"Section Content Timeline [Scroll In]","actionItemGroups":[{"actionItems":[{"id":"a-5-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":0,"widthUnit":"%","heightUnit":"PX","locked":false}}]},{"actionItems":[{"id":"a-5-n-2","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":100,"widthUnit":"%","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":true,"createdOn":1626765982929},"a-6":{"id":"a-6","title":"Section Content Timeline [Scroll Out]","actionItemGroups":[{"actionItems":[{"id":"a-6-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"outQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".home-howto_progress-bar","selectorGuids":["2f70e478-2755-9ab3-4af8-79dacb6afc55"]},"widthValue":0,"widthUnit":"%","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626765982929},"a-9":{"id":"a-9","title":"Navbar 1 [Open Menu]","actionItemGroups":[{"actionItems":[{"id":"a-9-n","actionTypeId":"STYLE_SIZE","config":{"delay":0,"easing":"inOutQuint","duration":200,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-middle","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a1"]},"widthValue":0,"widthUnit":"px","heightUnit":"PX","locked":false}},{"id":"a-9-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"yValue":-8,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-9-n-3","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"yValue":8,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-9-n-4","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"zValue":-45,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-9-n-5","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"zValue":45,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626168378054},"a-10":{"id":"a-10","title":"Navbar 1 [Close Menu]","actionItemGroups":[{"actionItems":[{"id":"a-10-n","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"yValue":0,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-10-n-2","actionTypeId":"TRANSFORM_MOVE","config":{"delay":0,"easing":"inOutQuint","duration":600,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"yValue":0,"xUnit":"PX","yUnit":"px","zUnit":"PX"}},{"id":"a-10-n-3","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-bottom","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d79d"]},"zValue":0,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-10-n-4","actionTypeId":"TRANSFORM_ROTATE","config":{"delay":0,"easing":"inOutQuint","duration":400,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-top","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a8"]},"zValue":0,"xUnit":"DEG","yUnit":"DEG","zUnit":"deg"}},{"id":"a-10-n-5","actionTypeId":"STYLE_SIZE","config":{"delay":400,"easing":"inOutQuint","duration":200,"target":{"useEventTarget":"CHILDREN","selector":".menu-icon1_line-middle","selectorGuids":["7cf95910-b302-877a-be3e-2384f1e6d7a1"]},"widthValue":24,"widthUnit":"px","heightUnit":"PX","locked":false}}]}],"useFirstGroupAsInitialState":false,"createdOn":1626168766736}},"site":{"mediaQueries":[{"key":"main","min":992,"max":10000},{"key":"medium","min":768,"max":991},{"key":"small","min":480,"max":767},{"key":"tiny","min":0,"max":479}]}}
 );
